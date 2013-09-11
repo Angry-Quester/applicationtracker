@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:tx="http://www.springframework.org/schema/tx"
+			xsi:schemaLocation="
+			http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/tx
+			http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+			http://www.springframework.org/schema/aop
+			http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<!-- Load in application properties reference -->
+	<bean id="applicationProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:application.properties"/>
+	</bean>
+
+
+	<!--Datasource-->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"><value>${db.driver}</value></property>
+		<property name="url"><value>${db.url}</value></property>
+		<property name="username"><value>${db.user}</value></property>
+		<property name="password"><value>${db.password}</value></property>
+	</bean>
+
+
+	<!-- Hibernate SessionFactory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource"><ref local="dataSource"/></property>
+
+		<property name="hibernateProperties">
+			<value>
+				hibernate.dialect=org.hibernate.dialect.MySQLDialect
+				hibernate.show_sql=true
+				hibernate.format_sql=true
+				<!--hibernate.hbm2ddl.auto=update-->
+			</value>
+		</property>
+
+		<property name="mappingResources">
+			<list>
+				<value>edu/khai/appticationtracker/model/Application.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+
+	<!--test defined bean for DAO-->
+	<bean id="applicationDAO" class="edu.khai.appticationtracker.dao.hibernate.ApplicationDAOHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+
+	<bean id="applicationManager" class="edu.khai.appticationtracker.service.impl.ApplicationManagerImpl">
+		<property name="applicationDAO" ref="applicationDAO" />
+	</bean>
+
+</beans>

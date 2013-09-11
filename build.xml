@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<project name="${webapp.name}" basedir="." default="help">
+	<description>${webapp.name} application build file</description>
+
+	<property name="webapp.name" value="AppticationTracker"/>
+
+	<property name="src.dir" location="src/main/java"/>
+	<property name="test.dir" location="src/test/java"/>
+	<property name="webapp.dir" location="src/main/webapp"/>
+	<property name="resources.dir" location="src/main/resources" />
+	<property name="config.dir" location="src/main/config" />
+	<property name="lib.dir" location="src/main/lib" />
+
+	<property name="build.dir" location="build"/>
+	<property name="build.src.dir" location="build/classes"/>
+	<property name="build.test.dir" location="build/test"/>
+
+	<property name="log.dir" location="log"/>
+	<property name="log.test.dir" location="log/test"/>
+
+	<property environment="env"/>
+
+
+	<path id="classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar"/>
+		</fileset>
+		<pathelement path="${build.src.dir}"/>
+		<pathelement path="${build.test.dir}"/>
+		<pathelement path="${resources.dir}"/>
+		<pathelement path="${config.dir}"/>
+	</path>
+
+
+	<target name="help">
+		<echo message=""/>
+		<echo message="${webapp.name} build file"/>
+		<echo message="-----------------------------------"/>
+		<echo message=""/>
+		<echo message="Available targets are:"/>
+		<echo message=""/>
+		<echo message="compile   --> Compile all Java files"/>
+		<echo message="test      --> Runs all tests"/>
+		<echo message="clean     --> Deletes compiled classes and WAR"/>
+	</target>
+
+	<target name="compile" description="Compile main source tree java files">
+		<!-- compile source-->
+		<mkdir dir="${build.src.dir}"/>
+		<javac destdir="${build.src.dir}"
+				target="1.7"
+				debug="true"
+				deprecation="false"
+				optimize="false"
+				failonerror="true"
+				includeantruntime="false">
+			<src path="${src.dir}"/>
+			<classpath refid="classpath"/>
+			<compilerarg value="-Xlint"/>
+		</javac>
+
+        <copy todir="${build.src.dir}">
+            <fileset dir="${src.dir}" includes="**/*.hbm.xml"/>
+        </copy>
+
+ 		<!-- compile tests -->
+		<mkdir dir="${build.test.dir}"/>
+		<javac destdir="${build.test.dir}"
+				target="1.7"
+				debug="true"
+				deprecation="false"
+				optimize="false"
+				failonerror="true"
+				includeantruntime="false">
+			<src path="${test.dir}"/>
+			<classpath>
+				<path refid="classpath"/>
+				<path location="${build.src.dir}"/>
+			</classpath>
+			<compilerarg value="-Xlint"/>
+		</javac>
+	</target>
+
+	<target name="test" depends="compile" description="Runs JUnit tests">
+		<delete dir="${log.dir}"/>
+		<!-- Check that junit.jar is in $ANT_HOME/lib -->
+		<available classname="junit.framework.TestCase" property="junit.present"/>
+		<fail unless="junit.present"
+			message="Please copy web/WEB-INF/lib/junit.jar into ${env.ANT_HOME}/lib"/>
+
+		<mkdir dir="${log.test.dir}"/>
+		<junit printsummary="no"
+				fork="true"
+				errorProperty="test.failed"
+				failureProperty="test.failed">
+
+			<classpath>
+				<path refid="classpath"/>
+			</classpath>
+
+			<formatter type="plain"/>
+			<formatter type="brief" usefile="false"/>
+
+			<batchtest todir="${log.test.dir}" if="testcase">
+				<fileset dir="${build.test.dir}">
+					<include name="**/*${testcase}*"/>
+				</fileset>
+			</batchtest>
+			<batchtest todir="${log.test.dir}" unless="testcase">
+				<fileset dir="${build.test.dir}">
+					<include name="**/*Test.class*"/>
+				</fileset>
+			</batchtest>
+		</junit>
+
+		<fail if="test.failed">
+		  Unit tests failed. For error messages, check the log files in
+		  ${test.dir}/data or run "ant test-reports"
+		  to generate reports at ${test.dir}/reports.</fail>
+	</target>
+
+	<target name="clean" description="Clean output directories">
+		<delete dir="${build.dir}"/>
+	</target>
+
+</project>

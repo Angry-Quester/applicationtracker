@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="edu.khai.appticationtracker.model.Application" table="application">
+
+		<id name="applicationId" column="applicationId" unsaved-value="0">
+			<generator class="increment"/>
+		</id>
+
+		<property name="applicationType" column="applicationType" not-null="false"/>
+		<property name="applicationData" column="applicationData" not-null="false"/>
+
+	</class>
+</hibernate-mapping>
