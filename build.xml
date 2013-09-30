@@ -2,7 +2,7 @@
 <project name="${webapp.name}" basedir="." default="help">
 	<description>${webapp.name} application build file</description>
 
-	<property name="webapp.name" value="AppticationTracker"/>
+	<property name="webapp.name" value="ApplicationTracker"/>
 
 	<property name="src.dir" location="src/main/java"/>
 	<property name="test.dir" location="src/test/java"/>
@@ -14,6 +14,8 @@
 	<property name="build.dir" location="build"/>
 	<property name="build.src.dir" location="build/classes"/>
 	<property name="build.test.dir" location="build/test"/>
+
+	<property name="dist.dir" location="dist"/>
 
 	<property name="log.dir" location="log"/>
 	<property name="log.test.dir" location="log/test"/>
@@ -40,8 +42,9 @@
 		<echo message="Available targets are:"/>
 		<echo message=""/>
 		<echo message="compile   --> Compile all Java files"/>
-		<echo message="test      --> Runs all tests"/>
-		<echo message="clean     --> Deletes compiled classes and WAR"/>
+		<echo message="test	  --> Runs all tests"/>
+		<echo message="war	  --> Creates *.war file"/>
+		<echo message="clean	 --> Deletes compiled classes and WAR"/>
 	</target>
 
 	<target name="compile" description="Compile main source tree java files">
@@ -59,9 +62,9 @@
 			<compilerarg value="-Xlint"/>
 		</javac>
 
-        <copy todir="${build.src.dir}">
-            <fileset dir="${src.dir}" includes="**/*.hbm.xml"/>
-        </copy>
+		<copy todir="${build.src.dir}">
+			<fileset dir="${src.dir}" includes="**/*.hbm.xml"/>
+		</copy>
 
  		<!-- compile tests -->
 		<mkdir dir="${build.test.dir}"/>
@@ -121,6 +124,36 @@
 
 	<target name="clean" description="Clean output directories">
 		<delete dir="${build.dir}"/>
+	</target>
+
+	<target name="war" depends="compile" description="Packages app as WAR">
+		<mkdir dir="${dist.dir}"/>
+		<war destfile="${dist.dir}/${webapp.name}.war" webxml="${webapp.dir}/web-inf/web.xml">
+
+			<classes dir="${build.dir}/classes"/>
+
+			<classes dir="${config.dir}">
+				<include name="application.properties" />
+			</classes>
+
+			<fileset dir="${webapp.dir}">
+				<include name="**/*.*"/>
+				<exclude name="**/web.xml"/>
+				<exclude name="**/junit.jar"/>
+				<exclude name="**/*mock.jar"/>
+				<exclude name="**/strutstestcase*.jar"/>
+			</fileset>
+
+			<lib dir="${lib.dir}">
+				<include name="**" />
+				<exclude name="javax.servlet.jar" />
+			</lib>
+
+			<webinf dir="${config.dir}">
+				<include name="application-servlet.xml" />
+			</webinf>
+
+		</war>
 	</target>
 
 </project>
