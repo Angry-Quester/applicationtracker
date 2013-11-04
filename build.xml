@@ -2,6 +2,8 @@
 <project name="${webapp.name}" basedir="." default="help">
 	<description>${webapp.name} application build file</description>
 
+
+<!-- Application deafault properties -->
 	<property name="webapp.name" value="ApplicationTracker"/>
 
 	<property name="src.dir" location="src/main/java"/>
@@ -23,6 +25,7 @@
 	<property environment="env"/>
 
 
+<!-- Application classpath including paths to compiled tests and configuration files folders -->
 	<path id="classpath">
 		<fileset dir="${lib.dir}">
 			<include name="*.jar"/>
@@ -34,19 +37,27 @@
 	</path>
 
 
+<!-- Ant task list all available ant tasks in this project -->
 	<target name="help">
 		<echo message=""/>
 		<echo message="${webapp.name} build file"/>
 		<echo message="-----------------------------------"/>
 		<echo message=""/>
-		<echo message="Available targets are:"/>
+		<echo message="Available Ant targets are:"/>
+		<echo message="compile  --> Compile all Java files"/>
+		<echo message="test     --> Runs all tests"/>
+		<echo message="war      --> Creates *.war file"/>
+		<echo message="clean    --> Deletes compiled classes and WAR"/>
 		<echo message=""/>
-		<echo message="compile   --> Compile all Java files"/>
-		<echo message="test	  --> Runs all tests"/>
-		<echo message="war	  --> Creates *.war file"/>
-		<echo message="clean	 --> Deletes compiled classes and WAR"/>
+		<echo message="Available Tomcat/Ant targets are:"/>
+		<echo message="deploy   --> Deploys application on the Tomcat"/>
+		<echo message="undeploy --> Undeploys application from the Tomcat"/>
+		<echo message="reload   --> Reloads application on the Tomcat"/>
+		<echo message="list     --> Lists all applications from the Tomcat"/>
 	</target>
 
+
+<!-- Ant task to compile all application source code  -->
 	<target name="compile" description="Compile main source tree java files">
 		<!-- compile source-->
 		<mkdir dir="${build.src.dir}"/>
@@ -84,6 +95,8 @@
 		</javac>
 	</target>
 
+
+<!-- Ant task to run all tests or tu run selected test on demand -->
 	<target name="test" depends="compile" description="Runs JUnit tests">
 		<delete dir="${log.dir}"/>
 		<!-- Check that junit.jar is in $ANT_HOME/lib -->
@@ -117,15 +130,17 @@
 		</junit>
 
 		<fail if="test.failed">
-		  Unit tests failed. For error messages, check the log files in
-		  ${test.dir}/data or run "ant test-reports"
-		  to generate reports at ${test.dir}/reports.</fail>
+			Unit tests failed. For error messages, check the log files in
+			${test.dir}/data or run "ant test-reports"
+			to generate reports at ${test.dir}/reports.</fail>
 	</target>
 
 	<target name="clean" description="Clean output directories">
 		<delete dir="${build.dir}"/>
 	</target>
 
+
+<!-- Ant task to make deployable *.war file -->
 	<target name="war" depends="compile" description="Packages app as WAR">
 		<mkdir dir="${dist.dir}"/>
 		<war destfile="${dist.dir}/${webapp.name}.war" webxml="${webapp.dir}/web-inf/web.xml">
@@ -154,6 +169,43 @@
 			</webinf>
 
 		</war>
+	</target>
+
+
+<!-- Configure Tomcat properties to access the Manager application -->
+	<property file="tomcatProperties.properties"/>
+<!-- Configure the custom Ant tasks for the Tomcat Manager application -->
+	<taskdef file="tomcatTasks.properties"/>
+
+
+<!-- Executable Ant Tomcat Targets to: deploy, reload, undeploy, list something on the Tomcat-->
+	<target name="deploy" description="Install web application" depends="war">
+		<deploy url="${tomcat.url}"
+				username="${tomcat.username}"
+				password="${tomcat.password}"
+				path="${tomcat.context.path}"
+				war="file:${dist.dir}/${webapp.name}.war"/>
+	</target>
+
+	<target name="reload" description="Reload web application" depends="compile">
+		<reload	url="${tomcat.url}"
+				username="${tomcat.username}"
+				password="${tomcat.password}"
+				path="${tomcat.context.path}"/>
+	</target>
+
+	<target name="undeploy" description="Remove web application">
+		<undeploy
+				url="${tomcat.url}"
+				username="${tomcat.username}"
+				password="${tomcat.password}"
+				path="${tomcat.context.path}"/>
+	</target>
+
+	<target name="list" description="Install web application" depends="war">
+		<list url="${tomcat.url}"
+				username="${tomcat.username}"
+				password="${tomcat.password}"/>
 	</target>
 
 </project>
