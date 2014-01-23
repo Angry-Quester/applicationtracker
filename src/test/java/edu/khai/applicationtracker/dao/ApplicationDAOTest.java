@@ -24,7 +24,7 @@ import edu.khai.applicationtracker.dao.ApplicationDAO;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath:applicationContext.xml"})
+@ContextConfiguration({"classpath:application-servlet.xml"})
 @TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
 public class ApplicationDAOTest {
 	final static Logger logger = Logger.getLogger(ApplicationDAOTest.class);

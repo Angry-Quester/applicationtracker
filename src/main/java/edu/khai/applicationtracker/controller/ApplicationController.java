@@ -19,7 +19,7 @@ public class ApplicationController {
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ModelAndView  postApptication(@ModelAttribute("index") Application application, BindingResult result) {
+    public ModelAndView  postApplication(@ModelAttribute("index") Application application, BindingResult result) {
         return new ModelAndView("main","user", application);
     }
 }

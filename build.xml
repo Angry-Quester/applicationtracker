@@ -11,7 +11,7 @@
 	<property name="webapp.dir" location="src/main/webapp"/>
 	<property name="resources.dir" location="src/main/resources" />
 	<property name="config.dir" location="src/main/config" />
-	<property name="lib.dir" location="src/main/lib" />
+	<property name="lib.dir" location="src/main/webapp/web-inf/lib" />
 
 	<property name="build.dir" location="build"/>
 	<property name="build.src.dir" location="build/classes"/>
@@ -32,8 +32,8 @@
 		</fileset>
 		<pathelement path="${build.src.dir}"/>
 		<pathelement path="${build.test.dir}"/>
-		<pathelement path="${resources.dir}"/>
 		<pathelement path="${config.dir}"/>
+		<pathelement path="${webapp.dir}/web-inf"/>
 	</path>
 
 
@@ -54,6 +54,8 @@
 		<echo message="undeploy --> Undeploys application from the Tomcat"/>
 		<echo message="reload   --> Reloads application on the Tomcat"/>
 		<echo message="list     --> Lists all applications from the Tomcat"/>
+		<echo message="start	--> Starts web application"/>
+		<echo message="stop		--> Stops web application"/>
 	</target>
 
 
@@ -149,25 +151,13 @@
 
 			<classes dir="${config.dir}">
 				<include name="application.properties" />
+				<include name="log4j.properties" />
 			</classes>
 
 			<fileset dir="${webapp.dir}">
 				<include name="**/*.*"/>
-				<exclude name="**/web.xml"/>
-				<exclude name="**/junit.jar"/>
-				<exclude name="**/*mock.jar"/>
-				<exclude name="**/strutstestcase*.jar"/>
-			</fileset>
-
-			<lib dir="${lib.dir}">
-				<include name="**" />
 				<exclude name="javax.servlet.jar" />
-			</lib>
-
-			<webinf dir="${config.dir}">
-				<include name="application-servlet.xml" />
-			</webinf>
-
+			</fileset>
 		</war>
 	</target>
 
@@ -206,6 +196,20 @@
 		<list url="${tomcat.url}"
 				username="${tomcat.username}"
 				password="${tomcat.password}"/>
+	</target>
+
+	<target name="start" description="Start web application">
+		<start url="${tomcat.url}"
+				username="${tomcat.username}"
+				password="${tomcat.password}"
+				path="${tomcat.context.path}"/>
+	</target>
+
+	<target name="stop" description="Stop web application">
+		<stop url="${tomcat.url}"
+				username="${tomcat.username}"
+				password="${tomcat.password}"
+				path="${tomcat.context.path}"/>
 	</target>
 
 </project>
