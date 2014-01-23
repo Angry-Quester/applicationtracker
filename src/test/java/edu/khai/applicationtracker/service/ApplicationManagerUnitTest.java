@@ -1,7 +1,7 @@
 package edu.khai.applicationtracker.service;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.BasicConfigurator;
+//import org.apache.log4j.BasicConfigurator;
 
 import org.junit.Before;
 import org.junit.After;
