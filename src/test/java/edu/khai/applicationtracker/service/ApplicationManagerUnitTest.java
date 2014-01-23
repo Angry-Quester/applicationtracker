@@ -1,4 +1,4 @@
-package edu.khai.appticationtracker.service;
+package edu.khai.applicationtracker.service;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.BasicConfigurator;
@@ -7,9 +7,9 @@ import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
 
-import edu.khai.appticationtracker.model.Application;
-import edu.khai.appticationtracker.dao.ApplicationDAO;
-import edu.khai.appticationtracker.service.impl.ApplicationManagerImpl;
+import edu.khai.applicationtracker.model.Application;
+import edu.khai.applicationtracker.dao.ApplicationDAO;
+import edu.khai.applicationtracker.service.impl.ApplicationManagerImpl;
 
 /*Mockito imports*/
 import static org.mockito.Mockito.*;

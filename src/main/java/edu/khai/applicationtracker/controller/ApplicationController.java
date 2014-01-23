@@ -1,8 +1,7 @@
-package edu.khai.appticationtracker.controller;
+package edu.khai.applicationtracker.controller;
 
-import edu.khai.appticationtracker.model.Application;
+import edu.khai.applicationtracker.model.Application;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +14,7 @@ public class ApplicationController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView getApplication() {
     	Application application = new Application();
-    		application.setApplicationId(new Long(12345));
+    		application.setApplicationId(new Long(123456));
         return new ModelAndView("index", "application", application);
     }
 

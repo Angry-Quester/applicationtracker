@@ -1,11 +1,11 @@
-package edu.khai.appticationtracker.dao.hibernate;
+package edu.khai.applicationtracker.dao.hibernate;
 
 import java.util.List;
 
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import edu.khai.appticationtracker.dao.ApplicationDAO;
-import edu.khai.appticationtracker.model.Application;
+import edu.khai.applicationtracker.dao.ApplicationDAO;
+import edu.khai.applicationtracker.model.Application;
 
 public class ApplicationDAOHibernate extends HibernateDaoSupport implements ApplicationDAO {
 

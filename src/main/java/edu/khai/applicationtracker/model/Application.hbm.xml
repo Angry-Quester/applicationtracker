@@ -4,7 +4,7 @@
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="edu.khai.appticationtracker.model.Application" table="application">
+	<class name="edu.khai.applicationtracker.model.Application" table="application">
 
 		<id name="applicationId" column="applicationId" unsaved-value="0">
 			<generator class="increment"/>

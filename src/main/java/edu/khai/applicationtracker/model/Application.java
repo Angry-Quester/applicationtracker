@@ -1,4 +1,4 @@
-package edu.khai.appticationtracker.model;
+package edu.khai.applicationtracker.model;
 
 public class Application extends BaseObject {
 

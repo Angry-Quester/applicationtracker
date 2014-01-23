@@ -1,8 +1,8 @@
-package edu.khai.appticationtracker.service;
+package edu.khai.applicationtracker.service;
 
 import java.util.List;
 
-import edu.khai.appticationtracker.model.Application;
+import edu.khai.applicationtracker.model.Application;
 
 public interface ApplicationManager {
     public List<Application> getApplications();

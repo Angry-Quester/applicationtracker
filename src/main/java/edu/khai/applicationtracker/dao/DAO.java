@@ -1,4 +1,4 @@
-package edu.khai.appticationtracker.dao;
+package edu.khai.applicationtracker.dao;
 
 /**
  * Data Access Object (DAO) interface.   This is an empty interface

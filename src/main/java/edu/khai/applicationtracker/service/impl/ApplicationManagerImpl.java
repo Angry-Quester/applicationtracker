@@ -1,11 +1,11 @@
-package edu.khai.appticationtracker.service.impl;
+package edu.khai.applicationtracker.service.impl;
 
 import java.util.List;
 
-import edu.khai.appticationtracker.dao.ApplicationDAO;
-import edu.khai.appticationtracker.model.Application;
+import edu.khai.applicationtracker.dao.ApplicationDAO;
+import edu.khai.applicationtracker.model.Application;
 
-import edu.khai.appticationtracker.service.ApplicationManager;
+import edu.khai.applicationtracker.service.ApplicationManager;
 
 public class ApplicationManagerImpl implements ApplicationManager{
 

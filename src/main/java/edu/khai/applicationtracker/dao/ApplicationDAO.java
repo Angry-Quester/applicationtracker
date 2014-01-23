@@ -1,8 +1,8 @@
-package edu.khai.appticationtracker.dao;
+package edu.khai.applicationtracker.dao;
 
 import java.util.List;
 
-import edu.khai.appticationtracker.model.Application;
+import edu.khai.applicationtracker.model.Application;
 
 public interface ApplicationDAO extends DAO {
 	public List<Application> getApplications();

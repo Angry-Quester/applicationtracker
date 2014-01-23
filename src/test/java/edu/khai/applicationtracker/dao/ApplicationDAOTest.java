@@ -19,8 +19,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.khai.appticationtracker.model.Application;
-import edu.khai.appticationtracker.dao.ApplicationDAO;
+import edu.khai.applicationtracker.model.Application;
+import edu.khai.applicationtracker.dao.ApplicationDAO;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
