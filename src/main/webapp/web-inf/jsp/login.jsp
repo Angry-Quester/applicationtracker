@@ -9,18 +9,14 @@
 		<link rel="stylesheet" href="css/style.css" type="text/css"/>
 	</head>
 	<body>
-		<h1>DEMO</h1>
-        <h1>Success !</h1>
-		<h2>Some smart text</h2>
-		<h2>Somethig is really Happening</h2>
-		<h2>Somethig is really Happening</h2>
-		
-        
-        <p>ID = <b>${application.applicationId}</b></p>
-        <hr />
-        
-        
-
+		<h1>Login Page</h1>
+		<c:if test="${not empty data}" >
+			<p>${data}</p>
+  		</c:if>
+		<hr/>
+		<c:if test="${not empty loginData}" >
+			<p>${loginData}</p>	
+  		</c:if>  		
 	</body>
 </html>
 

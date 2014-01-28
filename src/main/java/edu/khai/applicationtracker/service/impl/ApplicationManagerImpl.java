@@ -9,6 +9,7 @@ import edu.khai.applicationtracker.service.ApplicationManager;
 
 public class ApplicationManagerImpl implements ApplicationManager{
 
+
     private ApplicationDAO applicationDAO;
 
     public void setApplicationDAO(ApplicationDAO applicationDAO) {

@@ -1,101 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="
 			http://www.springframework.org/schema/beans
-			http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-			http://www.springframework.org/schema/tx
-			http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
-			http://www.springframework.org/schema/aop
-			http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-			http://www.springframework.org/schema/context
-			http://www.springframework.org/schema/context/spring-context-3.0.xsd
-			http://www.springframework.org/schema/mvc
-			http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+			http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<!-- Load in application properties reference -->
+<!-- Load in application properties reference -->
 	<bean id="applicationProperties"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="classpath:application.properties" />
 	</bean>
 
-
-	<!--Datasource -->
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName">
-			<value>${db.driver}</value>
-		</property>
-		<property name="url">
-			<value>${db.url}</value>
-		</property>
-		<property name="username">
-			<value>${db.user}</value>
-		</property>
-		<property name="password">
-			<value>${db.password}</value>
-		</property>
-	</bean>
-
-
-	<!-- Hibernate SessionFactory -->
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-		<property name="dataSource">
-			<ref local="dataSource" />
-		</property>
-
-		<property name="hibernateProperties">
-			<value>
-				hibernate.dialect=org.hibernate.dialect.MySQLDialect
-				hibernate.show_sql=true
-				hibernate.format_sql=true
-				<!--hibernate.hbm2ddl.auto=update -->
-			</value>
-		</property>
-
-		<property name="mappingResources">
-			<list>
-				<value>edu/khai/applicationtracker/model/Application.hbm.xml</value>
-			</list>
-		</property>
-	</bean>
-
-	<!-- Transaction manager for a single Hibernate SessionFactory (alternative
-		to JTA) -->
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
-	<!--test defined bean for DAO -->
-	<bean id="applicationDAO"
-		class="edu.khai.applicationtracker.dao.hibernate.ApplicationDAOHibernate">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
-
-	<bean id="applicationManager"
-		class="edu.khai.applicationtracker.service.impl.ApplicationManagerImpl">
-		<property name="applicationDAO" ref="applicationDAO" />
-	</bean>
-
-	<!--Controller Configuration -->
-	<mvc:resources mapping="/css/**" location="WEB-INF/resources/css/*" />
-	<mvc:annotation-driven />
-
-	<context:component-scan base-package="edu.khai.applicationtracker.controller" />
-
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix">
-			<value>/WEB-INF/jsp/</value>
-		</property>
-		<property name="suffix">
-			<value>.jsp</value>
-		</property>
-	</bean>
+<!-- Context files imports -->
+	<import resource="spring-context/dao-context.xml"/>
+	<import resource="spring-context/service-context.xml"/>
+	<import resource="spring-context/controller-context.xml"/>	
+  	<import resource="spring-context/security-context.xml"/>
 
 </beans>
