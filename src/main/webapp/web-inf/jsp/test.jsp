@@ -10,7 +10,8 @@
 	</head>
 	<body>
 		<h1>Page</h1>
-		<form action="test" method="post">
+		
+		<form action="<c:url value="/test"/>" method="post">
 			<input type="text" name="testField" /> <br />
 			<input type="submit" value="Push"/> 
 		</form>

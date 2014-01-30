@@ -11,7 +11,7 @@
 	<property name="webapp.dir" location="src/main/webapp"/>
 	<property name="resources.dir" location="src/main/resources" />
 	<property name="config.dir" location="src/main/config" />
-	<property name="lib.dir" location="src/main/webapp/web-inf/lib" />
+	<property name="lib.dir" location="src/main/webapp/WEB-INF/lib" />
 
 	<property name="build.dir" location="build"/>
 	<property name="build.src.dir" location="build/classes"/>
@@ -33,7 +33,7 @@
 		<pathelement path="${build.src.dir}"/>
 		<pathelement path="${build.test.dir}"/>
 		<pathelement path="${config.dir}"/>
-		<pathelement path="${webapp.dir}/web-inf"/>
+		<pathelement path="${webapp.dir}/WEB-INF"/>
 	</path>
 
 
@@ -145,7 +145,7 @@
 <!-- Ant task to make deployable *.war file -->
 	<target name="war" depends="compile" description="Packages app as WAR">
 		<mkdir dir="${dist.dir}"/>
-		<war destfile="${dist.dir}/${webapp.name}.war" webxml="${webapp.dir}/web-inf/web.xml">
+		<war destfile="${dist.dir}/${webapp.name}.war" webxml="${webapp.dir}/WEB-INF/web.xml">
 
 			<classes dir="${build.dir}/classes"/>
 
