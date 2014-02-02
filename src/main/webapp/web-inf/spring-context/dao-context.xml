@@ -15,7 +15,7 @@
 			http://www.springframework.org/schema/mvc
 			http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	<!--Datasource -->
+<!--Datasource -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName">
@@ -33,7 +33,7 @@
 	</bean>
 
 
-	<!-- Hibernate SessionFactory -->
+<!-- Hibernate SessionFactory -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<property name="dataSource">
@@ -45,25 +45,31 @@
 				hibernate.dialect=org.hibernate.dialect.MySQLDialect
 				hibernate.show_sql=true
 				hibernate.format_sql=true
-				<!--hibernate.hbm2ddl.auto=update -->
+				hibernate.hbm2ddl.auto=update
 			</value>
 		</property>
 
 		<property name="mappingResources">
 			<list>
+				<value>edu/khai/applicationtracker/model/AppUser.hbm.xml</value>
 				<value>edu/khai/applicationtracker/model/Application.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
 
-	<!-- Transaction manager for a single Hibernate SessionFactory (alternative
-		to JTA) -->
+<!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<!--test defined bean for DAO -->
+<!--appUserDao bean-->
+	<bean id="appUserDAO"
+		class="edu.khai.applicationtracker.dao.hibernate.AppUserDAOHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+<!--applicationDAO bean-->
 	<bean id="applicationDAO"
 		class="edu.khai.applicationtracker.dao.hibernate.ApplicationDAOHibernate">
 		<property name="sessionFactory" ref="sessionFactory" />

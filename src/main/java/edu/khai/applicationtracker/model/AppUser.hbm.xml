@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="edu.khai.applicationtracker.model.AppUser" table="appUser">
+
+		<id name="appUserId" column="appUserId" unsaved-value="0">
+			<generator class="increment"/>
+		</id>
+
+		<property name="name" column="name" not-null="false"/>
+		<property name="password" column="password" not-null="false"/>
+		<property name="authorities" column="authorities" not-null="false"/>
+		<property name="locked" column="locked" not-null="false"/>
+		<property name="disabled" column="disabled" not-null="false"/>
+
+	</class>
+</hibernate-mapping>

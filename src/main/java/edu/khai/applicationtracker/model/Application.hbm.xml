@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC
-	"-//Hibernate/Hibernate Mapping DTD 2.0//EN"
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
@@ -12,6 +12,5 @@
 
 		<property name="applicationType" column="applicationType" not-null="false"/>
 		<property name="applicationData" column="applicationData" not-null="false"/>
-
 	</class>
 </hibernate-mapping>
