@@ -35,6 +35,13 @@ public class AppUserDAOTest {
 
     @Before
     public void setUp() throws Exception {
+        appUser = new AppUser();
+        appUser.setName("myname@mailbox.net");
+        appUser.setPassword("password");        
+        appUser.setAuthorities("ROLE_ADMIN");
+        appUser.setDisabled(false);
+        appUser.setLocked(false);
+    	
         appUserDAO = (AppUserDAO)applicationContext.getBean("appUserDAO");
     }
 
@@ -45,15 +52,8 @@ public class AppUserDAOTest {
 
     @Test
     @Transactional(propagation = Propagation.REQUIRED)
-    @Rollback(false)
+    @Rollback(true)
     public void testSaveUser() throws Exception {
-        appUser = new AppUser();
-        appUser.setName("Some AppUser Name");
-        appUser.setPassword("password");        
-        appUser.setAuthorities("ROLE_ADMIN");
-        appUser.setDisabled(false);
-        appUser.setLocked(false);
-       
         appUserDAO.saveAppUser(appUser);
 
         assertNotNull("primary key assigned", appUser.getAppUserId());
@@ -63,16 +63,9 @@ public class AppUserDAOTest {
 
     @Test
     @Transactional(propagation = Propagation.REQUIRED)
-    @Rollback(false)
+    @Rollback(true)
     public void testAddAndRemoveUser() throws Exception {
-        appUser = new AppUser();
-        appUser.setName("Some AppUser Name");
-        appUser.setPassword("password");        
-        appUser.setAuthorities("ROLE_ADMIN");
-        appUser.setDisabled(false);
-        appUser.setLocked(false);
-
-        appUserDAO.saveAppUser(appUser);
+    	appUserDAO.saveAppUser(appUser);
 
         assertNotNull("Checking appUser's ID value="+appUser.getAppUserId(),appUser.getAppUserId());
             logger.info(appUser);
@@ -86,5 +79,17 @@ public class AppUserDAOTest {
 
         assertNull(appUserDAO.getAppUser(appUser.getAppUserId()));
     }
+    
+    @Test
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Rollback(true)
+    public void testGetUserByName() throws Exception {
+        appUserDAO.saveAppUser(appUser);
+        
+        AppUser testAppUser = appUserDAO.getAppUserByName("myname@mailbox.net");
+        
+        assertNotNull(testAppUser);
+        assertEquals(testAppUser.getName(), appUser.getName());
+    }    
 
 }

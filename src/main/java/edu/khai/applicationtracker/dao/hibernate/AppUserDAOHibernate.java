@@ -29,4 +29,10 @@ public class AppUserDAOHibernate  extends HibernateDaoSupport implements AppUser
 		getHibernateTemplate().delete(appUser);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public AppUser getAppUserByName(String name) {
+		List<AppUser> appUsers = getHibernateTemplate().find("from AppUser where name=?", name);
+		return (appUsers != null && appUsers.size() >0) ? appUsers.get(0) : null;
+	}
+	
 }
