@@ -2,35 +2,37 @@ package edu.khai.applicationtracker.model;
 
 public class AppUser extends BaseObject{
 	private static final long serialVersionUID = -1482059036524890651L;
-	public Long appUserId;
-	public String name;
-	public String password;
-	public String authorities;
-	public Boolean locked;
-	public Boolean disabled;
+	private Long appUserId;
+	private String username;
+	private String password;
+	private String  authorities;
+	private boolean accountNonExpired;
+	private boolean accountNonLocked;
+	private boolean credentialsNonExpired;
+	private boolean enabled;
 	/**
-	 * @return the userId
+	 * @return the appUserId
 	 */
 	public Long getAppUserId() {
 		return appUserId;
 	}
 	/**
-	 * @param userId the userId to set
+	 * @param appUserId the appUserId to set
 	 */
 	public void setAppUserId(Long appUserId) {
 		this.appUserId = appUserId;
 	}
 	/**
-	 * @return the name
+	 * @return the username
 	 */
-	public String getName() {
-		return name;
+	public String getUsername() {
+		return username;
 	}
 	/**
-	 * @param name the name to set
+	 * @param username the username to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	/**
 	 * @return the password
@@ -57,35 +59,53 @@ public class AppUser extends BaseObject{
 		this.authorities = authorities;
 	}
 	/**
-	 * @return the locked
+	 * @return the accountNonExpired
 	 */
-	public Boolean getLocked() {
-		return locked;
+	public boolean isAccountNonExpired() {
+		return accountNonExpired;
 	}
 	/**
-	 * @param locked the locked to set
+	 * @param accountNonExpired the accountNonExpired to set
 	 */
-	public void setLocked(Boolean locked) {
-		this.locked = locked;
+	public void setAccountNonExpired(boolean accountNonExpired) {
+		this.accountNonExpired = accountNonExpired;
 	}
 	/**
-	 * @return the disabled
+	 * @return the accountNonLocked
 	 */
-	public Boolean getDisabled() {
-		return disabled;
+	public boolean isAccountNonLocked() {
+		return accountNonLocked;
 	}
 	/**
-	 * @param disabled the disabled to set
+	 * @param accountNonLocked the accountNonLocked to set
 	 */
-	public void setDisabled(Boolean disabled) {
-		this.disabled = disabled;
+	public void setAccountNonLocked(boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * @return the credentialsNonExpired
 	 */
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
+	public boolean isCredentialsNonExpired() {
+		return credentialsNonExpired;
+	}
+	/**
+	 * @param credentialsNonExpired the credentialsNonExpired to set
 	 */
+	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+		this.credentialsNonExpired = credentialsNonExpired;
+	}
+	/**
+	 * @return the enabled
+	 */
+	public boolean isEnabled() {
+		return enabled;
+	}
+	/**
+	 * @param enabled the enabled to set
+	 */
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -93,16 +113,18 @@ public class AppUser extends BaseObject{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + (accountNonExpired ? 1231 : 1237);
+		result = prime * result + (accountNonLocked ? 1231 : 1237);
 		result = prime * result
 				+ ((appUserId == null) ? 0 : appUserId.hashCode());
 		result = prime * result
 				+ ((authorities == null) ? 0 : authorities.hashCode());
-		result = prime * result
-				+ ((disabled == null) ? 0 : disabled.hashCode());
-		result = prime * result + ((locked == null) ? 0 : locked.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + (credentialsNonExpired ? 1231 : 1237);
+		result = prime * result + (enabled ? 1231 : 1237);
 		result = prime * result
 				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result
+				+ ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 	/* (non-Javadoc)
@@ -117,6 +139,10 @@ public class AppUser extends BaseObject{
 		if (getClass() != obj.getClass())
 			return false;
 		AppUser other = (AppUser) obj;
+		if (accountNonExpired != other.accountNonExpired)
+			return false;
+		if (accountNonLocked != other.accountNonLocked)
+			return false;
 		if (appUserId == null) {
 			if (other.appUserId != null)
 				return false;
@@ -127,25 +153,19 @@ public class AppUser extends BaseObject{
 				return false;
 		} else if (!authorities.equals(other.authorities))
 			return false;
-		if (disabled == null) {
-			if (other.disabled != null)
-				return false;
-		} else if (!disabled.equals(other.disabled))
+		if (credentialsNonExpired != other.credentialsNonExpired)
 			return false;
-		if (locked == null) {
-			if (other.locked != null)
-				return false;
-		} else if (!locked.equals(other.locked))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
+		if (enabled != other.enabled)
 			return false;
 		if (password == null) {
 			if (other.password != null)
 				return false;
 		} else if (!password.equals(other.password))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
 			return false;
 		return true;
 	}
@@ -154,9 +174,12 @@ public class AppUser extends BaseObject{
 	 */
 	@Override
 	public String toString() {
-		return "AppUser [appUserId=" + appUserId + ", name=" + name
+		return "AppUser [appUserId=" + appUserId + ", username=" + username
 				+ ", password=" + password + ", authorities=" + authorities
-				+ ", locked=" + locked + ", disabled=" + disabled + "]";
+				+ ", accountNonExpired=" + accountNonExpired
+				+ ", accountNonLocked=" + accountNonLocked
+				+ ", credentialsNonExpired=" + credentialsNonExpired
+				+ ", enabled=" + enabled + "]";
 	}
 	
 	

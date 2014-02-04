@@ -57,33 +57,33 @@ public class AppUserManagerUnitTest {
 	@Test
 	public void testGetAppUser() throws Exception {
 		AppUser appUser = new AppUser();
-			appUser.setName("myname@mailbox.net");
+			appUser.setUsername("myname@mailbox.net");
 		//given
 		willReturn(appUser).given(mockAppUserDAO).getAppUser(anyLong());
 		//when
 		AppUser testAppuser = appUserManagerImpl.getAppUser(new Long(123));
 		//then
 		verify(mockAppUserDAO, times(1)).getAppUser(new Long(123));
-		assertEquals(appUser.getName(), testAppuser.getName());
+		assertEquals(appUser.getUsername(), testAppuser.getUsername());
 	}
 	
 	@Test
 	public void testSaveAppUser() throws Exception {
 		AppUser appUser = new AppUser();
-			appUser.setName("myname@mailbox.net");
+			appUser.setUsername("myname@mailbox.net");
 		//given
 		willDoNothing().given(mockAppUserDAO).saveAppUser(appUser);
 		//when
 		AppUser testAppuser = appUserManagerImpl.saveAppUser(appUser);
 		//then
 		verify(mockAppUserDAO, times(1)).saveAppUser(appUser);
-		assertEquals(appUser.getName(), testAppuser.getName());
+		assertEquals(appUser.getUsername(), testAppuser.getUsername());
 	}		
 	
 	@Test
 	public void testRemoveAppUser() throws Exception {
 		AppUser appUser = new AppUser();
-			appUser.setName("myname@mailbox.net");
+			appUser.setUsername("myname@mailbox.net");
 		//given
 		willDoNothing().given(mockAppUserDAO).removeAppUser(anyLong());
 		//when

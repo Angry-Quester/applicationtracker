@@ -36,12 +36,10 @@ public class AppUserDAOTest {
     @Before
     public void setUp() throws Exception {
         appUser = new AppUser();
-        appUser.setName("myname@mailbox.net");
+        appUser.setUsername("myname@mailbox.net");
         appUser.setPassword("password");        
         appUser.setAuthorities("ROLE_ADMIN");
-        appUser.setDisabled(false);
-        appUser.setLocked(false);
-    	
+
         appUserDAO = (AppUserDAO)applicationContext.getBean("appUserDAO");
     }
 
@@ -89,7 +87,7 @@ public class AppUserDAOTest {
         AppUser testAppUser = appUserDAO.getAppUserByName("myname@mailbox.net");
         
         assertNotNull(testAppUser);
-        assertEquals(testAppUser.getName(), appUser.getName());
+        assertEquals(testAppUser.getUsername(), appUser.getUsername());
     }    
 
 }
