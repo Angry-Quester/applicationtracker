@@ -15,5 +15,9 @@
 	<bean id="applicationManager" class="edu.khai.applicationtracker.service.impl.ApplicationManagerImpl">
 		<property name="applicationDAO" ref="applicationDAO" />
 	</bean>
-
+	
+	<bean id="userDetailService" class="edu.khai.applicationtracker.service.impl.UserDetailsServiceImpl">
+		<property name="appUserDAO" ref="appUserDAO" />
+		<property name="userDetailsProvider" ref="userDetailsProvider" />
+	</bean>
 </beans>

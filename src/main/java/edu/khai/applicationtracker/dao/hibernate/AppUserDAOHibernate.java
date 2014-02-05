@@ -30,9 +30,9 @@ public class AppUserDAOHibernate  extends HibernateDaoSupport implements AppUser
 	}
 	
 	@SuppressWarnings("unchecked")
-	public AppUser getAppUserByName(String name) {
-		List<AppUser> appUsers = getHibernateTemplate().find("from AppUser where name=?", name);
+	public AppUser getAppUserByName(String username) {
+		List<AppUser> appUsers = getHibernateTemplate().find("from AppUser where username=?", username);
 		return (appUsers != null && appUsers.size() >0) ? appUsers.get(0) : null;
 	}
 	
-}
+}	
