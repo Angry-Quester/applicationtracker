@@ -52,6 +52,7 @@
 		<property name="mappingResources">
 			<list>
 				<value>edu/khai/applicationtracker/model/AppUser.hbm.xml</value>
+				<value>edu/khai/applicationtracker/model/UserRole.hbm.xml</value>
 				<value>edu/khai/applicationtracker/model/Application.hbm.xml</value>
 			</list>
 		</property>
@@ -68,6 +69,12 @@
 		class="edu.khai.applicationtracker.dao.hibernate.AppUserDAOHibernate">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+<!--UserRoleDao bean-->
+	<bean id="userRoleDAO"
+		class="edu.khai.applicationtracker.dao.hibernate.UserRoleDAOHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>	
 
 <!--applicationDAO bean-->
 	<bean id="applicationDAO"
