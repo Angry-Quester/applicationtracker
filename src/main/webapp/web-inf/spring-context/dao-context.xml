@@ -53,6 +53,7 @@
 			<list>
 				<value>edu/khai/applicationtracker/model/AppUser.hbm.xml</value>
 				<value>edu/khai/applicationtracker/model/UserRole.hbm.xml</value>
+				<value>edu/khai/applicationtracker/model/AppUserUserRole.hbm.xml</value>
 				<value>edu/khai/applicationtracker/model/Application.hbm.xml</value>
 			</list>
 		</property>
@@ -63,7 +64,7 @@
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-
+	
 <!--appUserDao bean-->
 	<bean id="appUserDAO"
 		class="edu.khai.applicationtracker.dao.hibernate.AppUserDAOHibernate">
@@ -74,7 +75,13 @@
 	<bean id="userRoleDAO"
 		class="edu.khai.applicationtracker.dao.hibernate.UserRoleDAOHibernate">
 		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>	
+	</bean>
+
+<!--AppUserUserRoleDao bean-->
+	<bean id="appUserUserRoleDAO"
+		class="edu.khai.applicationtracker.dao.hibernate.AppUserUserRoleDAOHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 
 <!--applicationDAO bean-->
 	<bean id="applicationDAO"
