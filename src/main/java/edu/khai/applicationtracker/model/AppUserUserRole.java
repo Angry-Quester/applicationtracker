@@ -9,13 +9,13 @@ public class AppUserUserRole extends BaseObject{
 	private AppUser appUser;
 	private UserRole userRole;
 	/**
-	 * @return the idAppUserUserRole
+	 * @return the appUserUserRoleId
 	 */
 	public Long getAppUserUserRoleId() {
 		return appUserUserRoleId;
 	}
 	/**
-	 * @param appUserUserRoleId the idAppUserUserRole to set
+	 * @param appUserUserRoleId the appUserUserRoleId to set
 	 */
 	public void setAppUserUserRoleId(Long appUserUserRoleId) {
 		this.appUserUserRoleId = appUserUserRoleId;
@@ -51,13 +51,10 @@ public class AppUserUserRole extends BaseObject{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((appUser == null) ? 0 : appUser.hashCode());
 		result = prime
 				* result
 				+ ((appUserUserRoleId == null) ? 0 : appUserUserRoleId
 						.hashCode());
-		result = prime * result
-				+ ((userRole == null) ? 0 : userRole.hashCode());
 		return result;
 	}
 	/* (non-Javadoc)
@@ -72,20 +69,10 @@ public class AppUserUserRole extends BaseObject{
 		if (getClass() != obj.getClass())
 			return false;
 		AppUserUserRole other = (AppUserUserRole) obj;
-		if (appUser == null) {
-			if (other.appUser != null)
-				return false;
-		} else if (!appUser.equals(other.appUser))
-			return false;
 		if (appUserUserRoleId == null) {
 			if (other.appUserUserRoleId != null)
 				return false;
 		} else if (!appUserUserRoleId.equals(other.appUserUserRoleId))
-			return false;
-		if (userRole == null) {
-			if (other.userRole != null)
-				return false;
-		} else if (!userRole.equals(other.userRole))
 			return false;
 		return true;
 	}
@@ -94,10 +81,6 @@ public class AppUserUserRole extends BaseObject{
 	 */
 	@Override
 	public String toString() {
-		return "AppUserUserRole [idAppUserUserRole=" + appUserUserRoleId
-								+ ", appUser=" + appUser
-								+ ", userRole=" + userRole + "]";
+		return "AppUserUserRole [appUserUserRoleId=" + appUserUserRoleId + "]";
 	}
-
-
 }

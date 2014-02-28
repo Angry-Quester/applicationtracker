@@ -44,7 +44,7 @@ public class AppUserManagerUnitTest {
 	public void testGetAppUsers() throws Exception {
 		List<AppUser> appUsers = new ArrayList<AppUser>();
 		appUsers.add(new AppUser());
-		
+
 		//given
 		willReturn(appUsers).given(mockAppUserDAO).getAppUsers();
 		//when

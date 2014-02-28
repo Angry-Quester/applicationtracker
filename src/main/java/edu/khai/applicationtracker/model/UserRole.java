@@ -1,36 +1,62 @@
 package edu.khai.applicationtracker.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class UserRole extends BaseObject{
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 8940350881770698263L;
+
 	private Long userRoleId;
 	private String authority;
+
+	private Set<AppUserUserRole> appUserUserRoles = new HashSet<AppUserUserRole>(0);
+
 	/**
 	 * @return the userRoleId
 	 */
 	public Long getUserRoleId() {
 		return userRoleId;
 	}
+
 	/**
 	 * @param userRoleId the userRoleId to set
 	 */
 	public void setUserRoleId(Long userRoleId) {
 		this.userRoleId = userRoleId;
 	}
+
 	/**
 	 * @return the authority
 	 */
 	public String getAuthority() {
 		return authority;
 	}
+
 	/**
 	 * @param authority the authority to set
 	 */
 	public void setAuthority(String authority) {
 		this.authority = authority;
 	}
+
+
+	/**
+	 * @return the appUserUserRoles
+	 */
+	public Set<AppUserUserRole> getAppUserUserRoles() {
+		return appUserUserRoles;
+	}
+
+	/**
+	 * @param appUserUserRoles the appUserUserRoles to set
+	 */
+	public void setAppUserUserRoles(Set<AppUserUserRole> appUserUserRoles) {
+		this.appUserUserRoles = appUserUserRoles;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -44,6 +70,7 @@ public class UserRole extends BaseObject{
 				+ ((userRoleId == null) ? 0 : userRoleId.hashCode());
 		return result;
 	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -68,13 +95,16 @@ public class UserRole extends BaseObject{
 			return false;
 		return true;
 	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "UserRole [userRoleId=" + userRoleId + 
-						", authority=" + authority + "]";
+		return "UserRole [userRoleId=" + userRoleId + ", authority="
+				+ authority + "]";
 	}
-	
+
+
+
 }

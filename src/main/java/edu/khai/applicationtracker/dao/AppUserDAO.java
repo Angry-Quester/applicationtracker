@@ -8,6 +8,7 @@ public interface AppUserDAO extends DAO {
 	public List<AppUser> getAppUsers();
 	public AppUser getAppUser(Long appUserId);
 	public void saveAppUser(AppUser appUser);
-    public void removeAppUser(Long appUserId);
-    public AppUser getAppUserByName(String name);
+	public void removeAppUser(Long appUserId);
+	public AppUser getAppUserFromName(String name);
+	public AppUser getAppUserFromNameWithRoles(String name);
 }
