@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.User;
 
 import edu.khai.applicationtracker.model.AppUser;
 import edu.khai.applicationtracker.model.AppUserUserRole;
-import edu.khai.applicationtracker.model.UserRole;
 
 public class UserDetailsProvider {
 

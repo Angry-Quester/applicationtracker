@@ -1,15 +1,11 @@
 package edu.khai.applicationtracker.dao.hibernate;
 
-import java.util.Iterator;
+
 import java.util.List;
-
-import org.hibernate.Hibernate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.transaction.annotation.Transactional;
-
 import edu.khai.applicationtracker.dao.AppUserDAO;
 import edu.khai.applicationtracker.model.AppUser;
-import edu.khai.applicationtracker.model.AppUserUserRole;
+
 
 public class AppUserDAOHibernate extends HibernateDaoSupport implements AppUserDAO {
 

@@ -17,7 +17,7 @@ import edu.khai.applicationtracker.model.AppUser;
 import edu.khai.applicationtracker.dao.AppUserDAO;
 import edu.khai.applicationtracker.service.impl.UserDetailsServiceImpl;
 import edu.khai.applicationtracker.util.UserDetailsProvider;
-import static org.mockito.Matchers.anyString;
+//import static org.mockito.Matchers.anyString;
 /*Mockito imports*/
 import static org.mockito.Mockito.*;
 import static org.mockito.BDDMockito.*;
