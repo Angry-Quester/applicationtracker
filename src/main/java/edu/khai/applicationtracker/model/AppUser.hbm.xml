@@ -27,5 +27,16 @@
 			</key>
 			<one-to-many class="edu.khai.applicationtracker.model.AppUserUserRole" />
 		</set>
+
+		<set name="appUserApplications" table="appUserApplication"
+							inverse="true"
+							lazy="true"
+							fetch="select">
+			<key>
+				<column name="appUserId" not-null="true" />
+			</key>
+			<one-to-many class="edu.khai.applicationtracker.model.AppUserApplication" />
+		</set>
+
 	</class>
 </hibernate-mapping>

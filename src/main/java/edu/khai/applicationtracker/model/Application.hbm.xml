@@ -10,7 +10,22 @@
 			<generator class="increment"/>
 		</id>
 
-		<property name="applicationType" column="applicationType" not-null="false"/>
-		<property name="applicationData" column="applicationData" not-null="false"/>
+		<property name="givenName"  column="givenName" not-null="false"/>
+		<property name="middleName"  column="middleName" not-null="false"/>
+		<property name="familyName"  column="familyName" not-null="false"/>
+		<property name="birthDate"  column="birthDate" not-null="false"/>
+		<property name="creationDate"  column="creationDate" not-null="false"/>
+		<property name="lastModificationDate"  column="lastModificationDate" not-null="false"/>
+
+		<set name="appUserApplications" table="appUserApplication"
+							inverse="true"
+							lazy="true"
+							fetch="select">
+			<key>
+				<column name="applicationId" not-null="true" />
+			</key>
+			<one-to-many class="edu.khai.applicationtracker.model.AppUserApplication" />
+		</set>
+
 	</class>
 </hibernate-mapping>

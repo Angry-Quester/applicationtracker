@@ -1,7 +1,8 @@
 package edu.khai.applicationtracker.service;
 
-import org.apache.log4j.Logger;
+import java.text.SimpleDateFormat;
 
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
@@ -29,20 +30,27 @@ public class ApplicationManagerUnitTest {
 		mockApplicationDAO = mock(ApplicationDAO.class);
 		//Устанавливаем зависимости, которые раньше делал Spring
 		applicationManagerImpl.setApplicationDAO(mockApplicationDAO);
+
+		//Creating some random application for the test
+		application = new Application();
+		application.setGivenName("John");
+		application.setFamilyName("Layman");
+		application.setMiddleName("Doe");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				application.setBirthDate(sdf.parse("12-10-1960"));
+				application.setCreationDate(sdf.parse("02-01-2014"));
+				application.setLastModificationDate(sdf.parse("13-01-2014"));
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		applicationManagerImpl = null;
 		mockApplicationDAO = null;
+		application = null;
 	}
 
 	@Test
 	public void testSaveUserTDD() throws Exception {
-		//Делаем сущность Application, с которой нам работать вообще-то её можно
-		//даже не заполнять, т.к. просто проверяется только поведение методов
-		application = new Application();
-		application.setApplicationType("form1");
 
 
 		//1. stub задаём иммитацию поведения для ApplicationDAO. saveApplication() это void метод,
@@ -65,7 +73,6 @@ public class ApplicationManagerUnitTest {
 	public void testSaveUserBDD() throws Exception {
 		//Делаем сущность Application, с которой нам работать
 		application = new Application();
-		application.setApplicationType("form1");
 
 		//given
 		willDoNothing().given(mockApplicationDAO).saveApplication(application);

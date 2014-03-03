@@ -16,6 +16,7 @@ public class AppUser extends BaseObject{
 	private boolean enabled;
 
 	private Set<AppUserUserRole> appUserUserRoles = new HashSet<AppUserUserRole>(0);
+	private Set<AppUserApplication> appUserApplications= new HashSet<AppUserApplication>(0);
 
 	/**
 	 * @return the appUserId
@@ -141,6 +142,20 @@ public class AppUser extends BaseObject{
 	 */
 	public void setAppUserUserRoles(Set<AppUserUserRole> appUserUserRoles) {
 		this.appUserUserRoles = appUserUserRoles;
+	}
+
+	/**
+	 * @return the appUserApplications
+	 */
+	public Set<AppUserApplication> getAppUserApplications() {
+		return appUserApplications;
+	}
+
+	/**
+	 * @param appUserApplications the appUserApplications to set
+	 */
+	public void setAppUserApplications(Set<AppUserApplication> appUserApplications) {
+		this.appUserApplications = appUserApplications;
 	}
 
 	/* (non-Javadoc)

@@ -1,14 +1,14 @@
 package edu.khai.applicationtracker.dao;
 
+import java.text.SimpleDateFormat;
+
 import org.apache.log4j.Logger;
-//import org.apache.log4j.BasicConfigurator;
 
 import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-//import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -33,54 +33,59 @@ public class ApplicationDAOTest {
 	private ApplicationContext applicationContext;
 
 	private Application application = null;
-    private ApplicationDAO applicationDAO = null;
+	private ApplicationDAO applicationDAO = null;
 
-    @Before
-    public void setUp() throws Exception {
-        applicationDAO = (ApplicationDAO)applicationContext.getBean("applicationDAO");
-    }
+	@Before
+	public void setUp() throws Exception {
+		//Getting ApplicationDAO bean from the spring context
+		applicationDAO = (ApplicationDAO)applicationContext.getBean("applicationDAO");
 
-    @After
-    public void tearDown() throws Exception {
-        applicationDAO = null;
-    }
+		//Creating some random application for the test
+		application = new Application();
+		application.setGivenName("John");
+		application.setFamilyName("Layman");
+		application.setMiddleName("Doe");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				application.setBirthDate(sdf.parse("12-10-1960"));
+				application.setCreationDate(sdf.parse("02-01-2014"));
+				application.setLastModificationDate(sdf.parse("13-01-2014"));
+	}
 
-    @Test
-    @Transactional(propagation = Propagation.REQUIRED)
-    @Rollback(true)
-    public void testSaveUser() throws Exception {
-        application = new Application();
-        application.setApplicationType("app-type");
-        application.setApplicationData(1);
+	@After
+	public void tearDown() throws Exception {
+		applicationDAO = null;
+		application = null;
+	}
 
-        applicationDAO.saveApplication(application);
+	@Test
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Rollback(true)
+	public void testSaveUser() throws Exception {
 
-        assertNotNull("primary key assigned", application.getApplicationId());
-            logger.info(application);
-        assertNotNull(application.getApplicationType());
-    }
+		applicationDAO.saveApplication(application);
 
-    @Test
-    @Transactional(propagation = Propagation.REQUIRED)
-    @Rollback(true)
-    public void testAddAndRemoveUser() throws Exception {
-        application = new Application();
-        application.setApplicationType("app-type");
-        application.setApplicationData(1);
+		assertNotNull("primary key assigned", application.getApplicationId());
+			logger.info(application);
+		assertNotNull(application.getBirthDate());
+	}
 
-        applicationDAO.saveApplication(application);
+	@Test
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Rollback(true)
+	public void testAddAndRemoveUser() throws Exception {
+		applicationDAO.saveApplication(application);
 
-        assertNotNull("Checking application's ID value="+application.getApplicationId(),application.getApplicationId());
-            logger.info(application);
-        assertEquals(application.getApplicationType(), "app-type");
+		assertNotNull("Checking application's ID value="+application.getApplicationId(),application.getApplicationId());
+			logger.info(application);
+		assertEquals(application.getGivenName(), "John");
 
-        if (logger.isDebugEnabled()) {
-            logger.debug("removing application...");
-        }
+		if (logger.isDebugEnabled()) {
+			logger.debug("removing application...");
+		}
 
-        applicationDAO.removeApplication(application.getApplicationId());
+		applicationDAO.removeApplication(application.getApplicationId());
 
-        assertNull(applicationDAO.getApplication(application.getApplicationId()));
-    }
+		assertNull(applicationDAO.getApplication(application.getApplicationId()));
+	}
 
 }

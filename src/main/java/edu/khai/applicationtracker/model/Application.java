@@ -1,13 +1,23 @@
 package edu.khai.applicationtracker.model;
 
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+
 public class Application extends BaseObject {
 
-	private static final long serialVersionUID = 259729176139504809L;
+	private static final long serialVersionUID = -6443052395300638511L;
 
 	private Long applicationId;
-	private String applicationType;
-	private Integer applicationData;
+	private String givenName;
+	private String middleName;
+	private String familyName;
+	private Date birthDate;
+	private Date creationDate;
+	private Date lastModificationDate;
 
+	private Set<AppUserApplication> appUserApplications = new HashSet<AppUserApplication>(0);
 	/**
 	 * @return the applicationId
 	 */
@@ -21,89 +31,174 @@ public class Application extends BaseObject {
 		this.applicationId = applicationId;
 	}
 	/**
-	 * @return the applicationType
+	 * @return the givenName
 	 */
-	public String getApplicationType() {
-		return applicationType;
+	public String getGivenName() {
+		return givenName;
 	}
 	/**
-	 * @param applicationType the applicationType to set
+	 * @param givenName the givenName to set
 	 */
-	public void setApplicationType(String applicationType) {
-		this.applicationType = applicationType;
+	public void setGivenName(String givenName) {
+		this.givenName = givenName;
 	}
 	/**
-	 * @return the applicationData
+	 * @return the middleName
 	 */
-	public Integer getApplicationData() {
-		return applicationData;
+	public String getMiddleName() {
+		return middleName;
 	}
 	/**
-	 * @param applicationData the applicationData to set
+	 * @param middleName the middleName to set
 	 */
-	public void setApplicationData(Integer applicationData) {
-		this.applicationData = applicationData;
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
+	}
+	/**
+	 * @return the familyName
+	 */
+	public String getFamilyName() {
+		return familyName;
+	}
+	/**
+	 * @param familyName the familyName to set
+	 */
+	public void setFamilyName(String familyName) {
+		this.familyName = familyName;
+	}
+	/**
+	 * @return the birthDate
+	 */
+	public Date getBirthDate() {
+		return birthDate;
+	}
+	/**
+	 * @param birthDate the birthDate to set
+	 */
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+	/**
+	 * @return the creationDate
+	 */
+	public Date getCreationDate() {
+		return creationDate;
+	}
+	/**
+	 * @param creationDate the creationDate to set
+	 */
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
+	}
+	/**
+	 * @return the lastModificationDate
+	 */
+	public Date getLastModificationDate() {
+		return lastModificationDate;
+	}
+	/**
+	 * @param lastModificationDate the lastModificationDate to set
+	 */
+	public void setLastModificationDate(Date lastModificationDate) {
+		this.lastModificationDate = lastModificationDate;
 	}
 
-
+	/**
+	 * @return the appUserApplications
+	 */
+	public Set<AppUserApplication> getAppUserApplications() {
+		return appUserApplications;
+	}
+	/**
+	 * @param appUserApplications the appUserApplications to set
+	 */
+	public void setAppUserApplications(Set<AppUserApplication> appUserApplications) {
+		this.appUserApplications = appUserApplications;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((applicationData == null) ? 0 : applicationData.hashCode());
+				+ ((applicationId == null) ? 0 : applicationId.hashCode());
 		result = prime * result
-				+ ((applicationType == null) ? 0 : applicationType.hashCode());
-		result = prime * result + ((applicationId == null) ? 0 : applicationId.hashCode());
+				+ ((birthDate == null) ? 0 : birthDate.hashCode());
+		result = prime * result
+				+ ((creationDate == null) ? 0 : creationDate.hashCode());
+		result = prime * result
+				+ ((familyName == null) ? 0 : familyName.hashCode());
+		result = prime * result
+				+ ((givenName == null) ? 0 : givenName.hashCode());
+		result = prime
+				* result
+				+ ((lastModificationDate == null) ? 0 : lastModificationDate
+						.hashCode());
+		result = prime * result
+				+ ((middleName == null) ? 0 : middleName.hashCode());
 		return result;
 	}
-
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
+	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		Application other = (Application) obj;
-		if (applicationData == null) {
-			if (other.applicationData != null) {
-				return false;
-			}
-		} else if (!applicationData.equals(other.applicationData)) {
-			return false;
-		}
-		if (applicationType == null) {
-			if (other.applicationType != null) {
-				return false;
-			}
-		} else if (!applicationType.equals(other.applicationType)) {
-			return false;
-		}
 		if (applicationId == null) {
-			if (other.applicationId != null) {
+			if (other.applicationId != null)
 				return false;
-			}
-		} else if (!applicationId.equals(other.applicationId)) {
+		} else if (!applicationId.equals(other.applicationId))
 			return false;
-		}
+		if (birthDate == null) {
+			if (other.birthDate != null)
+				return false;
+		} else if (!birthDate.equals(other.birthDate))
+			return false;
+		if (creationDate == null) {
+			if (other.creationDate != null)
+				return false;
+		} else if (!creationDate.equals(other.creationDate))
+			return false;
+		if (familyName == null) {
+			if (other.familyName != null)
+				return false;
+		} else if (!familyName.equals(other.familyName))
+			return false;
+		if (givenName == null) {
+			if (other.givenName != null)
+				return false;
+		} else if (!givenName.equals(other.givenName))
+			return false;
+		if (lastModificationDate == null) {
+			if (other.lastModificationDate != null)
+				return false;
+		} else if (!lastModificationDate.equals(other.lastModificationDate))
+			return false;
+		if (middleName == null) {
+			if (other.middleName != null)
+				return false;
+		} else if (!middleName.equals(other.middleName))
+			return false;
 		return true;
 	}
-
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString() {
-		return "Application [applicationId=" + applicationId + ", applicationType=" + applicationType
-				+ ", applicationData=" + applicationData + "]";
+		return "Application [applicationId=" + applicationId + ", givenName="
+				+ givenName + ", middleName=" + middleName + ", familyName="
+				+ familyName + ", birthDate=" + birthDate + ", creationDate="
+				+ creationDate + ", lastModificationDate="
+				+ lastModificationDate + "]";
 	}
 
 }
