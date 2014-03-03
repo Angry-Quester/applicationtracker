@@ -16,6 +16,7 @@
 	<import resource="spring-context/service-context.xml"/>
 	<import resource="spring-context/util-context.xml"/>
 	<import resource="spring-context/controller-context.xml"/>	
-  	<import resource="spring-context/security-context.xml"/>
+	<import resource="spring-context/security-context.xml"/>
 
 </beans>
+	

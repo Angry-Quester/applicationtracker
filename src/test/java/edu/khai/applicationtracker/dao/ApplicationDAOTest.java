@@ -47,7 +47,7 @@ public class ApplicationDAOTest {
 
     @Test
     @Transactional(propagation = Propagation.REQUIRED)
-    @Rollback(false)
+    @Rollback(true)
     public void testSaveUser() throws Exception {
         application = new Application();
         application.setApplicationType("app-type");
@@ -62,7 +62,7 @@ public class ApplicationDAOTest {
 
     @Test
     @Transactional(propagation = Propagation.REQUIRED)
-    @Rollback(false)
+    @Rollback(true)
     public void testAddAndRemoveUser() throws Exception {
         application = new Application();
         application.setApplicationType("app-type");

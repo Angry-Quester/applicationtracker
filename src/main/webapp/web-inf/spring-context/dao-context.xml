@@ -52,20 +52,53 @@
 		<property name="mappingResources">
 			<list>
 				<value>edu/khai/applicationtracker/model/AppUser.hbm.xml</value>
+				<value>edu/khai/applicationtracker/model/UserRole.hbm.xml</value>
+				<value>edu/khai/applicationtracker/model/AppUserUserRole.hbm.xml</value>
 				<value>edu/khai/applicationtracker/model/Application.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
 
 <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
-	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
+	
+	<!-- I will use annotation driven transaction only when i need a non-standart method
+	to become transactional-->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<!-- Non-invasive annotation driven transactional mechanism-->
+	<aop:config>
+		<aop:pointcut id="serviceMethods" expression="execution(* edu.khai.applicationtracker.service.*Manager.*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods"/>
+	</aop:config>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED"/>
+			<tx:method name="remove*" propagation="REQUIRED"/>
+			<tx:method name="*" propagation="REQUIRED" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	
+
 
 <!--appUserDao bean-->
 	<bean id="appUserDAO"
 		class="edu.khai.applicationtracker.dao.hibernate.AppUserDAOHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+<!--UserRoleDao bean-->
+	<bean id="userRoleDAO"
+		class="edu.khai.applicationtracker.dao.hibernate.UserRoleDAOHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+<!--AppUserUserRoleDao bean-->
+	<bean id="appUserUserRoleDAO"
+		class="edu.khai.applicationtracker.dao.hibernate.AppUserUserRoleDAOHibernate">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 

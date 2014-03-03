@@ -1,7 +1,11 @@
 package edu.khai.applicationtracker.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class AppUser extends BaseObject{
 	private static final long serialVersionUID = -1482059036524890651L;
+
 	private Long appUserId;
 	private String username;
 	private String password;
@@ -10,102 +14,135 @@ public class AppUser extends BaseObject{
 	private boolean accountNonLocked;
 	private boolean credentialsNonExpired;
 	private boolean enabled;
+
+	private Set<AppUserUserRole> appUserUserRoles = new HashSet<AppUserUserRole>(0);
+
 	/**
 	 * @return the appUserId
 	 */
 	public Long getAppUserId() {
 		return appUserId;
 	}
+
 	/**
 	 * @param appUserId the appUserId to set
 	 */
 	public void setAppUserId(Long appUserId) {
 		this.appUserId = appUserId;
 	}
+
 	/**
 	 * @return the username
 	 */
 	public String getUsername() {
 		return username;
 	}
+
 	/**
 	 * @param username the username to set
 	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	/**
 	 * @return the password
 	 */
 	public String getPassword() {
 		return password;
 	}
+
 	/**
 	 * @param password the password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	/**
 	 * @return the authorities
 	 */
 	public String getAuthorities() {
 		return authorities;
 	}
+
 	/**
 	 * @param authorities the authorities to set
 	 */
 	public void setAuthorities(String authorities) {
 		this.authorities = authorities;
 	}
+
 	/**
 	 * @return the accountNonExpired
 	 */
 	public boolean isAccountNonExpired() {
 		return accountNonExpired;
 	}
+
 	/**
 	 * @param accountNonExpired the accountNonExpired to set
 	 */
 	public void setAccountNonExpired(boolean accountNonExpired) {
 		this.accountNonExpired = accountNonExpired;
 	}
+
 	/**
 	 * @return the accountNonLocked
 	 */
 	public boolean isAccountNonLocked() {
 		return accountNonLocked;
 	}
+
 	/**
 	 * @param accountNonLocked the accountNonLocked to set
 	 */
 	public void setAccountNonLocked(boolean accountNonLocked) {
 		this.accountNonLocked = accountNonLocked;
 	}
+
 	/**
 	 * @return the credentialsNonExpired
 	 */
 	public boolean isCredentialsNonExpired() {
 		return credentialsNonExpired;
 	}
+
 	/**
 	 * @param credentialsNonExpired the credentialsNonExpired to set
 	 */
 	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
 		this.credentialsNonExpired = credentialsNonExpired;
 	}
+
 	/**
 	 * @return the enabled
 	 */
 	public boolean isEnabled() {
 		return enabled;
 	}
+
 	/**
 	 * @param enabled the enabled to set
 	 */
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
+
+	/**
+	 * @return the appUserUserRoles
+	 */
+	public Set<AppUserUserRole> getAppUserUserRoles() {
+		return appUserUserRoles;
+	}
+
+	/**
+	 * @param appUserUserRoles the appUserUserRoles to set
+	 */
+	public void setAppUserUserRoles(Set<AppUserUserRole> appUserUserRoles) {
+		this.appUserUserRoles = appUserUserRoles;
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -127,6 +164,7 @@ public class AppUser extends BaseObject{
 				+ ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -169,6 +207,7 @@ public class AppUser extends BaseObject{
 			return false;
 		return true;
 	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -181,6 +220,4 @@ public class AppUser extends BaseObject{
 				+ ", credentialsNonExpired=" + credentialsNonExpired
 				+ ", enabled=" + enabled + "]";
 	}
-	
-	
 }

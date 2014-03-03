@@ -31,63 +31,63 @@ public class AppUserDAOTest {
 	private ApplicationContext applicationContext;
 
 	private AppUser appUser = null;
-    private AppUserDAO appUserDAO = null;
+	private AppUserDAO appUserDAO = null;
 
-    @Before
-    public void setUp() throws Exception {
-        appUser = new AppUser();
-        appUser.setUsername("myname@mailbox.net");
-        appUser.setPassword("password");        
-        appUser.setAuthorities("ROLE_ADMIN");
+	@Before
+	public void setUp() throws Exception {
+		appUser = new AppUser();
+		appUser.setUsername("myname@mailbox.net");
+		appUser.setPassword("password");
+		appUser.setAuthorities("ROLE_ADMIN");
 
-        appUserDAO = (AppUserDAO)applicationContext.getBean("appUserDAO");
-    }
+		appUserDAO = (AppUserDAO)applicationContext.getBean("appUserDAO");
+	}
 
-    @After
-    public void tearDown() throws Exception {
-        appUserDAO = null;
-    }
+	@After
+	public void tearDown() throws Exception {
+		appUserDAO = null;
+	}
 
-    @Test
-    @Transactional(propagation = Propagation.REQUIRED)
-    @Rollback(true)
-    public void testSaveUser() throws Exception {
-        appUserDAO.saveAppUser(appUser);
+	@Test
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Rollback(true)
+	public void testSaveUser() throws Exception {
+		appUserDAO.saveAppUser(appUser);
 
-        assertNotNull("primary key assigned", appUser.getAppUserId());
-            logger.info(appUser);
-        assertNotNull(appUser.getPassword());
-    }
+		assertNotNull("primary key assigned", appUser.getAppUserId());
+			logger.info(appUser);
+		assertNotNull(appUser.getPassword());
+	}
 
-    @Test
-    @Transactional(propagation = Propagation.REQUIRED)
-    @Rollback(true)
-    public void testAddAndRemoveUser() throws Exception {
-    	appUserDAO.saveAppUser(appUser);
+	@Test
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Rollback(true)
+	public void testAddAndRemoveUser() throws Exception {
+		appUserDAO.saveAppUser(appUser);
 
-        assertNotNull("Checking appUser's ID value="+appUser.getAppUserId(),appUser.getAppUserId());
-            logger.info(appUser);
-        assertEquals(appUser.getPassword(), "password");
+		assertNotNull("Checking appUser's ID value="+appUser.getAppUserId(),appUser.getAppUserId());
+			logger.info(appUser);
+		assertEquals(appUser.getPassword(), "password");
 
-        if (logger.isDebugEnabled()) {
-            logger.debug("removing appUser...");
-        }
+		if (logger.isDebugEnabled()) {
+			logger.debug("removing appUser...");
+		}
 
-        appUserDAO.removeAppUser(appUser.getAppUserId());
+		appUserDAO.removeAppUser(appUser.getAppUserId());
 
-        assertNull(appUserDAO.getAppUser(appUser.getAppUserId()));
-    }
-    
-    @Test
-    @Transactional(propagation = Propagation.REQUIRED)
-    @Rollback(true)
-    public void testGetUserByName() throws Exception {
-        appUserDAO.saveAppUser(appUser);
-        
-        AppUser testAppUser = appUserDAO.getAppUserByName("myname@mailbox.net");
-        
-        assertNotNull(testAppUser);
-        assertEquals(testAppUser.getUsername(), appUser.getUsername());
-    }    
+		assertNull(appUserDAO.getAppUser(appUser.getAppUserId()));
+	}
+
+	@Test
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Rollback(true)
+	public void testGetUserFromName() throws Exception {
+		appUserDAO.saveAppUser(appUser);
+
+		AppUser testAppUser = appUserDAO.getAppUserFromName("myname@mailbox.net");
+
+		assertNotNull(testAppUser);
+		assertEquals(testAppUser.getUsername(), appUser.getUsername());
+	}
 
 }
