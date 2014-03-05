@@ -20,7 +20,7 @@ public class ApplicationController {
         return new ModelAndView("index", "application", application);
     }
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login*", method = RequestMethod.GET)
     public ModelAndView getLogin() {
 
         return new ModelAndView("login", "loginData", SecurityContextHolder.getContext().getAuthentication());

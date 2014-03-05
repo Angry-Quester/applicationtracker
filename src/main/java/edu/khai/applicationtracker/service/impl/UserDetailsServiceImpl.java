@@ -26,7 +26,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 	/**
 	 * Code made transactional in case something goes wrong when
-	 * application tries to get valid users.
+	 * the application tries to get valid users.
 	 * This code closely connected цшер DAO wich in it's turn, implements complex HQL request,
 	 * wich fetches all elements of the "AppUser" object, including it's roles.
 	 * Possible source of problems.

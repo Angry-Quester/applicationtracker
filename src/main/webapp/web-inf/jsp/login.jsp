@@ -12,11 +12,11 @@
 		<h1>Login Page</h1>
 		<c:if test="${not empty data}" >
 			<p>${data}</p>
-  		</c:if>
+		</c:if>
 		<hr/>
 		<c:if test="${not empty loginData}" >
-			<p>${loginData}</p>	
-  		</c:if>  		
+			<p>${loginData}</p>
+		</c:if>
 	</body>
 </html>
 
