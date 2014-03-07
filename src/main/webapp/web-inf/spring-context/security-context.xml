@@ -9,6 +9,8 @@
 
 <!-- No security processing for the static resources -->
 		<http pattern="/css/**" security="none"/>
+		<http pattern="/js/**" security="none"/>
+		<http pattern="/fonts/**" security="none"/>
 
 <!-- Security settings for *.jsp pages -->
 		<http>

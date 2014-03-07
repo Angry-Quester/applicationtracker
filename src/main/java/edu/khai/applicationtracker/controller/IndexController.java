@@ -10,10 +10,16 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/")
 public class IndexController {
 	private static final String WELCOME_MESSAGE = "Welcome aboard!";
+	private static final String WELCOME_MESSAGE_ANONIMOUS = "Welcome ANONIMOUS user!";
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ModelAndView getContextIndex() {
+			return new ModelAndView("index", "welcomeMessage", WELCOME_MESSAGE);
+	}
 
 	@RequestMapping(value = "index", method = RequestMethod.GET)
-	public ModelAndView getApplication() {
+	public ModelAndView getIndexPage() {
 
-		return new ModelAndView("index", "welcomeMessage", WELCOME_MESSAGE);
+		return new ModelAndView("index", "welcomeMessage", WELCOME_MESSAGE_ANONIMOUS);
 	}
 }
