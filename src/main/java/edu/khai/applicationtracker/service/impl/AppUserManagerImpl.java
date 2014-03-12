@@ -8,28 +8,32 @@ import edu.khai.applicationtracker.service.AppUserManager;
 
 public class AppUserManagerImpl implements AppUserManager{
 
-    private AppUserDAO appUserDAO;
+	private AppUserDAO appUserDAO;
 
-    public void setAppUserDAO(AppUserDAO appUserDAO) {
-        this.appUserDAO = appUserDAO;
-    }
+	public void setAppUserDAO(AppUserDAO appUserDAO) {
+		this.appUserDAO = appUserDAO;
+	}
 
+	@Override
 	public List<AppUser> getAppUsers() {
 		return appUserDAO.getAppUsers();
 	}
 
+	@Override
 	public AppUser getAppUser(Long appUserId) {
 		return appUserDAO.getAppUser(appUserId);
 	}
-	
+
+	@Override
 	public AppUser saveAppUser(AppUser appUser) {
 		appUserDAO.saveAppUser(appUser);
 		return appUser;
 	}
 
+	@Override
 	public void removeAppUser(Long appUserId) {
 		appUserDAO.removeAppUser(appUserId);
-		
+
 	}
 
 }

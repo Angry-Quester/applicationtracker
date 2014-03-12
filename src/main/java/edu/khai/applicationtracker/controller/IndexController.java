@@ -7,7 +7,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-@RequestMapping(value = "/")
 public class IndexController {
 	private static final String WELCOME_MESSAGE = "Welcome aboard!";
 	private static final String WELCOME_MESSAGE_ANONIMOUS = "Welcome ANONIMOUS user!";

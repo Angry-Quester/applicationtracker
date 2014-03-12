@@ -43,7 +43,7 @@ public class TestDAOTest {
 
 	@Test
 //	@Transactional(propagation = Propagation.REQUIRED)
-//	@Rollback(true)
+//	@Rollback(false)
 	public void testTest() throws Exception {
 		UserDetails ud = uds.loadUserByUsername("myname@mailbox.net");
 		logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!! = "+ud);

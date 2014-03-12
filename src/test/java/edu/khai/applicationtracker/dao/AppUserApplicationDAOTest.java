@@ -77,7 +77,7 @@ public class AppUserApplicationDAOTest {
 
 	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
-	@Rollback(true)
+	@Rollback(false)
 	public void testSaveAppUserUserRole() throws Exception {
 		appUserDAO.saveAppUser(appUser);
 		applicationDAO.saveApplication(application);
@@ -95,7 +95,7 @@ public class AppUserApplicationDAOTest {
 
 	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
-	@Rollback(true)
+	@Rollback(false)
 	public void testAddAndRemoveAppUserUserRole() throws Exception {
 		appUserDAO.saveAppUser(appUser);
 		applicationDAO.saveApplication(application);

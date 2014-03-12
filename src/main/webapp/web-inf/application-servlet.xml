@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xsi:schemaLocation="
-			http://www.springframework.org/schema/beans
-			http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-
-<!-- Load in application properties reference -->
-	<bean id="applicationProperties"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:application.properties" />
-	</bean>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 <!-- Context files imports -->
-	<import resource="spring-context/dao-context.xml"/>
-	<import resource="spring-context/service-context.xml"/>
-	<import resource="spring-context/util-context.xml"/>
-	<import resource="spring-context/controller-context.xml"/>	
-	<import resource="spring-context/security-context.xml"/>
+    <import resource="spring-context/dao-context.xml"/>
+    <import resource="spring-context/service-context.xml"/>
+    <import resource="spring-context/util-context.xml"/>
+    <import resource="spring-context/controller-context.xml"/>
+    <import resource="spring-context/security-context.xml"/>
 
 </beans>
-	

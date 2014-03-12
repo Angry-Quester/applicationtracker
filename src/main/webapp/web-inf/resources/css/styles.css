@@ -1,14 +1,49 @@
 /*
-	Custom made styles for the Application Tracker application
+    Custom made styles for the Application Tracker application
 */
+html {
+  font-size: 100%;
+}
+
 body {
-	font-family: Verdana, Arial, sans-serif;
-	font-size: 12px;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "Liberation Sans", Verdana, Arial, sans-serif;
+    font-size: 100%;
+    background-color: #999;
 }
-div.row {
-	border:5px solid red;
+
+div {
+    /*outline: 1px dashed #000000;*/
+    background-color: #fff;
 }
-div.row  div{
-	padding: 10px;
-	border:5px solid green;
+
+#header {
+    height: 80px;
+}
+
+#sidebar {
+    float: left;
+    width: 14%;
+    min-width: 100px;
+}
+
+#content {
+    float: left;
+    width: 80%;
+}
+
+#footer {
+    clear: both;
+    height: 80px;
+}
+
+div#header, div#footer {
+    /*outline: 1px dashed #000000;*/
+    background-color: #ddd;
+    
+}
+
+div#sidebar, div#content {
+    margin: 3px 1%;
+    padding: 0.5%;
+    border-radius: 5px;
 }

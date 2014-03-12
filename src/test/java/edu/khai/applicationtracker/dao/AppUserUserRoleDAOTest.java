@@ -89,7 +89,7 @@ public class AppUserUserRoleDAOTest {
 
 	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
-	@Rollback(true)
+	@Rollback(false)
 	public void testAddAndRemoveAppUserUserRole() throws Exception {
 		appUserDAO.saveAppUser(appUser);
 		userRoleDAO.saveUserRole(userRole);

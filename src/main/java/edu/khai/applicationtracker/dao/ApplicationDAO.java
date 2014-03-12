@@ -8,5 +8,5 @@ public interface ApplicationDAO extends DAO {
 	public List<Application> getApplications();
 	public Application getApplication(Long applicationId);
 	public void saveApplication(Application application);
-    public void removeApplication(Long applicationId);
+	public void removeApplication(Long applicationId);
 }

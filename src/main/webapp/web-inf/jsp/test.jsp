@@ -5,26 +5,26 @@
 
 
 <html>
-	<head>
-		<title>Test page with Spring-MVC</title>
-	</head>
-	<body>
-		<h1>Page</h1>
-		
-		<form action="<c:url value="/test"/>" method="post">
-			<input type="text" name="testField" /> <br />
-			<input type="submit" value="Push"/> 
-		</form>
-		
-		<c:if test="${not empty error}" >
-			<p>${error}</p>]	
-  		</c:if>
-  		
-		
-		<c:if test="${not empty data}" >
-			<p>${data.testField}</p>
-  		</c:if>  		
+    <head>
+        <title>Test page with Spring-MVC</title>
+    </head>
+    <body>
+        <h1>Page</h1>
 
-	</body>
+        <form action="<c:url value="/test"/>" method="post">
+            <input type="text" name="testField" /> <br />
+            <input type="submit" value="Push"/>
+        </form>
+
+        <c:if test="${not empty error}" >
+            <p>${error}</p>]
+          </c:if>
+
+
+        <c:if test="${not empty data}" >
+            <p>${data.testField}</p>
+          </c:if>
+
+    </body>
 </html>
 

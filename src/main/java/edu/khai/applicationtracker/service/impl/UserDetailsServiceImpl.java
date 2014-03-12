@@ -31,9 +31,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	 * wich fetches all elements of the "AppUser" object, including it's roles.
 	 * Possible source of problems.
 	 * Maybe not thogh.
-	 * @author      Quester
-	 * @version     0.0
-	 * @since       2014-02-27
+	 * @author	  Quester
+	 * @version	 0.0
+	 * @since	   2014-02-27
 	 */
 	@Override
 	@Transactional

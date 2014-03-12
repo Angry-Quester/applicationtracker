@@ -14,7 +14,7 @@ public class UserDetailsProviderUnitTest {
 	final static Logger logger = Logger.getLogger(UserDetailsProviderUnitTest.class);
 
 	private UserDetailsProvider userDetailsProvider;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		//Делаем экземпляр userDetailsServiceImpl. Это как раз тот класс который нужно тестировать
@@ -33,17 +33,17 @@ public class UserDetailsProviderUnitTest {
 		String username = "somename@mailbox.ru";
 		String password = "password";
 		String authorities = "ROLE_USER";
-		
-		
+
+
 		AppUser appUser = new AppUser();
 			appUser.setUsername(username);
 			appUser.setPassword(password);
 			appUser.setAuthorities(authorities);
 
 		//given
-		
+
 		//when
-		User user = userDetailsProvider.getUserDetails(appUser); 
+		User user = userDetailsProvider.getUserDetails(appUser);
 		//then
 		assertNotNull(user);
 		assertEquals(user.getUsername(), appUser.getUsername());

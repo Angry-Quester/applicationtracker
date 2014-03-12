@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<project name="${webapp.name}" basedir="." default="help">
+    <description>${webapp.name} application build file</description>
+
+
+<!-- Application deafault properties -->
+    <property name="webapp.name" value="ApplicationTracker"/>
+
+    <property name="test.lib.dir" location="src/test/webapp/WEB-INF/lib" />
+
+    <property name="test.db.lib" location="${test.lib.dir}/hsqldb.jar"></property>
+    <property name="test.db.dir" location="testdb"></property>
+    <property name="test.db.name" value="applicationTrackerDb"></property>
+    <property name="test.db.path" location="${test.db.dir}/${test.db.name}"></property>
+
+
+<!-- Ant task list all available ant tasks in this project -->
+    <target name="help">
+        <echo message=""/>
+        <echo message="${webapp.name} build file"/>
+        <echo message="HSQLDB start stop configuration"/>
+        <echo message="-----------------------------------"/>
+        <echo message=""/>
+        <echo message="hsql-start    --> Starts web application"/>
+        <echo message="hsql-stop    --> Starts web application"/>
+    </target>
+
+
+    <target name="hsql-start">
+        <mkdir dir="${test.db.dir}"/>
+        <java classname="org.hsqldb.server.Server"
+                fork="true"
+                failonerror="true"
+                maxmemory="256m">
+                        <arg value="--database.0" />
+                        <arg value="file:${test.db.path};hsqldb.lock_file=false" />
+                        <arg value="--dbname.0" />
+                        <arg value="applicationTrackerDb" />
+                    <classpath location="${test.db.lib}"/>
+        </java>
+    </target>
+
+    <target name="hsql-stop">
+        <sql url="jdbc:hsqldb:hsql://localhost:9001/applicationTrackerDb"
+            driver="org.hsqldb.jdbc.JDBCDriver"
+            userid="SA"
+            password=""
+            autocommit="true">
+                <classpath location="${test.db.lib}"/>
+            <![CDATA[
+                SHUTDOWN
+            ]]>
+        </sql>
+    </target>
+    
+  
+</project>

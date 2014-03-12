@@ -22,7 +22,7 @@ import edu.khai.applicationtracker.dao.AppUserDAO;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath:application-servlet.xml"})
+@ContextConfiguration({"classpath:spring-context/dao-context.xml"})
 @TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
 public class AppUserDAOTest {
 	final static Logger logger = Logger.getLogger(AppUserDAOTest.class);
@@ -50,7 +50,7 @@ public class AppUserDAOTest {
 
 	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
-	@Rollback(true)
+	@Rollback(false)
 	public void testSaveUser() throws Exception {
 		appUserDAO.saveAppUser(appUser);
 
@@ -61,7 +61,7 @@ public class AppUserDAOTest {
 
 	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
-	@Rollback(true)
+	@Rollback(false)
 	public void testAddAndRemoveUser() throws Exception {
 		appUserDAO.saveAppUser(appUser);
 
@@ -80,7 +80,7 @@ public class AppUserDAOTest {
 
 	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
-	@Rollback(true)
+	@Rollback(false)
 	public void testGetUserFromName() throws Exception {
 		appUserDAO.saveAppUser(appUser);
 

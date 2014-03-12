@@ -1,215 +1,235 @@
 <?xml version="1.0"?>
 <project name="${webapp.name}" basedir="." default="help">
-	<description>${webapp.name} application build file</description>
+    <description>${webapp.name} application build file</description>
 
 
 <!-- Application deafault properties -->
-	<property name="webapp.name" value="ApplicationTracker"/>
+    <property name="webapp.name" value="ApplicationTracker"/>
 
-	<property name="src.dir" location="src/main/java"/>
-	<property name="test.dir" location="src/test/java"/>
-	<property name="webapp.dir" location="src/main/webapp"/>
-	<property name="resources.dir" location="src/main/resources" />
-	<property name="config.dir" location="src/main/config" />
-	<property name="lib.dir" location="src/main/webapp/WEB-INF/lib" />
+    <property environment="env"/>
 
-	<property name="build.dir" location="build"/>
-	<property name="build.src.dir" location="build/classes"/>
-	<property name="build.test.dir" location="build/test"/>
+    <property name="build.dir" location="build"/>
 
-	<property name="dist.dir" location="dist"/>
+    <property name="dist.dir" location="dist"/>
 
-	<property name="log.dir" location="log"/>
-	<property name="log.test.dir" location="log/test"/>
+    <property name="log.dir" location="log"/>
+    <property name="log.test.dir" location="log/test"/>
 
-	<property environment="env"/>
+    <property name="src.dir" location="src/main/java"/>
+    <property name="webapp.dir" location="src/main/webapp"/>
+    <property name="resources.dir" location="src/main/resources" />
+    <property name="config.dir" location="src/main/config" />
+    <property name="lib.dir" location="src/main/webapp/WEB-INF/lib" />
+    <property name="build.src.dir" location="build/classes"/>
 
+    <property name="test.src.dir" location="src/test/java"/>
+    <property name="test.config.dir" location="src/test/config" />
+    <property name="test.lib.dir" location="src/test/webapp/WEB-INF/lib" />
+    <property name="test.build.src.dir" location="build/test" />
 
-<!-- Application classpath including paths to compiled tests and configuration files folders -->
-	<path id="classpath">
-		<fileset dir="${lib.dir}">
-			<include name="*.jar"/>
-		</fileset>
-		<pathelement path="${build.src.dir}"/>
-		<pathelement path="${build.test.dir}"/>
-		<pathelement path="${config.dir}"/>
-		<pathelement path="${webapp.dir}/WEB-INF"/>
-	</path>
+<!-- Classpath to compile everything -->
+    <path id="classpath">
+        <fileset dir="${lib.dir}">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement path="${build.src.dir}"/>
+        <pathelement path="${config.dir}"/>
+        <pathelement path="${webapp.dir}/WEB-INF"/>
+    </path>
 
+<!-- Classpath for the tests -->
+    <path id="test.classpath">
+        <fileset dir="${lib.dir}">
+            <include name="*.jar"/>
+            <exclude name="mysql-connector-java-5.1.22-bin.jar"/>
+        </fileset>
+        <fileset dir="${test.lib.dir}">
+            <include name="*.jar"/>
+        </fileset>
+        <pathelement path="${build.src.dir}" />
+        <pathelement path="${test.build.src.dir}" />
+        <pathelement path="${test.config.dir}" />
+        <pathelement path="${webapp.dir}/WEB-INF"/>
+    </path>
 
 <!-- Ant task list all available ant tasks in this project -->
-	<target name="help">
-		<echo message=""/>
-		<echo message="${webapp.name} build file"/>
-		<echo message="-----------------------------------"/>
-		<echo message=""/>
-		<echo message="Available Ant targets are:"/>
-		<echo message="compile  --> Compile all Java files"/>
-		<echo message="test     --> Runs all tests"/>
-		<echo message="war      --> Creates *.war file"/>
-		<echo message="clean    --> Deletes compiled classes and WAR"/>
-		<echo message=""/>
-		<echo message="Available Tomcat/Ant targets are:"/>
-		<echo message="deploy   --> Deploys application on the Tomcat"/>
-		<echo message="undeploy --> Undeploys application from the Tomcat"/>
-		<echo message="reload   --> Reloads application on the Tomcat"/>
-		<echo message="list     --> Lists all applications from the Tomcat"/>
-		<echo message="start	--> Starts web application"/>
-		<echo message="stop		--> Stops web application"/>
-	</target>
+    <target name="help">
+        <echo message=""/>
+        <echo message="${webapp.name} build file"/>
+        <echo message="-----------------------------------"/>
+        <echo message=""/>
+        <echo message="Available Ant targets are:"/>
+        <echo message="compile  --> Compile all Java files"/>
+        <echo message="test     --> Runs all tests"/>
+        <echo message="war      --> Creates *.war file"/>
+        <echo message="clean    --> Deletes compiled classes and WAR"/>
+        <echo message=""/>
+        <echo message="Available Tomcat/Ant targets are:"/>
+        <echo message="deploy   --> Deploys application on the Tomcat"/>
+        <echo message="undeploy --> Undeploys application from the Tomcat"/>
+        <echo message="reload   --> Reloads application on the Tomcat"/>
+        <echo message="list     --> Lists all applications from the Tomcat"/>
+        <echo message="start    --> Starts web application"/>
+        <echo message="stop     --> Stops web application"/>
+    </target>
 
 
 <!-- Ant task to compile all application source code  -->
-	<target name="compile" description="Compile main source tree java files">
-		<!-- compile source-->
-		<mkdir dir="${build.src.dir}"/>
-		<javac destdir="${build.src.dir}"
-				target="1.7"
-				debug="true"
-				deprecation="false"
-				optimize="false"
-				failonerror="true"
-				includeantruntime="false">
-			<src path="${src.dir}"/>
-			<classpath refid="classpath"/>
-			<compilerarg value="-Xlint"/>
-		</javac>
+    <target name="compile" description="Compile main source tree java files">
+        <!-- compile source-->
+        <mkdir dir="${build.src.dir}"/>
 
-		<copy todir="${build.src.dir}">
-			<fileset dir="${src.dir}" includes="**/*.hbm.xml"/>
-		</copy>
+        <javac destdir="${build.src.dir}"
+                target="1.7"
+                debug="true"
+                deprecation="false"
+                optimize="false"
+                failonerror="true"
+                includeantruntime="false">
+            <src path="${src.dir}"/>
+            <classpath refid="classpath"/>
+            <compilerarg value="-Xlint"/>
+        </javac>
 
- 		<!-- compile tests -->
-		<mkdir dir="${build.test.dir}"/>
-		<javac destdir="${build.test.dir}"
-				target="1.7"
-				debug="true"
-				deprecation="false"
-				optimize="false"
-				failonerror="true"
-				includeantruntime="false">
-			<src path="${test.dir}"/>
-			<classpath>
-				<path refid="classpath"/>
-				<path location="${build.src.dir}"/>
-			</classpath>
-			<compilerarg value="-Xlint"/>
-		</javac>
-	</target>
+        <copy todir="${build.src.dir}">
+            <fileset dir="${src.dir}" includes="**/*.hbm.xml"/>
+        </copy>
+
+        <!-- compile tests -->
+        <mkdir dir="${test.build.src.dir}"/>
+        <javac destdir="${test.build.src.dir}"
+                target="1.7"
+                debug="true"
+                deprecation="false"
+                optimize="false"
+                failonerror="true"
+                includeantruntime="false">
+            <src path="${test.src.dir}"/>
+            <classpath>
+                <path refid="test.classpath"/>
+                <path location="${build.src.dir}"/>
+            </classpath>
+            <compilerarg value="-Xlint"/>
+        </javac>
+    </target>
 
 
 <!-- Ant task to run all tests or tu run selected test on demand -->
-	<target name="test" depends="compile" description="Runs JUnit tests">
-		<delete dir="${log.dir}"/>
-		<!-- Check that junit.jar is in $ANT_HOME/lib -->
-		<available classname="junit.framework.TestCase" property="junit.present"/>
-		<fail unless="junit.present"
-			message="Please copy web/WEB-INF/lib/junit.jar into ${env.ANT_HOME}/lib"/>
+    <target name="test" depends="compile" description="Runs JUnit tests">
+        <delete dir="${log.dir}"/>
+        <!-- Check that junit.jar is in $ANT_HOME/lib -->
+        <available classname="junit.framework.TestCase" property="junit.present"/>
+        <fail unless="junit.present"
+            message="Please copy junit.jar into ${env.ANT_HOME}/lib"/>
 
-		<mkdir dir="${log.test.dir}"/>
-		<junit printsummary="no"
-				fork="true"
-				errorProperty="test.failed"
-				failureProperty="test.failed">
+        <mkdir dir="${log.test.dir}"/>
 
-			<classpath>
-				<path refid="classpath"/>
-			</classpath>
+        <junit printsummary="no"
+                fork="true"
+                errorProperty="test.failed"
+                failureProperty="test.failed">
 
-			<formatter type="plain"/>
-			<formatter type="brief" usefile="false"/>
+            <classpath>
+                <path refid="test.classpath"/>
+            </classpath>
 
-			<batchtest todir="${log.test.dir}" if="testcase">
-				<fileset dir="${build.test.dir}">
-					<include name="**/*${testcase}*"/>
-				</fileset>
-			</batchtest>
-			<batchtest todir="${log.test.dir}" unless="testcase">
-				<fileset dir="${build.test.dir}">
-					<include name="**/*Test.class*"/>
-				</fileset>
-			</batchtest>
-		</junit>
+            <formatter type="plain"/>
+            <formatter type="brief" usefile="false"/>
 
-		<fail if="test.failed">
-			Unit tests failed. For error messages, check the log files in
-			${test.dir}/data or run "ant test-reports"
-			to generate reports at ${test.dir}/reports.</fail>
-	</target>
+            <batchtest todir="${log.test.dir}" if="testcase">
+                <fileset dir="${test.build.src.dir}">
+                    <include name="**/*${testcase}*"/>
+                </fileset>
+            </batchtest>
+            <batchtest todir="${log.test.dir}" unless="testcase">
+                <fileset dir="${test.build.src.dir}">
+                    <include name="**/*Test.class*"/>
+                </fileset>
+            </batchtest>
+        </junit>
 
-	<target name="clean" description="Clean output directories">
-		<delete dir="${build.dir}"/>
-	</target>
+        <fail if="test.failed">
+            Unit tests failed. For error messages, check the log files in
+            ${log.test.dir}.</fail>
+    </target>
+
+    <target name="clean" description="Clean output directories">
+        <delete dir="${build.dir}"/>
+        <delete dir="${dist.dir}"/>
+        <delete dir="${log.dir}"/>
+        <delete dir="${test.db.dir}"/>
+    </target>
 
 
 <!-- Ant task to make deployable *.war file -->
-	<target name="war" depends="compile" description="Packages app as WAR">
-		<mkdir dir="${dist.dir}"/>
-		<war destfile="${dist.dir}/${webapp.name}.war" webxml="${webapp.dir}/WEB-INF/web.xml">
+    <target name="war" depends="compile" description="Packages app as WAR">
+        <mkdir dir="${dist.dir}"/>
+        <war destfile="${dist.dir}/${webapp.name}.war" webxml="${webapp.dir}/WEB-INF/web.xml">
 
-			<classes dir="${build.dir}/classes"/>
+            <classes dir="${build.dir}/classes"/>
 
-			<classes dir="${config.dir}">
-				<include name="application.properties" />
-				<include name="log4j.properties" />
-			</classes>
+            <classes dir="${config.dir}">
+                <include name="application.properties" />
+                <include name="log4j.properties" />
+            </classes>
 
-			<fileset dir="${webapp.dir}">
-				<include name="**/*.*"/>
-				<exclude name="javax.servlet.jar" />
-			</fileset>
-		</war>
-	</target>
+            <fileset dir="${webapp.dir}">
+                <include name="**/*.*"/>
+                <exclude name="javax.servlet.jar" />
+            </fileset>
+        </war>
+    </target>
 
 
 <!-- Configure Tomcat properties to access the Manager application -->
-	<property file="tomcatProperties.properties"/>
+    <property file="tomcatProperties.properties"/>
 <!-- Configure the custom Ant tasks for the Tomcat Manager application -->
-	<taskdef file="tomcatTasks.properties"/>
+    <taskdef file="tomcatTasks.properties"/>
 
 
 <!-- Executable Ant Tomcat Targets to: deploy, reload, undeploy, list something on the Tomcat-->
-	<target name="deploy" description="Install web application" depends="war">
-		<deploy url="${tomcat.url}"
-				username="${tomcat.username}"
-				password="${tomcat.password}"
-				path="${tomcat.context.path}"
-				war="file:${dist.dir}/${webapp.name}.war"/>
-	</target>
+    <target name="deploy" description="Install web application" depends="war">
+        <deploy url="${tomcat.url}"
+                username="${tomcat.username}"
+                password="${tomcat.password}"
+                path="${tomcat.context.path}"
+                war="file:${dist.dir}/${webapp.name}.war"/>
 
-	<target name="reload" description="Reload web application" depends="compile">
-		<reload	url="${tomcat.url}"
-				username="${tomcat.username}"
-				password="${tomcat.password}"
-				path="${tomcat.context.path}"/>
-	</target>
+    </target>
 
-	<target name="undeploy" description="Remove web application">
-		<undeploy
-				url="${tomcat.url}"
-				username="${tomcat.username}"
-				password="${tomcat.password}"
-				path="${tomcat.context.path}"/>
-	</target>
+    <target name="reload" description="Reload web application" depends="compile">
+        <reload    url="${tomcat.url}"
+                username="${tomcat.username}"
+                password="${tomcat.password}"
+                path="${tomcat.context.path}"/>
+    </target>
 
-	<target name="list" description="Install web application" depends="war">
-		<list url="${tomcat.url}"
-				username="${tomcat.username}"
-				password="${tomcat.password}"/>
-	</target>
+    <target name="undeploy" description="Remove web application">
+        <undeploy
+                url="${tomcat.url}"
+                username="${tomcat.username}"
+                password="${tomcat.password}"
+                path="${tomcat.context.path}"/>
+    </target>
 
-	<target name="start" description="Start web application">
-		<start url="${tomcat.url}"
-				username="${tomcat.username}"
-				password="${tomcat.password}"
-				path="${tomcat.context.path}"/>
-	</target>
+    <target name="list" description="Install web application" depends="war">
+        <list url="${tomcat.url}"
+                username="${tomcat.username}"
+                password="${tomcat.password}"/>
+    </target>
 
-	<target name="stop" description="Stop web application">
-		<stop url="${tomcat.url}"
-				username="${tomcat.username}"
-				password="${tomcat.password}"
-				path="${tomcat.context.path}"/>
-	</target>
+    <target name="start" description="Start web application">
+        <start url="${tomcat.url}"
+                username="${tomcat.username}"
+                password="${tomcat.password}"
+                path="${tomcat.context.path}"/>
+    </target>
+
+    <target name="stop" description="Stop web application">
+        <stop url="${tomcat.url}"
+                username="${tomcat.username}"
+                password="${tomcat.password}"
+                path="${tomcat.context.path}"/>
+    </target>
 
 </project>

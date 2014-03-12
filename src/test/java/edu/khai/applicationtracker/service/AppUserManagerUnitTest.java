@@ -53,7 +53,7 @@ public class AppUserManagerUnitTest {
 		verify(mockAppUserDAO, times(1)).getAppUsers();
 		assertEquals(appUsers, testAppusers);
 	}
-	
+
 	@Test
 	public void testGetAppUser() throws Exception {
 		AppUser appUser = new AppUser();
@@ -66,7 +66,7 @@ public class AppUserManagerUnitTest {
 		verify(mockAppUserDAO, times(1)).getAppUser(new Long(123));
 		assertEquals(appUser.getUsername(), testAppuser.getUsername());
 	}
-	
+
 	@Test
 	public void testSaveAppUser() throws Exception {
 		AppUser appUser = new AppUser();
@@ -78,8 +78,8 @@ public class AppUserManagerUnitTest {
 		//then
 		verify(mockAppUserDAO, times(1)).saveAppUser(appUser);
 		assertEquals(appUser.getUsername(), testAppuser.getUsername());
-	}		
-	
+	}
+
 	@Test
 	public void testRemoveAppUser() throws Exception {
 		AppUser appUser = new AppUser();
@@ -90,6 +90,6 @@ public class AppUserManagerUnitTest {
 		appUserManagerImpl.removeAppUser(anyLong());
 		//then
 		verify(mockAppUserDAO, times(1)).removeAppUser(anyLong());
-	}		
+	}
 
 }
