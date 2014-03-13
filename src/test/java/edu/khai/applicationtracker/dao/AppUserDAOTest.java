@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class AppUserDAOTest {
 	@Before
 	public void setUp() throws Exception {
 		appUser = new AppUser();
-		appUser.setUsername("myname@mailbox.net");
+		appUser.setUsername("тестДляДела@mailbox.net");
 		appUser.setPassword("password");
 		appUser.setAuthorities("ROLE_ADMIN");
 
@@ -58,6 +59,7 @@ public class AppUserDAOTest {
 			logger.info(appUser);
 		assertNotNull(appUser.getPassword());
 	}
+
 
 	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
@@ -84,7 +86,9 @@ public class AppUserDAOTest {
 	public void testGetUserFromName() throws Exception {
 		appUserDAO.saveAppUser(appUser);
 
-		AppUser testAppUser = appUserDAO.getAppUserFromName("myname@mailbox.net");
+		AppUser testAppUser = appUserDAO.getAppUserFromName("тестДляДела@mailbox.net");
+		System.out.println("!!!!!!!!!!!!!!!!!!1"+appUser);
+		System.out.println("!!!!!!!!!!!!!!!!!!2"+testAppUser );
 
 		assertNotNull(testAppUser);
 		assertEquals(testAppUser.getUsername(), appUser.getUsername());
