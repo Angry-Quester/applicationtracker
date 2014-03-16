@@ -1,5 +1,7 @@
 package edu.khai.applicationtracker.controller;
 
+import java.util.Map;
+
 import javax.validation.Valid;
 
 import edu.khai.applicationtracker.model.AppUser;
@@ -8,9 +10,10 @@ import edu.khai.applicationtracker.service.AppUserManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ValidationUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,14 +40,42 @@ public class TestController {
 		this.appUserManager = appUserManager;
 	}
 
+
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public ModelAndView getTest() {
-		/*
-		TestModel testModel = new TestModel();
-		testModel.setTestField("first Call");
-		*/
+	public String getTest(@RequestParam Map<String, String> rqMap, Model testModel) {
 		AppUser appUser = appUserManager.getAppUser(new Long(5));
-		return new ModelAndView("test", "data", appUser);
+
+		//эти данные можно будет получить на jsp странице
+		//по типу переданных данных т.е. так: ${string}
+		testModel.addAttribute("smartModelContent");
+
+		//эти данные можно будет получить на jsp странице
+		//по типу переданных данных т.е. так: ${appUser}
+		//
+		//org.springframework.core.Conventions
+		//
+		//Determine the conventional variable name for
+		//the supplied Object based on its concrete type.
+		//The convention used is to return the uncapitalized short name of the Class,
+		//according to JavaBeans property naming rules:
+		//So,
+		//com.myapp.Product becomes product;
+		//com.myapp.MyProduct becomes myProduct;
+		//com.myapp.UKProduct becomes UKProduct.
+
+		testModel.addAttribute(appUser);
+
+		//эти данные можно будет получить на jsp странице явным образом
+		//по имени т.е. так: ${data}
+		testModel.addAttribute("data", appUser);
+
+
+		return "test";
+	}
+
+	@RequestMapping(value = "/test/{someData}", method = RequestMethod.GET)
+	public ModelAndView getTest(@PathVariable String someData) {
+		return new ModelAndView("test", "data", someData);
 	}
 
 	@RequestMapping(value = "/test", method = RequestMethod.POST)

@@ -16,22 +16,26 @@ public class ApplicationManagerImpl implements ApplicationManager{
 		this.applicationDAO = applicationDAO;
 	}
 
+	@Override
 	public List<Application> getApplications() {
 		return applicationDAO.getApplications();
 	}
 
-	public Application getApplication(String applicationId) {
-		Application application = applicationDAO.getApplication(Long.valueOf(applicationId));
+	@Override
+	public Application getApplication(Long applicationId) {
+		Application application = applicationDAO.getApplication(applicationId);
 		return application;
 	}
 
+	@Override
 	public Application saveApplication(Application application) {
 		applicationDAO.saveApplication(application);
 		return application;
 	}
 
-	public void removeApplication(String applicationId) {
-		applicationDAO.removeApplication(Long.valueOf(applicationId));
+	@Override
+	public void removeApplication(Long applicationId) {
+		applicationDAO.removeApplication(applicationId);
 	}
 
 }

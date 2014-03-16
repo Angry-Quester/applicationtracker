@@ -43,7 +43,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		//AppUser appUser = appUserDAO.getAppUserFromName(userName);
 
-		AppUser appUser = appUserDAO.getAppUserFromNameWithRoles(userName);
+		AppUser appUser = appUserDAO.getAppUserByNameWithRoles(userName);
 
 			if (appUser == null) {
 				throw new UsernameNotFoundException("user not found. UserName=["+userName+"]");

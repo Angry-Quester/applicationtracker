@@ -6,7 +6,7 @@ import edu.khai.applicationtracker.model.Application;
 
 public interface ApplicationManager {
 	public List<Application> getApplications();
-	public Application getApplication(String applicationId);
+	public Application getApplication(Long applicationId);
 	public Application saveApplication(Application application);
-	public void removeApplication(String applicationId);
+	public void removeApplication(Long applicationId);
 }

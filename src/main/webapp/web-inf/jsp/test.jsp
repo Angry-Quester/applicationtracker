@@ -58,15 +58,22 @@
 
 
         <c:if test="${not empty data}" >
-            <p>DATA=${data}</p>
+            <p>data = ${data}</p>
+        </c:if>
+        <c:if test="${not empty appUser}" >
+            <p>appUser = ${appUser}</p>
         </c:if>
         <c:if test="${not empty info}" >
             <p>INFO=${info}</p>
-        </c:if> 
+        </c:if>
+        <c:if test="${not empty string}" >
+            <p>smartModel ( string )=${string}</p>
+        </c:if>        
         <c:if test="${not empty modelMap}" >
             <p>MODEL-MAP=${modelMap}</p>
         </c:if> 
                
+         <a href="/applications/1">111111111111</a>
 
 <!--  Test matherials-->
 

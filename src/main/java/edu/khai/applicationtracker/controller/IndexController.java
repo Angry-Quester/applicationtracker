@@ -1,5 +1,6 @@
 package edu.khai.applicationtracker.controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,9 +17,16 @@ public class IndexController {
 			return new ModelAndView("index", "welcomeMessage", WELCOME_MESSAGE);
 	}
 
-	@RequestMapping(value = "index", method = RequestMethod.GET)
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public ModelAndView getIndexPage() {
 
 		return new ModelAndView("index", "welcomeMessage", WELCOME_MESSAGE_ANONIMOUS);
 	}
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public ModelAndView getLogin() {
+
+		return new ModelAndView("login", "loginData", SecurityContextHolder.getContext().getAuthentication());
+	}
+
 }

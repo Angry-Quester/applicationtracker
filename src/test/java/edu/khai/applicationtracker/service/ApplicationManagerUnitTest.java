@@ -91,7 +91,7 @@ public class ApplicationManagerUnitTest {
 		//given
 		willReturn(application).given(mockApplicationDAO).getApplication(Long.valueOf(37));
 		//when
-		applicationManagerImpl.getApplication("37");
+		applicationManagerImpl.getApplication(Long.valueOf(37));
 		//then
 		verify(mockApplicationDAO, times(1)).getApplication(Long.valueOf(37));
 		logger.info(application);

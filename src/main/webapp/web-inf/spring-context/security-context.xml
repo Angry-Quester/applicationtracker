@@ -15,15 +15,18 @@
 
 <!-- Security settings for *.jsp pages -->
         <http>
-            <intercept-url pattern="/login*" access="ROLE_ADMIN" />
+            <intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
-            <intercept-url pattern="/*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-            <intercept-url pattern="/index.jsp*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-
-            <intercept-url pattern="/test*" access="ROLE_ADMIN" />
+            <intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+            <intercept-url pattern="/index" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+            <intercept-url pattern="/test*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+            
+            <intercept-url pattern="/test**" access="ROLE_ADMIN" />
             <intercept-url pattern="/**" access="ROLE_ADMIN" />
+            
             <form-login />
             <logout />
+  
         </http>
 
 <!-- Yep - this is the cusom authentication-manager that gets it's users from the database-->

@@ -63,12 +63,12 @@ public class UserDetailsServiceUnitTest {
 		User user = new User(username, password, grantedAutorities);
 
 		//given
-		willReturn(appUser).given(mockAppUserDAO).getAppUserFromNameWithRoles("somename@mailbox.ru");
+		willReturn(appUser).given(mockAppUserDAO).getAppUserByNameWithRoles("somename@mailbox.ru");
 		willReturn(user).given(mockUserDetailsProvider).getUserDetails(appUser);
 		//when
 		UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername("somename@mailbox.ru");
 		//then
-		verify(mockAppUserDAO, times(1)).getAppUserFromNameWithRoles("somename@mailbox.ru");
+		verify(mockAppUserDAO, times(1)).getAppUserByNameWithRoles("somename@mailbox.ru");
 		verify(mockUserDetailsProvider, times(1)).getUserDetails(appUser);
 		assertNotNull(userDetails);
 		assertEquals(username, userDetails.getUsername());

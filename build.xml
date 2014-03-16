@@ -26,6 +26,8 @@
     <property name="test.config.dir" location="src/test/config" />
     <property name="test.lib.dir" location="src/test/webapp/WEB-INF/lib" />
     <property name="test.build.src.dir" location="build/test" />
+	
+    <property name="test.db.dir" location="testdb"></property>
 
 <!-- Classpath to compile everything -->
     <path id="classpath">

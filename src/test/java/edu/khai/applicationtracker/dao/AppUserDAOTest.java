@@ -37,7 +37,7 @@ public class AppUserDAOTest {
 	@Before
 	public void setUp() throws Exception {
 		appUser = new AppUser();
-		appUser.setUsername("тестДляДела@mailbox.net");
+		appUser.setUsername("тестИмя@mailbox.net");
 		appUser.setPassword("password");
 		appUser.setAuthorities("ROLE_ADMIN");
 
@@ -86,9 +86,7 @@ public class AppUserDAOTest {
 	public void testGetUserFromName() throws Exception {
 		appUserDAO.saveAppUser(appUser);
 
-		AppUser testAppUser = appUserDAO.getAppUserFromName("тестДляДела@mailbox.net");
-		System.out.println("!!!!!!!!!!!!!!!!!!1"+appUser);
-		System.out.println("!!!!!!!!!!!!!!!!!!2"+testAppUser );
+		AppUser testAppUser = appUserDAO.getAppUserByName("тестИмя@mailbox.net");
 
 		assertNotNull(testAppUser);
 		assertEquals(testAppUser.getUsername(), appUser.getUsername());

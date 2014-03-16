@@ -33,7 +33,7 @@ public class AppUserDAOHibernate extends HibernateDaoSupport implements AppUserD
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public AppUser getAppUserFromName(String username) {
+	public AppUser getAppUserByName(String username) {
 		List<AppUser> appUsers = getHibernateTemplate().find("from AppUser where username=?", username);
 		return (appUsers != null && appUsers.size() >0) ? appUsers.get(0) : null;
 	}
@@ -41,7 +41,7 @@ public class AppUserDAOHibernate extends HibernateDaoSupport implements AppUserD
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public AppUser getAppUserFromNameWithRoles(String username) {
+	public AppUser getAppUserByNameWithRoles(String username) {
 		List<AppUser> appUsers = getHibernateTemplate().find("from AppUser au "
 				+ "inner join fetch "
 				+ "		au.appUserUserRoles auur "
