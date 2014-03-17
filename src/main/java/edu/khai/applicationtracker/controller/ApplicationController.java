@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
-
 import edu.khai.applicationtracker.model.Application;
 import edu.khai.applicationtracker.service.ApplicationManager;
 
@@ -36,5 +34,4 @@ public class ApplicationController {
 			model.addAttribute("application", application);
 		return "application";
 	}
-
 }
