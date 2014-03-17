@@ -39,7 +39,6 @@ public class AppUserDAOTest {
 		appUser = new AppUser();
 		appUser.setUsername("тестИмя@mailbox.net");
 		appUser.setPassword("password");
-		appUser.setAuthorities("ROLE_ADMIN");
 
 		appUserDAO = (AppUserDAO)applicationContext.getBean("appUserDAO");
 	}

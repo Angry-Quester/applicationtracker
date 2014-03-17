@@ -12,7 +12,6 @@
 
 		<property name="username" column="username" not-null="false"/>
 		<property name="password" column="password" not-null="false"/>
-		<property name="authorities" column="authorities" not-null="false"/>
 		<property name="accountNonExpired" column="accountNonExpired" not-null="false"/>
 		<property name="accountNonLocked" column="accountNonLocked" not-null="false"/>
 		<property name="credentialsNonExpired" column="credentialsNonExpired" not-null="false"/>

@@ -47,7 +47,6 @@ public class AppUserUserRoleDAOTest {
 		appUser = new AppUser();
 		appUser.setUsername("myname@mailbox.net");
 		appUser.setPassword("password");
-		appUser.setAuthorities("ROLE_ADMIN");
 
 		userRole = new UserRole();
 		userRole.setAuthority(USER_ROLE);

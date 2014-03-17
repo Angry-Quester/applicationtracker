@@ -38,7 +38,6 @@ public class UserDetailsProviderUnitTest {
 		AppUser appUser = new AppUser();
 			appUser.setUsername(username);
 			appUser.setPassword(password);
-			appUser.setAuthorities(authorities);
 
 		//given
 

@@ -47,7 +47,6 @@ public class AppUserApplicationDAOTest {
 		appUser = new AppUser();
 		appUser.setUsername("myname@mailbox.net");
 		appUser.setPassword("password");
-		appUser.setAuthorities("ROLE_ADMIN");
 
 		application = new Application();
 		application.setGivenName("John");
