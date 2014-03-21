@@ -93,11 +93,12 @@
 
 
 <!-- DAOs-->
+
     <bean id="appUserDAO"
         class="edu.khai.applicationtracker.dao.hibernate.AppUserDAOHibernate">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
-
+ 
     <bean id="userRoleDAO"
         class="edu.khai.applicationtracker.dao.hibernate.UserRoleDAOHibernate">
         <property name="sessionFactory" ref="sessionFactory" />
