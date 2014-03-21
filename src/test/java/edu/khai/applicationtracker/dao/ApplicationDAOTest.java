@@ -1,6 +1,7 @@
 package edu.khai.applicationtracker.dao;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -19,12 +20,14 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.khai.applicationtracker.model.AppUser;
+import edu.khai.applicationtracker.model.AppUserApplication;
 import edu.khai.applicationtracker.model.Application;
 import edu.khai.applicationtracker.dao.ApplicationDAO;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath:application-servlet.xml"})
+@ContextConfiguration({"classpath:spring-context/dao-context.xml"})
 @TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
 public class ApplicationDAOTest {
 	final static Logger logger = Logger.getLogger(ApplicationDAOTest.class);
@@ -34,11 +37,15 @@ public class ApplicationDAOTest {
 
 	private Application application = null;
 	private ApplicationDAO applicationDAO = null;
+	private AppUserDAO appUserDAO = null;
+	private AppUserApplicationDAO appUserApplicationDAO = null;
 
 	@Before
 	public void setUp() throws Exception {
 		//Getting ApplicationDAO bean from the spring context
-		applicationDAO = (ApplicationDAO)applicationContext.getBean("applicationDAO");
+		applicationDAO = (ApplicationDAO) applicationContext.getBean("applicationDAO");
+		appUserDAO = (AppUserDAO) applicationContext.getBean("appUserDAO");
+		appUserApplicationDAO = (AppUserApplicationDAO) applicationContext.getBean("appUserApplicationDAO");
 
 		//Creating some random application for the test
 		application = new Application();
@@ -60,7 +67,7 @@ public class ApplicationDAOTest {
 	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Rollback(false)
-	public void testSaveUser() throws Exception {
+	public void testSaveApplication() throws Exception {
 
 		applicationDAO.saveApplication(application);
 
@@ -72,7 +79,7 @@ public class ApplicationDAOTest {
 	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Rollback(false)
-	public void testAddAndRemoveUser() throws Exception {
+	public void testAddAndRemoveApplication() throws Exception {
 		applicationDAO.saveApplication(application);
 
 		assertNotNull("Checking application's ID value="+application.getApplicationId(),application.getApplicationId());
@@ -87,5 +94,32 @@ public class ApplicationDAOTest {
 
 		assertNull(applicationDAO.getApplication(application.getApplicationId()));
 	}
+
+	@Test
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Rollback(false)
+	public void testGetApplicationsByAppUserId() throws Exception {
+		applicationDAO.saveApplication(application);
+
+			AppUser appUser = new AppUser();
+			appUser.setUsername("myname@mailbox.net");
+			appUser.setPassword("password");
+
+			appUserDAO.saveAppUser(appUser);
+
+				AppUserApplication appUserApplication = new AppUserApplication();
+				appUserApplication.setAppUser(appUser);
+				appUserApplication.setApplication(application);
+
+				appUserApplicationDAO.saveAppUserApplication(appUserApplication);
+
+		List<Application> lp = applicationDAO.getApplicationsByAppUserId(appUser.getAppUserId());
+
+		logger.info("Application for the user List content = "+lp.get(0));
+
+			assertTrue(lp.size()>0);
+			assertEquals(lp.get(0).getFamilyName(), "Layman");
+	}
+
 
 }

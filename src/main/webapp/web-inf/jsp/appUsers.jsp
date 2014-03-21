@@ -25,30 +25,52 @@
 
     <div id="sidebar">
         menu text
-        <ol>
-            <s:url var = "loginPathAsUser" value="/appUsers/1" />
-            <li><a href="${loginPathAsUser}">LOGIN as AppUser</a></li>        
-            <s:url var = "loginPath" value="/login" />
-            <li><a href="${loginPath}">LOGIN Information</a></li>
-            <s:url var = "testPath" value="/test" />
-            <li><a href="${testPath}">test</a></li>
-        </ol>
     </div>
     <div id="content">
+
+        <h1>Applications</h1>
+
+        <c:if test="${not empty appUsers}">
+            <table class="table table-bordered">
+                <tr>
+                    <td>appUserId</td>
+                    <td>username</td>
+                    <td>password</td>
+                    <td>accountNonExpired</td>
+                    <td>accountNonLocked</td>
+                    <td>credentialsNonExpired</td>
+                    <td>enabled</td>
+                </tr>
+            <c:forEach items="${appUsers}" var="appUser" varStatus="status">
+                <tr>
+                    <td><a href="${ctx}/appUsers/${appUser.appUserId}">${appUser.appUserId}</a></td>
+                        <td>${appUser.appUserId}</td>
+                        <td>${appUser.username}</td>
+                        <td>${appUser.password}</td>
+                        <td>${appUser.accountNonExpired}</td>
+                        <td>${appUser.accountNonLocked}</td>
+                        <td>${appUser.credentialsNonExpired}</td>
+                        <td>${appUser.enabled}</td>
+                </tr>
+            </c:forEach>
+            </table>
+        </c:if>
         <hr />
-        <p>Welcome Random User!</p>
-        <p><c:if test="${not empty welcomeMessage}">${welcomeMessage}</c:if></p>
+        <s:url var = "loginPath" value="/login" />
+        <a href="${loginPath}">LOGIN</a>
         <hr />
+        <s:url var = "testPath" value="/test" />
+        <a href="${testPath}">test</a>
+
     </div>
     <div id="footer">
         <p>Footer</p>
     </div>
-   
-    
+
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="${jsCtx}/jquery-1.11.0.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="${jsCtx}/bootstrap.js"></script>
 </body>
 </html>
-

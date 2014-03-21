@@ -21,7 +21,7 @@ import edu.khai.applicationtracker.model.UserRole;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath:application-servlet.xml"})
+@ContextConfiguration({"classpath:spring-context/dao-context.xml"})
 @TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
 public class UserRoleDAOTest {
 	final static Logger logger = Logger.getLogger(UserRoleDAOTest.class);

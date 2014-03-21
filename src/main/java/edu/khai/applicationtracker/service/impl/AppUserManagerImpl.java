@@ -25,6 +25,11 @@ public class AppUserManagerImpl implements AppUserManager{
 	}
 
 	@Override
+	public AppUser getAppUserByName(String appUserName) {
+		return appUserDAO.getAppUserByName(appUserName);
+	}
+
+	@Override
 	public AppUser saveAppUser(AppUser appUser) {
 		appUserDAO.saveAppUser(appUser);
 		return appUser;

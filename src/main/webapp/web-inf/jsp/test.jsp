@@ -21,7 +21,12 @@
 <body id="body-test">
     <div id="content-background"></div>
     <div id="sidebar">
-        menu text
+        <ol>
+            <s:url var = "loginPath" value="/login" />
+            <li><a href="${loginPath}">LOGIN Information</a></li>
+            <s:url var = "testPath" value="/test" />
+            <li><a href="${testPath}">test</a></li>
+        </ol>
     </div>
     <div id="content">
         <h1>Page</h1>

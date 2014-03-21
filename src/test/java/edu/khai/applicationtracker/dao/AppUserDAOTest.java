@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.khai.applicationtracker.model.AppUser;
+import edu.khai.applicationtracker.model.AppUserUserRole;
+import edu.khai.applicationtracker.model.UserRole;
 import edu.khai.applicationtracker.dao.AppUserDAO;
 
 
@@ -33,6 +35,9 @@ public class AppUserDAOTest {
 
 	private AppUser appUser = null;
 	private AppUserDAO appUserDAO = null;
+	private AppUserUserRoleDAO appUserUserRoleDAO = null;
+	private UserRoleDAO userRoleDAO = null;
+
 
 	@Before
 	public void setUp() throws Exception {
@@ -41,6 +46,8 @@ public class AppUserDAOTest {
 		appUser.setPassword("password");
 
 		appUserDAO = (AppUserDAO)applicationContext.getBean("appUserDAO");
+		appUserUserRoleDAO = (AppUserUserRoleDAO) applicationContext.getBean("appUserUserRoleDAO");
+		userRoleDAO = (UserRoleDAO) applicationContext.getBean("userRoleDAO");
 	}
 
 	@After
@@ -82,13 +89,35 @@ public class AppUserDAOTest {
 	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Rollback(false)
-	public void testGetUserFromName() throws Exception {
+	public void testGetUserByName() throws Exception {
 		appUserDAO.saveAppUser(appUser);
 
 		AppUser testAppUser = appUserDAO.getAppUserByName("тестИмя@mailbox.net");
 
 		assertNotNull(testAppUser);
 		assertEquals(testAppUser.getUsername(), appUser.getUsername());
+	}
+
+	@Test
+	@Transactional(propagation = Propagation.REQUIRED)
+	@Rollback(false)
+	public void testGetAppUserByNameWithRoles() throws Exception {
+		appUserDAO.saveAppUser(appUser);
+
+			UserRole userRole = new UserRole();
+			userRole.setAuthority("ROLE_ADMIN");
+				userRoleDAO.saveUserRole(userRole);
+
+				AppUserUserRole appUserUserRole = new AppUserUserRole();
+				appUserUserRole.setAppUser(appUser);
+				appUserUserRole.setUserRole(userRole);
+					appUserUserRoleDAO.saveAppUserUserRole(appUserUserRole);
+
+		AppUser appUserWithRoles = appUserDAO.getAppUserByNameWithRoles("тестИмя@mailbox.net");
+
+		assertEquals(appUserWithRoles.getUsername(), "тестИмя@mailbox.net");
+		assertEquals(appUserWithRoles.getAppUserUserRoles().size(), 1);
+		assertEquals(appUserWithRoles.getAppUserUserRoles().iterator().next().getUserRole().getAuthority(), "ROLE_ADMIN");
 	}
 
 }

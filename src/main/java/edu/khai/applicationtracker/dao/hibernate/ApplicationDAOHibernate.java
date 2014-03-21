@@ -16,6 +16,15 @@ public class ApplicationDAOHibernate extends HibernateDaoSupport implements Appl
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
+	public List<Application> getApplicationsByAppUserId(Long appUserId) {
+
+		return getHibernateTemplate().find("select app from Application as app "
+				+ "inner join app.appUserApplications auapp "
+				+ "where auapp.appUser.appUserId=?", appUserId);
+	}
+
+	@Override
 	public Application getApplication(Long id) {
 		return getHibernateTemplate().get(Application.class, id);
 	}

@@ -22,6 +22,11 @@ public class ApplicationManagerImpl implements ApplicationManager{
 	}
 
 	@Override
+	public List<Application> getApplicationsByAppUserId(Long appUserId) {
+		return applicationDAO.getApplicationsByAppUserId(appUserId);
+	}
+
+	@Override
 	public Application getApplication(Long applicationId) {
 		Application application = applicationDAO.getApplication(applicationId);
 		return application;

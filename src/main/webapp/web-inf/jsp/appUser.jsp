@@ -25,30 +25,40 @@
 
     <div id="sidebar">
         menu text
-        <ol>
-            <s:url var = "loginPathAsUser" value="/appUsers/1" />
-            <li><a href="${loginPathAsUser}">LOGIN as AppUser</a></li>        
-            <s:url var = "loginPath" value="/login" />
-            <li><a href="${loginPath}">LOGIN Information</a></li>
-            <s:url var = "testPath" value="/test" />
-            <li><a href="${testPath}">test</a></li>
-        </ol>
     </div>
     <div id="content">
+        <h1>Application N</h1>
+        <hr/>
+        <c:if test="${not empty appUser}">
+            <s:url var = "appUserApplications" value="/applications" />
+            <a href="${appUserApplications}">User applications</a>
+            <hr/>
+                <dl  class="dl-horizontal">
+                    <dt>appUserId</dt> <dd>${appUser.appUserId}</dd>
+                    <dt>username</dt> <dd>${appUser.username}</dd>
+                    <dt>password</dt> <dd>${appUser.password}</dd>
+                    <dt>accountNonExpired</dt> <dd>${appUser.accountNonExpired}</dd>
+                    <dt>accountNonLocked</dt> <dd>${appUser.accountNonLocked}</dd>
+                    <dt>credentialsNonExpired</dt> <dd>${appUser.credentialsNonExpired}</dd>
+                    <dt>enabled</dt> <dd>${appUser.enabled}</dd>
+                </dl>
+        </c:if>
         <hr />
-        <p>Welcome Random User!</p>
-        <p><c:if test="${not empty welcomeMessage}">${welcomeMessage}</c:if></p>
+        <s:url var = "loginPath" value="/login" />
+        <a href="${loginPath}">LOGIN</a>
         <hr />
+        <s:url var = "testPath" value="/test" />
+        <a href="${testPath}">test</a>
+
     </div>
     <div id="footer">
         <p>Footer</p>
     </div>
-   
-    
+
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="${jsCtx}/jquery-1.11.0.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="${jsCtx}/bootstrap.js"></script>
 </body>
 </html>
-
