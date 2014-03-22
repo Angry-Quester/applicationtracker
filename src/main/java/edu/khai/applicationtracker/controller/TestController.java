@@ -6,7 +6,7 @@ import javax.validation.Valid;
 
 import edu.khai.applicationtracker.model.AppUser;
 import edu.khai.applicationtracker.model.TestModel;
-import edu.khai.applicationtracker.service.AppUserManager;
+import edu.khai.applicationtracker.service.AppUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,19 +24,19 @@ import org.springframework.web.servlet.ModelAndView;
 public class TestController {
 
 	@Autowired
-	private AppUserManager appUserManager;
+	private AppUserService appUserManager;
 
 	/**
 	 * @return the appUserManager
 	 */
-	public AppUserManager getAppUserManager() {
+	public AppUserService getAppUserManager() {
 		return appUserManager;
 	}
 
 	/**
 	 * @param appUserManager the appUserManager to set
 	 */
-	public void setAppUserManager(AppUserManager appUserManager) {
+	public void setAppUserManager(AppUserService appUserManager) {
 		this.appUserManager = appUserManager;
 	}
 
@@ -82,17 +82,12 @@ public class TestController {
 	public ModelAndView getPost(
 			@Valid TestModel testModel, BindingResult bindingResult,
 			@RequestParam("id") Long appUserId,
-			ModelMap modelMap
-			) {
+			ModelMap modelMap) {
 
         ModelAndView mav = new ModelAndView("test");
 
         mav.addObject("modelMap", modelMap);
        	mav.addObject("data", testModel);
-       		AppUser appUser = appUserManager.getAppUser(appUserId);
-       			appUser.setUsername(testModel.getTestField());
-       				appUserManager.saveAppUser(appUser);
-       	mav.addObject("info", appUser);
        	mav.addObject("errors", bindingResult);
 
 		if (bindingResult.hasErrors()) {

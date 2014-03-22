@@ -14,37 +14,39 @@ import org.springframework.web.servlet.ModelAndView;
 
 import edu.khai.applicationtracker.model.AppUser;
 import edu.khai.applicationtracker.model.Application;
-import edu.khai.applicationtracker.service.AppUserManager;
-import edu.khai.applicationtracker.service.ApplicationManager;
+import edu.khai.applicationtracker.service.AppUserService;
+import edu.khai.applicationtracker.service.ApplicationService;
 
 
 @Controller
 public class ApplicationController {
 
 	@Autowired
-	private ApplicationManager applicationManager;
+	private ApplicationService applicationManager;
 
 	@Autowired
-	private AppUserManager appUserManager;
+	private AppUserService appUserManager;
 
 	@RequestMapping(value = "/applications", method = RequestMethod.GET)
 	public String getApplications(Model model) {
 		//getting authenticated user name
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-		//use that name to load marks
+		//use the name to load applications
 		AppUser au = appUserManager.getAppUserByName(auth.getName());
 
 		List<Application> applications = applicationManager.getApplicationsByAppUserId(au.getAppUserId());
 
-			model.addAttribute("applications", applications);
+		model.addAttribute("applications", applications);
+
 		return "applications";
 	}
 
 	@RequestMapping(value = "/applications/{applicationId}", method = RequestMethod.GET)
 	public String getApplicationById(@PathVariable Long applicationId, Model model) {
 		Application application = applicationManager.getApplication(applicationId);
-			model.addAttribute("application", application);
+
+		model.addAttribute("application", application);
+
 		return "application";
 	}
 }

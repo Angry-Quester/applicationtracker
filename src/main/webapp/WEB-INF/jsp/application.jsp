@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ page language="java" contentType="text/html;"%>
+<%@ page contentType="text/html; charset=UTF-8"    pageEncoding="UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
@@ -27,10 +28,11 @@
         menu text
     </div>
     <div id="content">
-        <h1>Application N</h1>
-        <hr/>
         <c:if test="${not empty application}">
-                <dl  class="dl-horizontal">
+        <h1>Application номер ${application.applicationId}</h1>
+        <hr/>
+№
+                <dl>
                     <dt>applicationId</dt> <dd>${application.applicationId}</dd>
                     <dt>givenName</dt> <dd>${application.givenName}</dd>
                     <dt>middleName</dt> <dd>${application.middleName}</dd>
@@ -51,8 +53,8 @@
     <div id="footer">
         <p>Footer</p>
     </div>
-   
-    
+
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="${jsCtx}/jquery-1.11.0.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

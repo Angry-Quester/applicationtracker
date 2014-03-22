@@ -79,13 +79,14 @@
 
     <!-- Non-invasive annotation driven transactional mechanism-->
     <aop:config>
-        <aop:pointcut id="serviceMethods" expression="execution(* edu.khai.applicationtracker.service.*Manager.*(..))"/>
+        <aop:pointcut id="serviceMethods" expression="execution(* edu.khai.applicationtracker.service.*Service.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods"/>
     </aop:config>
 
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
             <tx:method name="remove*" propagation="REQUIRED"/>
             <tx:method name="*" propagation="REQUIRED" read-only="true"/>
         </tx:attributes>
@@ -94,23 +95,14 @@
 
 <!-- DAOs-->
 
-    <bean id="appUserDAO"
-        class="edu.khai.applicationtracker.dao.hibernate.AppUserDAOHibernate">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
- 
-    <bean id="userRoleDAO"
-        class="edu.khai.applicationtracker.dao.hibernate.UserRoleDAOHibernate">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
-    <bean id="appUserUserRoleDAO"
-        class="edu.khai.applicationtracker.dao.hibernate.AppUserUserRoleDAOHibernate">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
+<!-- Tutorial tests  -->
     <bean id="applicationDAO"
         class="edu.khai.applicationtracker.dao.hibernate.ApplicationDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="appUserDAO"
+        class="edu.khai.applicationtracker.dao.hibernate.AppUserDAOHibernate">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
@@ -118,5 +110,15 @@
         class="edu.khai.applicationtracker.dao.hibernate.AppUserApplicationDAOHibernate">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+    
+    <bean id="userRoleDAO"
+        class="edu.khai.applicationtracker.dao.hibernate.UserRoleDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="appUserUserRoleDAO"
+        class="edu.khai.applicationtracker.dao.hibernate.AppUserUserRoleDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>    
 
 </beans>

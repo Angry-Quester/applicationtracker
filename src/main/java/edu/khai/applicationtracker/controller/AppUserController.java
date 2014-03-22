@@ -1,42 +1,49 @@
 package edu.khai.applicationtracker.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
 import edu.khai.applicationtracker.model.AppUser;
-import edu.khai.applicationtracker.model.Application;
-import edu.khai.applicationtracker.service.AppUserManager;
-import edu.khai.applicationtracker.service.ApplicationManager;
+import edu.khai.applicationtracker.service.AppUserService;
+import edu.khai.applicationtracker.service.ApplicationService;
 
 
 @Controller
 public class AppUserController {
 
 	@Autowired
-	private AppUserManager appUserManager;
+	private AppUserService appUserService;
 
 	@Autowired
-	private ApplicationManager applicationManager;
+	private ApplicationService applicationManager;
 
 
 	@RequestMapping(value = "/appUsers", method = RequestMethod.GET)
 	public String getAppUsers(Model model) {
-		List<AppUser> appUsers = appUserManager.getAppUsers();
-			model.addAttribute("applications", appUsers);
+		//getting authenticated user name
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//use the name to load applications
+		AppUser au = appUserService.getAppUserByName(auth.getName());
+
+		List<AppUser> appUsers = new ArrayList<AppUser>();
+						appUsers.add(appUserService.getAppUser(au.getAppUserId()));
+
+			model.addAttribute("appUsers", appUsers);
 		return "appUsers";
 	}
 
 	@RequestMapping(value = "/appUsers/{appUserId}", method = RequestMethod.GET)
 	public String getAppUserById(@PathVariable Long appUserId, Model model) {
-		AppUser appUser= appUserManager.getAppUser(appUserId);
+		AppUser appUser = appUserService.getAppUser(appUserId);
 			model.addAttribute("appUser", appUser);
 		return "appUser";
 	}

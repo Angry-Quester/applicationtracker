@@ -4,21 +4,14 @@ import java.util.List;
 
 import edu.khai.applicationtracker.dao.ApplicationDAO;
 import edu.khai.applicationtracker.model.Application;
+import edu.khai.applicationtracker.service.ApplicationService;
 
-import edu.khai.applicationtracker.service.ApplicationManager;
-
-public class ApplicationManagerImpl implements ApplicationManager{
-
+public class ApplicationServiceImpl implements ApplicationService{
 
 	private ApplicationDAO applicationDAO;
 
 	public void setApplicationDAO(ApplicationDAO applicationDAO) {
 		this.applicationDAO = applicationDAO;
-	}
-
-	@Override
-	public List<Application> getApplications() {
-		return applicationDAO.getApplications();
 	}
 
 	@Override
@@ -28,19 +21,25 @@ public class ApplicationManagerImpl implements ApplicationManager{
 
 	@Override
 	public Application getApplication(Long applicationId) {
-		Application application = applicationDAO.getApplication(applicationId);
+		Application application = applicationDAO.find(applicationId);
 		return application;
 	}
 
 	@Override
-	public Application saveApplication(Application application) {
-		applicationDAO.saveApplication(application);
+	public Application addApplication(Application application) {
+		applicationDAO.add(application);
+		return application;
+	}
+
+	@Override
+	public Application updateApplication(Application application) {
+		applicationDAO.update(application);
 		return application;
 	}
 
 	@Override
 	public void removeApplication(Long applicationId) {
-		applicationDAO.removeApplication(applicationId);
+		applicationDAO.removeById(applicationId);
 	}
 
 }

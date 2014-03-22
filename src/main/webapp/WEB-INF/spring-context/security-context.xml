@@ -29,7 +29,7 @@
   
         </http>
 
-<!-- Yep - this is the cusom authentication-manager that gets it's users from the database-->
+<!-- Yep - this is the cusom authentication-manager wich gets users from the DB-->
         <authentication-manager>
             <authentication-provider user-service-ref="userDetailService">
             </authentication-provider>

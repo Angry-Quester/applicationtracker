@@ -2,39 +2,20 @@ package edu.khai.applicationtracker.dao.hibernate;
 
 
 import java.util.List;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
 import edu.khai.applicationtracker.dao.AppUserDAO;
 import edu.khai.applicationtracker.model.AppUser;
 
 
-public class AppUserDAOHibernate extends HibernateDaoSupport implements AppUserDAO {
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<AppUser> getAppUsers(){
-		return getHibernateTemplate().find("from AppUser");
-	}
-
-	@Override
-	public AppUser getAppUser(Long id) {
-		return getHibernateTemplate().get(AppUser.class, id);
-	}
-
-	@Override
-	public void saveAppUser(AppUser appUser){
-		getHibernateTemplate().saveOrUpdate(appUser);
-	}
-
-	@Override
-	public void removeAppUser(Long id) {
-		Object appUser = getHibernateTemplate().load(AppUser.class, id);
-		getHibernateTemplate().delete(appUser);
-	}
+public class AppUserDAOHibernate extends HibernateDAO<AppUser, Long> implements AppUserDAO {
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public AppUser getAppUserByName(String username) {
-		List<AppUser> appUsers = getHibernateTemplate().find("from AppUser where username=?", username);
+		List<AppUser> appUsers = currentSession()
+				.createQuery("from AppUser where username=:username")
+				.setParameter("username", username)
+				.list();
 		return (appUsers != null && appUsers.size() >0) ? appUsers.get(0) : null;
 	}
 
@@ -42,15 +23,19 @@ public class AppUserDAOHibernate extends HibernateDaoSupport implements AppUserD
 	@Override
 	@SuppressWarnings("unchecked")
 	public AppUser getAppUserByNameWithRoles(String username) {
-		List<AppUser> appUsers = getHibernateTemplate().find("from AppUser au "
-				+ "inner join fetch "
-				+ "		au.appUserUserRoles auur "
-				+ "inner join fetch "
-				+ "		auur.userRole ur "
-				+ "where au.username=?", username);
+		List<AppUser> appUsers = currentSession()
+				.createQuery("from AppUser au "
+						+ "inner join fetch "
+						+ "		au.appUserUserRoles auur "
+						+ "inner join fetch "
+						+ "		auur.userRole ur "
+						+ "where au.username=:username")
+						.setParameter("username", username)
+						.list();
+
 
 		/*This stub makes my life simple, but it should be removed
-		 * as soon as the DB starts to fill with rea data.
+		 * as soon as the DB starts to fill with real data.
 		 *For now users duplicate for known reasons - tests create duplicates
 		 */
 			AppUser appUser = (appUsers != null && appUsers.size() >0) ? appUsers.get(0) : null;
@@ -71,5 +56,4 @@ public class AppUserDAOHibernate extends HibernateDaoSupport implements AppUserD
 			*/
 		return appUser;
 	}
-
 }

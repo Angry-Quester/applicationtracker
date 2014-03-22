@@ -30,7 +30,6 @@
     </div>
     <div id="content">
         <h1>Page</h1>
-
   <center>
     <s:hasBindErrors name="testModel">
       <c:if test="${errors.errorCount > 0 }">
