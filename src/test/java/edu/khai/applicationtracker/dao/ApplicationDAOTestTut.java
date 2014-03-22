@@ -169,6 +169,6 @@ public class ApplicationDAOTestTut {
 		List<Application> la = applicationDAOTut.getApplicationsByAppUserId(appUser.getAppUserId());
 			logger.info("\n la DATA ::" + la + "\n");
 
-		assertEquals(la.size(), 2);
+		assertEquals(la.size(), 1);
 	}
 }
