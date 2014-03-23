@@ -77,7 +77,7 @@ public class ApplicationController {
 		 */
 
 		//getting authenticated user ID
-/*
+
 		AppUserPrincipal aup =
 				(AppUserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -88,8 +88,8 @@ public class ApplicationController {
 				securityMarker ?
 				applicationService.getApplication(applicationId) :
 				null;
-*/
-		Application application = applicationService.getApplication(applicationId);
+
+//		Application application = applicationService.getApplication(applicationId);
 
 		model.addAttribute("application", application);
 
