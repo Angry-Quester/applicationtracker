@@ -19,4 +19,20 @@ public class ApplicationDAOHibernate extends HibernateDAO<Application, Long> imp
 				.list();
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public boolean securityCheck(Long principalId, Long entityId) {
+		List<Application> applications =
+				currentSession()
+				.createQuery("select app from Application as app "
+						+ "inner join app.appUserApplications auapp "
+						+ "where auapp.appUser.appUserId=:principalId "
+						+ "and app.applicationId=:entityId")
+				.setParameter("principalId", principalId)
+				.setParameter("entityId", entityId)
+				.list();
+
+			return (applications.size()>0) ? true : false;
+	}
+
 }

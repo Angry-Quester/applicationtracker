@@ -31,7 +31,7 @@
         <c:if test="${not empty application}">
         <h1>Application номер ${application.applicationId}</h1>
         <hr/>
-№
+                №
                 <dl>
                     <dt>applicationId</dt> <dd>${application.applicationId}</dd>
                     <dt>givenName</dt> <dd>${application.givenName}</dd>

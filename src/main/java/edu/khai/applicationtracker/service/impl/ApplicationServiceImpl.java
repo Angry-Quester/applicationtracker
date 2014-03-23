@@ -2,6 +2,8 @@ package edu.khai.applicationtracker.service.impl;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import edu.khai.applicationtracker.dao.ApplicationDAO;
 import edu.khai.applicationtracker.model.Application;
 import edu.khai.applicationtracker.service.ApplicationService;
@@ -20,6 +22,7 @@ public class ApplicationServiceImpl implements ApplicationService{
 	}
 
 	@Override
+	@PreAuthorize("hasRole('ROLE_ADMIN')" )
 	public Application getApplication(Long applicationId) {
 		Application application = applicationDAO.find(applicationId);
 		return application;
@@ -42,4 +45,8 @@ public class ApplicationServiceImpl implements ApplicationService{
 		applicationDAO.removeById(applicationId);
 	}
 
+	@Override
+	public boolean securityCheck(Long principalId, Long entityId) {
+		return applicationDAO.securityCheck(principalId, entityId);
+	}
 }

@@ -34,5 +34,9 @@
             <authentication-provider user-service-ref="userDetailService">
             </authentication-provider>
         </authentication-manager>
+        
+<!-- Method security configuration -->
+<!-- For now nothing here  -->
+   
 
 </beans:beans>

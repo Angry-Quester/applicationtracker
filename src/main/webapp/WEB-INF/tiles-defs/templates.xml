@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+    <!-- Default Main Template -->
+    <definition name="at.template" template="/WEB-INF/jsp/index.jsp">
+        <put-attribute name="title" value="Application Tracker" type="string" />
+
+        <put-attribute name="header" value="/WEB-INF/jspx/header.jsp" />
+        <put-attribute name="sidebar" value="/WEB-INF/jspx/sidebar.jsp" />
+        <put-attribute name="content" value="/WEB-INF/jspx/content.jsp" />        
+        <put-attribute name="footer" value="/WEB-INF/jspx/footer.jsp" />
+    </definition>
+ 
+    <definition name="index" extends="at.template">
+        <put-attribute name="content" value="/WEB-INF/jspx/index.jsp" />
+    </definition>
+
+    <definition name="application" extends="at.template">
+        <put-attribute name="content" value="/WEB-INF/jspx/application.jsp" />
+    </definition>
+    
+    <definition name="applications" extends="at.template">
+        <put-attribute name="content" value="/WEB-INF/jspx/applications.jsp" />
+    </definition>
+ 
+</tiles-definitions>

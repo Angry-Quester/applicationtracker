@@ -22,9 +22,10 @@
     <mvc:resources mapping="/fonts/**" location="WEB-INF/resources/fonts/" />
     <mvc:resources mapping="/img/**" location="WEB-INF/resources/img/" />
 
+
 <!-- View resolvers config -->
-    <bean
-        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="order" value="1"></property>        
         <property name="prefix">
             <value>/WEB-INF/jsp/</value>
         </property>
@@ -32,4 +33,17 @@
             <value>.jsp</value>
         </property>
     </bean>
+
+    <bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
+        <property name="order" value="0"></property>
+    </bean>
+        
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+      <property name="definitions">
+            <list>
+                <value>/WEB-INF/tiles-defs/templates.xml</value>
+            </list>
+      </property>
+    </bean>    
+    
 </beans>

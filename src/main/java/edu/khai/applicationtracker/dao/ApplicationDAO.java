@@ -4,6 +4,6 @@ import java.util.List;
 
 import edu.khai.applicationtracker.model.Application;
 
-public interface ApplicationDAO extends GenericDao<Application, Long> {
+public interface ApplicationDAO extends GenericDao<Application, Long>, SecuredDAO{
 	public List<Application> getApplicationsByAppUserId(Long appUserId);
 }

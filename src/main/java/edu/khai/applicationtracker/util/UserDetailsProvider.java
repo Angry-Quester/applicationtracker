@@ -9,11 +9,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import edu.khai.applicationtracker.model.AppUser;
+import edu.khai.applicationtracker.model.AppUserPrincipal;
 import edu.khai.applicationtracker.model.AppUserUserRole;
 
 public class UserDetailsProvider {
 
-	public User getUserDetails(AppUser appUser) {
+	public AppUserPrincipal getUserDetails(AppUser appUser) {
 		String username = appUser.getUsername();
 		String password = appUser.getPassword();
 
@@ -31,7 +32,10 @@ public class UserDetailsProvider {
 		boolean credentialsNonExpired = appUser.isCredentialsNonExpired();
 		boolean enabled = appUser.isEnabled();
 
-		User user = new User(username,
+		AppUserPrincipal appUserPrincipal
+					= new AppUserPrincipal(
+								appUser.getAppUserId(),
+								username,
 								password,
 								enabled,
 								accountNonExpired,
@@ -39,7 +43,7 @@ public class UserDetailsProvider {
 								accountNonLocked,
 								grantedAuthority);
 
-		return user;
+		return appUserPrincipal;
 	}
 
 }

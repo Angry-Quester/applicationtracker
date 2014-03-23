@@ -17,6 +17,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import edu.khai.applicationtracker.service.ApplicationService;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:application-servlet.xml"})
@@ -28,10 +30,12 @@ public class TestDAOTest {
 	private ApplicationContext applicationContext;
 
 	UserDetailsService uds = null;
+	ApplicationService as = null;
 
 	@Before
 	public void setUp() throws Exception {
 		 uds = (UserDetailsService)applicationContext.getBean("userDetailService");
+		 as = (ApplicationService)applicationContext.getBean("applicationService");
 	}
 
 	@After
@@ -46,6 +50,16 @@ public class TestDAOTest {
 	public void testTest() throws Exception {
 		UserDetails ud = uds.loadUserByUsername("myname@mailbox.net");
 		logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!! = "+ud);
+	}
+
+	@Test
+//	@Transactional(propagation = Propagation.REQUIRED)
+//	@Rollback(false)
+	@Ignore
+	public void testAs() throws Exception {
+		boolean securityMarker =
+				as.securityCheck(Long.valueOf(1), Long.valueOf(1));
+		logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!! = "+securityMarker);
 	}
 
 }

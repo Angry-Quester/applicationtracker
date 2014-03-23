@@ -1,16 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ page language="java" contentType="text/html;"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
-
-<c:set var="ctx" value="${pageContext.request.contextPath}"/>
-<s:url var="cssCtx" value="/css"/>
-<s:url var="jsCtx" value="/js"/>
+<%@ include file="/WEB-INF/jsp/taglibs.jsp"%>
 
 <html>
 <head>
-    <title>Welcome to the Application Tracker</title>
+    <title><tiles:getAsString name="title" /></title>
     <link href="${cssCtx}/html5-doctor-reset-stylesheet.css" rel="stylesheet" type="text/css" />
     <link href="${cssCtx}/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="${cssCtx}/bootstrap-theme.css" rel="stylesheet" type="text/css" />
@@ -19,32 +13,19 @@
 <body>
     <div id="content-background"></div>
     <div id="header">
-        <p>Header</p>
-        <div id="pic"></div>
+        <tiles:insertAttribute name="header"/>
     </div>
 
     <div id="sidebar">
-        menu text
-        <ol>
-            <s:url var = "loginPathAsUser" value="/appUsers/1" />
-            <li><a href="${loginPathAsUser}">LOGIN as AppUser</a></li>        
-            <s:url var = "loginPath" value="/login" />
-            <li><a href="${loginPath}">LOGIN Information</a></li>
-            <s:url var = "testPath" value="/test" />
-            <li><a href="${testPath}">test</a></li>
-        </ol>
+        <tiles:insertAttribute name="sidebar"/>
     </div>
     <div id="content">
-        <hr />
-        <p>Welcome Random User!</p>
-        <p><c:if test="${not empty welcomeMessage}">${welcomeMessage}</c:if></p>
-        <hr />
+        <tiles:insertAttribute name="content"/>
     </div>
     <div id="footer">
-        <p>Footer</p>
+        <tiles:insertAttribute name="footer"/>
     </div>
    
-    
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="${jsCtx}/jquery-1.11.0.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
