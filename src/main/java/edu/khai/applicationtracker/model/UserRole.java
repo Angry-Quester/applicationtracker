@@ -9,10 +9,28 @@ public class UserRole extends BaseObject{
 	 */
 	private static final long serialVersionUID = 8940350881770698263L;
 
+
+	private Long id;
 	private Long userRoleId;
 	private String authority;
 
 	private Set<AppUserUserRole> appUserUserRoles = new HashSet<AppUserUserRole>(0);
+
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+		this.userRoleId = id;
+	}
 
 	/**
 	 * @return the userRoleId
@@ -26,6 +44,7 @@ public class UserRole extends BaseObject{
 	 */
 	public void setUserRoleId(Long userRoleId) {
 		this.userRoleId = userRoleId;
+		this.id = userRoleId;
 	}
 
 	/**

@@ -1,9 +1,10 @@
 package edu.khai.applicationtracker.service;
 
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;

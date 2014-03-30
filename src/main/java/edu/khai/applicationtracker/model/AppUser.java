@@ -6,6 +6,7 @@ import java.util.Set;
 public class AppUser extends BaseObject{
 	private static final long serialVersionUID = -1482059036524890651L;
 
+	private Long id;
 	private Long appUserId;
 	private String username;
 	private String password;
@@ -16,6 +17,22 @@ public class AppUser extends BaseObject{
 
 	private Set<AppUserUserRole> appUserUserRoles = new HashSet<AppUserUserRole>(0);
 	private Set<AppUserApplication> appUserApplications= new HashSet<AppUserApplication>(0);
+
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+		this.appUserId = id;
+	}
 
 	/**
 	 * @return the appUserId
@@ -29,6 +46,7 @@ public class AppUser extends BaseObject{
 	 */
 	public void setAppUserId(Long appUserId) {
 		this.appUserId = appUserId;
+		this.id = appUserId;
 	}
 
 	/**

@@ -32,7 +32,6 @@ public class UserDetailsProviderUnitTest {
 	public void testloadUserByUsername() throws Exception {
 		String username = "somename@mailbox.ru";
 		String password = "password";
-		String authorities = "ROLE_USER";
 
 
 		AppUser appUser = new AppUser();

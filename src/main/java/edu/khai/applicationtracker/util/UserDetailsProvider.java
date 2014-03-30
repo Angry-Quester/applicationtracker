@@ -15,6 +15,7 @@ import edu.khai.applicationtracker.model.AppUserUserRole;
 public class UserDetailsProvider {
 
 	public AppUserPrincipal getUserDetails(AppUser appUser) {
+		Long userId = appUser.getAppUserId();
 		String username = appUser.getUsername();
 		String password = appUser.getPassword();
 
@@ -34,7 +35,7 @@ public class UserDetailsProvider {
 
 		AppUserPrincipal appUserPrincipal
 					= new AppUserPrincipal(
-								appUser.getAppUserId(),
+								userId,
 								username,
 								password,
 								enabled,

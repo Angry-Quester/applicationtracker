@@ -9,6 +9,7 @@ public class Application extends BaseObject {
 
 	private static final long serialVersionUID = -6443052395300638511L;
 
+	private Long id;
 	private Long applicationId;
 	private String givenName;
 	private String middleName;
@@ -17,6 +18,20 @@ public class Application extends BaseObject {
 	private Date creationDate;
 	private Date lastModificationDate;
 
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+		this.applicationId = id;
+	}
 	private Set<AppUserApplication> appUserApplications = new HashSet<AppUserApplication>(0);
 	/**
 	 * @return the applicationId
@@ -29,6 +44,7 @@ public class Application extends BaseObject {
 	 */
 	public void setApplicationId(Long applicationId) {
 		this.applicationId = applicationId;
+		this.id=applicationId;
 	}
 	/**
 	 * @return the givenName

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/security"
+<b:beans xmlns="http://www.springframework.org/schema/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:beans="http://www.springframework.org/schema/beans"
+            xmlns:b="http://www.springframework.org/schema/beans"
                 xsi:schemaLocation="http://www.springframework.org/schema/beans
                                     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                                     http://www.springframework.org/schema/security
-                                    http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+                                    http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
 <!-- No security processing for the static resources -->
         <http pattern="/css/**" security="none"/>
@@ -20,13 +20,13 @@
             <intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
             <intercept-url pattern="/index" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
             <intercept-url pattern="/test*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-            
+
             <intercept-url pattern="/test**" access="ROLE_ADMIN" />
             <intercept-url pattern="/**" access="ROLE_ADMIN" />
-            
+
             <form-login />
             <logout />
-  
+
         </http>
 
 <!-- Yep - this is the cusom authentication-manager wich gets users from the DB-->
@@ -34,9 +34,47 @@
             <authentication-provider user-service-ref="userDetailService">
             </authentication-provider>
         </authentication-manager>
-        
-<!-- Method security configuration -->
-<!-- For now nothing here  -->
-   
 
-</beans:beans>
+
+<!-- Method security configuration using 
+       
+-->
+    <global-method-security pre-post-annotations="enabled">
+        <expression-handler ref="expressionHandler" />
+    </global-method-security>        
+
+
+    <!-- Expression handler using 
+                customAclPermissionEvaluator
+                customRoleHierarchy
+                 -->
+    <b:bean id="expressionHandler" class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
+         <b:property name="permissionEvaluator" ref="permissionEvaluator" />    
+         <b:property name="roleHierarchy" ref="roleHierarchy" />
+    </b:bean>
+    
+
+     <!-- customAclPermissionEvaluator itself -->
+     <!-- -->
+    <b:bean id="permissionEvaluator" class="org.springframework.security.acls.AclPermissionEvaluator">
+        <b:constructor-arg ref="aclService" />
+    </b:bean>
+  
+ 
+    <!-- customRoleHierarchy itself--> 
+    <b:bean id="roleHierarchy" class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+        <b:property name="hierarchy">
+            <b:value>
+                ROLE_ADMIN > ROLE_USER
+            </b:value>
+        </b:property>
+    </b:bean>
+    
+    
+    <!-- after-invocation-provider using 
+                customAclPermissionEvaluator
+                customRoleHierarchy -->
+    <!-- Is not configured yet -->
+
+
+</b:beans>

@@ -4,9 +4,26 @@ public class AppUserApplication extends BaseObject{
 
 	private static final long serialVersionUID = -3628522496430525353L;
 
+	private Long id;
 	private Long appUserApplicationId;
 	private AppUser appUser;
 	private Application application;
+
+
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+		this.appUserApplicationId = id;
+	}
 	/**
 	 * @return the appUserApplicationId
 	 */
@@ -18,6 +35,7 @@ public class AppUserApplication extends BaseObject{
 	 */
 	public void setAppUserApplicationId(Long appUserApplicationId) {
 		this.appUserApplicationId = appUserApplicationId;
+		this.id = appUserApplicationId;
 	}
 	/**
 	 * @return the appUser
