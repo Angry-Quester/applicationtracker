@@ -25,7 +25,7 @@
         <echo message=""/>
         <echo message="hsql-start    --> Starts test DB"/>
         <echo message="hsql-stop     --> Stops test DB"/>
-        <echo message="populate      --> Populates production DB with schema"/>
+        <echo message="ptdb          --> Populates Test Data Base (ptdb)"/>
     </target>
 
 
@@ -36,7 +36,7 @@
                 failonerror="true"
                 maxmemory="256m">
                         <arg value="--database.0" />
-                        <arg value="file:${test.db.path};hsqldb.lock_file=false" />
+                        <arg value="file:${test.db.path};hsqldb.lock_file=false;sql.syntax_mys=true" />
                         <arg value="--dbname.0" />
                         <arg value="applicationTrackerDb" />
                     <classpath location="${test.db.lib}"/>
@@ -56,15 +56,15 @@
         </sql>
     </target>
     
-        <target name="populate">
-            <sql url="jdbc:mysql://localhost:3306/applicationTrackerDb?characterEncoding=UTF-8"
+        <target name="ptdb">
+            <sql url="jdbc:mysql://localhost:3306/applicationTrackerDbTest?useUnicode=true&amp;characterEncoding=UTF-8"
                 driver="com.mysql.jdbc.Driver"
                 userid="atroot"
                 password="ghbdtnatroot"
                 autocommit="true"
                 encoding="UTF-8">
                     <classpath location="${src.db.lib}"/>
-            <transaction  src="applicationtrackerdbScheme.sql"/>
+            <transaction  src="applicationtrackerdbtestScheme.sql"/>
             </sql>
         </target>    
     

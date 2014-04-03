@@ -141,12 +141,14 @@
 
             <batchtest todir="${log.test.dir}" if="testcase">
                 <fileset dir="${test.build.src.dir}">
-                    <include name="**/*${testcase}*"/>
+                    <include name="**/*${testcase}*.class"/>
+                    <exclude name="**/*$*.class"/>
                 </fileset>
             </batchtest>
             <batchtest todir="${log.test.dir}" unless="testcase">
                 <fileset dir="${test.build.src.dir}">
                     <include name="**/*Test.class*"/>
+                    <exclude name="**/*$*.class"/>                    
                 </fileset>
             </batchtest>
         </junit>

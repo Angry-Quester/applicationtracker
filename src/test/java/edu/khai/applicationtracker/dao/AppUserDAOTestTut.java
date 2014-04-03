@@ -41,7 +41,7 @@ public class AppUserDAOTestTut {
 	@Before
 	public void setUp() throws Exception {
 		appUser = new AppUser();
-		appUser.setUsername("myname@mailbox.net");
+		appUser.setUsername("фывmyname@mailbox.net");
 		appUser.setPassword("password");
 		appUser.setAccountNonExpired(true);
 		appUser.setAccountNonLocked(true);
@@ -56,7 +56,7 @@ public class AppUserDAOTestTut {
 
 	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
-	@Rollback(true)
+	@Rollback(false)
 	public void testGetAppUserByName() throws Exception {
 		appUserDAOTut.add(appUser);
 
@@ -79,7 +79,7 @@ public class AppUserDAOTestTut {
 
 	@Test
 	@Transactional(propagation = Propagation.REQUIRED)
-	@Rollback(true)
+	@Rollback(false)
 	public void testGetAppUserByNameWithRoles() throws Exception {
 			appUserDAOTut.add(appUser);
 				logger.info("\n appUser DATA ::" + appUser + "\n");
