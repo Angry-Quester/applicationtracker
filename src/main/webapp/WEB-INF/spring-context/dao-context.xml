@@ -62,6 +62,7 @@
 <!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory" />
+        <property name="dataSource" ref="dataSource" />
     </bean>
 
     <!-- I will use annotation driven transactions only when i need a non-standart method

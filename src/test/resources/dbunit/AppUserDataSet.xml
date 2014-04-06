@@ -22,6 +22,7 @@
   <userrole userRoleId="1" authority="ROLE_ADMIN"/>
 
   <appuser appUserId="1" username="core@mailbox.net" password="password" accountNonExpired="1" accountNonLocked="1" credentialsNonExpired="1" enabled="1"/>
+  <appuser appUserId="2" username="test@mailbox.net" password="password" accountNonExpired="1" accountNonLocked="1" credentialsNonExpired="1" enabled="1"/>  
 
   <appuseruserrole appUserUserRoleId="1" appUserId="1" userRoleId="1"/>
 

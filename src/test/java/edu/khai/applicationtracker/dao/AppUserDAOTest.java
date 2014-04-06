@@ -2,15 +2,16 @@ package edu.khai.applicationtracker.dao;
 
 import java.util.Iterator;
 
+import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 import org.dbunit.IDatabaseTester;
-
 import org.dbunit.dataset.IDataSet;
 
 import static org.junit.Assert.*;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,19 +23,18 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import edu.khai.applicationtracker.dao.AppUserDAO;
 import edu.khai.applicationtracker.model.AppUser;
 import edu.khai.applicationtracker.model.AppUserUserRole;
 import edu.khai.applicationtracker.model.UserRole;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring-context/dao-context.xml"})
 @TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
-public class AppUserDAOTestTut extends DBUnitSetup{
-	final static Logger logger = Logger.getLogger(AppUserDAOTestTut.class);
+public class AppUserDAOTest {
+
+	final static Logger logger = Logger.getLogger(AppUserDAOTest.class);
 
 	//path to the prepeared DBUnit flat dataset
 	private static final String DATASET_PATH = "src/test/resources/dbunit/AppUserDataSet.xml";
@@ -43,21 +43,26 @@ public class AppUserDAOTestTut extends DBUnitSetup{
 	private IDataSet dataSet = null;
 
 	@Autowired
-	ComboPooledDataSource dataSource;
+	DataSource dataSource; 	//ComboPooledDataSource
 
 	@Autowired
 	AppUserDAO appUserDAO;
 
 	@Before
 	public void setUp() throws Exception {
-		this.dataSet = readDataSet(DATASET_PATH);
-		this.databaseTester = setUpDatabaseTester(this.dataSource, this.dataSet);
-		this.databaseTester.onSetup();
+		dataSet = DBUnitSetup.readDataSet(DATASET_PATH);
+		databaseTester = DBUnitSetup.setUpDatabaseTester(dataSource, dataSet);
+		databaseTester.onSetup();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		this.databaseTester.onTearDown();
+		//databaseTester.onTearDown();
+	}
+
+	@AfterClass
+	public static void afterClass() throws Exception {
+		DBUnitSetup.afterTestCleanUp(DATASET_PATH);
 	}
 
 
@@ -66,8 +71,8 @@ public class AppUserDAOTestTut extends DBUnitSetup{
 	@Rollback(false)
 	public void testGetAppUserByName() throws Exception {
 		//get data from the dataset to check against
-		Long appUserId = Long.valueOf((String)this.dataSet.getTable("appUser").getValue(0, "appUserId"));
-		String username = (String)this.dataSet.getTable("appUser").getValue(0, "username");
+		Long appUserId = Long.valueOf(DBUnitSetup.getTestData("appUser", 0, "appUserId"));
+		String username = DBUnitSetup.getTestData("appUser", 0, "username");
 
 		//get appuser from database
 		AppUser found = appUserDAO.getAppUserByName(username);
@@ -83,9 +88,11 @@ public class AppUserDAOTestTut extends DBUnitSetup{
 	@Transactional(propagation = Propagation.REQUIRED)
 	@Rollback(false)
 	public void testGetAppUserByNameWithRoles() throws Exception {
-		Long appUserId = Long.valueOf((String)this.dataSet.getTable("appUser").getValue(0, "appUserId"));
-		String username = (String)this.dataSet.getTable("appUser").getValue(0, "username");
+		//get data from the dataset to check against
+		Long appUserId = Long.valueOf(DBUnitSetup.getTestData("appUser", 0, "appUserId"));
+		String username = DBUnitSetup.getTestData("appUser", 0, "username");
 
+		//get appuser from database
 		AppUser found = appUserDAO.getAppUserByNameWithRoles(username);
 			logger.info("\n found appUser DATA ::" + found + "\n");
 

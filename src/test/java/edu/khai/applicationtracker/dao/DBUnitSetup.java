@@ -13,32 +13,52 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
+import org.junit.AfterClass;
 
+
+/**
+ * Utility helper class. Implements basic DBUNit functionality and several helper methods.
+ *
+ * @author Random Screen
+ *
+ */
 public class DBUnitSetup {
 	final static Logger logger = Logger.getLogger(DBUnitSetup.class);
 
-	private IDatabaseTester databaseTester = null;
-	private IDataSet dataSet = null;
+	//new JdbcDatabaseTester(DRIVER_CLASS, CONNECTION_URL, USER, PASSWORD) {
+	/*
+	public static final String DRIVER_CLASS= "com.mysql.jdbc.Driver";
+	public static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/applicationTrackerDbTest?useUnicode=true&characterEncoding=UTF-8";
+	public static final String USER = "atroot";
+	public static final String PASSWORD = "ghbdtnatroot";
+	 */
+	private static IDatabaseTester databaseTester = null;
+	private static IDataSet dataSet = null;
 
 
-	public IDataSet getDataSet() {
-		return this.dataSet;
+	/**
+	 * @param fileName The name of the file (full path actually) storing flat dataset information for the test
+	 * @return DBUnit IDataSet for the given file
+	 * @throws general Exception. I'm lazy to implement exception logic at this point
+	 */
+	public static IDataSet readDataSet(String fileName) throws Exception {
+		dataSet = new FlatXmlDataSetBuilder().build(new File(fileName));
+		return dataSet;
 	}
 
-	public IDatabaseTester getDatabaseTester() {
-		return this.databaseTester;
-	}
 
+	/**
+	 * Setc up working IDatabaseTester for the current test Suite
+	 * @param dataSource data source to connect to DB. For now i just use data sources provided by Spring injections
+	 * @param dataSet
+	 * @return
+	 * @throws Exception
+	 */
+	public static IDatabaseTester setUpDatabaseTester(DataSource dataSource, IDataSet dataSet) throws Exception{
 
-	public IDataSet readDataSet(String fileName) throws Exception {
-		this.dataSet = new FlatXmlDataSetBuilder().build(new File(fileName));
-		return this.dataSet;
-	}
-
-
-	public IDatabaseTester setUpDatabaseTester(DataSource dataSource, IDataSet dataSet) throws Exception{
-		this.databaseTester = new DataSourceDatabaseTester(dataSource) {
-			//Neat hack. Adds new properties to the connection being returned ny the database tester
+		databaseTester =
+				new DataSourceDatabaseTester(dataSource) {
+			//Neat hack. Adds new properties to the connection being returned by the database tester
 			@Override
 			public IDatabaseConnection getConnection() throws Exception {
 				IDatabaseConnection connection = super.getConnection();
@@ -57,6 +77,42 @@ public class DBUnitSetup {
 		return databaseTester;
 	}
 
+	/**
+	 * Full cleanup operation used inside JUnit "AfterClass" method
+	 *
+	 * @param datasetPath  The name of the file (full path actually) storing flat dataset information for the test
+	 * @throws Exception
+	 */
+	public static void afterTestCleanUp(String datasetPath) throws Exception{
+			databaseTester.setDataSet(dataSet);
+			databaseTester.setTearDownOperation(DatabaseOperation.DELETE_ALL);
+			databaseTester.onTearDown();
+			databaseTester.setTearDownOperation(DatabaseOperation.NONE);
+	}
 
+
+	/**
+	 * Return some test data directly from the confugured db unit dataset
+	 *
+	 * @param tableName
+	 * @param row Row for the table in the current test data set
+	 * @param columnName Column name in the row
+	 * @return String representation of the test data
+	 * @throws Exception
+	 */
+	public static String getTestData(String tableName, int row, String columnName) throws Exception{
+		return (String)dataSet.getTable(tableName).getValue(row, columnName);
+	}
+
+	/**
+	 * Return row count for the given table directly from the confugured db unit dataset
+	 *
+	 * @param tableName Name of the DB table
+	 * @return row count for the given table
+	 * @throws Exception
+	 */
+	public static int getRowCount(String tableName) throws Exception{
+		return dataSet.getTable(tableName).getRowCount();
+	}
 
 }

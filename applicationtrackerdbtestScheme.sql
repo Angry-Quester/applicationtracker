@@ -1,8 +1,9 @@
+USE `applicationtrackerdbtest`;
 -- MySQL dump 10.13  Distrib 5.6.13, for Win32 (x86)
 --
 -- Host: 127.0.0.1    Database: applicationtrackerdb
 -- ------------------------------------------------------
--- Server version   5.6.16-log
+-- Server version	5.6.16-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -31,16 +32,6 @@ CREATE TABLE `acl_class` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `acl_class`
---
-
-LOCK TABLES `acl_class` WRITE;
-/*!40000 ALTER TABLE `acl_class` DISABLE KEYS */;
-INSERT INTO `acl_class` VALUES (1,'edu.khai.applicationtracker.model.Application');
-/*!40000 ALTER TABLE `acl_class` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `acl_entry`
 --
 
@@ -63,16 +54,6 @@ CREATE TABLE `acl_entry` (
   CONSTRAINT `foreign_fk_5` FOREIGN KEY (`sid`) REFERENCES `acl_sid` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `acl_entry`
---
-
-LOCK TABLES `acl_entry` WRITE;
-/*!40000 ALTER TABLE `acl_entry` DISABLE KEYS */;
-INSERT INTO `acl_entry` VALUES (1,1,1,1,16,1,1,1),(2,1,2,2,16,1,1,1);
-/*!40000 ALTER TABLE `acl_entry` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `acl_object_identity`
@@ -99,16 +80,6 @@ CREATE TABLE `acl_object_identity` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `acl_object_identity`
---
-
-LOCK TABLES `acl_object_identity` WRITE;
-/*!40000 ALTER TABLE `acl_object_identity` DISABLE KEYS */;
-INSERT INTO `acl_object_identity` VALUES (1,1,1,NULL,1,0);
-/*!40000 ALTER TABLE `acl_object_identity` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `acl_sid`
 --
 
@@ -123,16 +94,6 @@ CREATE TABLE `acl_sid` (
   UNIQUE KEY `unique_uk_1` (`sid`,`principal`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `acl_sid`
---
-
-LOCK TABLES `acl_sid` WRITE;
-/*!40000 ALTER TABLE `acl_sid` DISABLE KEYS */;
-INSERT INTO `acl_sid` VALUES (1,1,'core@mailbox.net'),(2,1,'test@mailbox.net');
-/*!40000 ALTER TABLE `acl_sid` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `application`
@@ -154,16 +115,6 @@ CREATE TABLE `application` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `application`
---
-
-LOCK TABLES `application` WRITE;
-/*!40000 ALTER TABLE `application` DISABLE KEYS */;
-INSERT INTO `application` VALUES (1,'John','Doe','Layman','1980-09-09 00:00:00','2014-01-02 00:00:00','2014-01-13 00:00:00'),(2,'Cris','Boom','Prophet','1960-11-10 00:00:00','2014-01-02 00:00:00','2014-01-13 00:00:00'),(4,'Mary','Trinity','Tripman','1960-10-12 00:00:00','2014-01-02 00:00:00','2014-01-13 00:00:00'),(5,'Trip','Snow','Karamel','1960-10-12 00:00:00','2014-01-02 00:00:00','2014-01-13 00:00:00'),(6,'Rod','Iron','Pupm','1960-10-12 00:00:00','2014-01-02 00:00:00','2014-01-13 00:00:00'),(8,'Stram','Tinker','Bass','1960-10-12 00:00:00','2014-01-02 00:00:00','2014-01-13 00:00:00'),(9,'Gordon','Ruger','Every','1960-10-12 00:00:00','2014-01-02 00:00:00','2014-01-13 00:00:00'),(10,'Kit','Apple','Stoleman','1960-10-12 00:00:00','2014-01-02 00:00:00','2014-01-13 00:00:00'),(12,'Vik','Krammer','Domry','1960-10-12 00:00:00','2014-01-02 00:00:00','2014-01-13 00:00:00'),(13,'Hamphry','Bruce','Stimmer','1960-10-12 00:00:00','2014-01-02 00:00:00','2014-01-13 00:00:00'),(14,'Emmet','Brother','Brown','1960-10-12 00:00:00','2014-01-02 00:00:00','2014-01-13 00:00:00');
-/*!40000 ALTER TABLE `application` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `appuser`
 --
 
@@ -181,16 +132,6 @@ CREATE TABLE `appuser` (
   PRIMARY KEY (`appUserId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `appuser`
---
-
-LOCK TABLES `appuser` WRITE;
-/*!40000 ALTER TABLE `appuser` DISABLE KEYS */;
-INSERT INTO `appuser` VALUES (1,'core@mailbox.net','password','','','',''),(2,'test@mailbox.net','password','','','','');
-/*!40000 ALTER TABLE `appuser` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `appuserapplication`
@@ -212,16 +153,6 @@ CREATE TABLE `appuserapplication` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `appuserapplication`
---
-
-LOCK TABLES `appuserapplication` WRITE;
-/*!40000 ALTER TABLE `appuserapplication` DISABLE KEYS */;
-INSERT INTO `appuserapplication` VALUES (1,1,1),(3,1,2),(4,1,4),(5,1,5),(6,2,6),(7,2,8);
-/*!40000 ALTER TABLE `appuserapplication` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `appuseruserrole`
 --
 
@@ -241,16 +172,6 @@ CREATE TABLE `appuseruserrole` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `appuseruserrole`
---
-
-LOCK TABLES `appuseruserrole` WRITE;
-/*!40000 ALTER TABLE `appuseruserrole` DISABLE KEYS */;
-INSERT INTO `appuseruserrole` VALUES (1,1,1),(3,2,2);
-/*!40000 ALTER TABLE `appuseruserrole` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `userrole`
 --
 
@@ -263,16 +184,6 @@ CREATE TABLE `userrole` (
   PRIMARY KEY (`userRoleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `userrole`
---
-
-LOCK TABLES `userrole` WRITE;
-/*!40000 ALTER TABLE `userrole` DISABLE KEYS */;
-INSERT INTO `userrole` VALUES (1,'ROLE_ADMIN'),(2,'ROLE_USER');
-/*!40000 ALTER TABLE `userrole` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -283,4 +194,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-04-05 13:25:56
+-- Dump completed on 2014-04-05 13:26:37

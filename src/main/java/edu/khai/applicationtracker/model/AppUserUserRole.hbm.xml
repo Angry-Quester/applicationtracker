@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC
-	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="edu.khai.applicationtracker.model.AppUserUserRole" table="appUserUserRole">
+    <class name="edu.khai.applicationtracker.model.AppUserUserRole" table="appUserUserRole">
 
-		<id name="appUserUserRoleId" column="appUserUserRoleId" unsaved-value="0">
-			<generator class="increment"/>
-		</id>
+        <id name="appUserUserRoleId" column="appUserUserRoleId" unsaved-value="0">
+            <generator class="increment"/>
+        </id>
 
-		<many-to-one name="appUser" class="edu.khai.applicationtracker.model.AppUser" fetch="select">
-			<column name="appUserId" not-null="true" />
-		</many-to-one>
+        <many-to-one name="appUser" class="edu.khai.applicationtracker.model.AppUser" fetch="select">
+            <column name="appUserId" not-null="true" />
+        </many-to-one>
 
-		<many-to-one name="userRole" class="edu.khai.applicationtracker.model.UserRole" fetch="select">
-			<column name="userRoleId" not-null="true" />
-		</many-to-one>
+        <many-to-one name="userRole" class="edu.khai.applicationtracker.model.UserRole" fetch="select">
+            <column name="userRoleId" not-null="true" />
+        </many-to-one>
 </class>
 </hibernate-mapping>

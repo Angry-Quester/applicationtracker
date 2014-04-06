@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC
-	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="edu.khai.applicationtracker.model.UserRole" table="UserRole">
+    <class name="edu.khai.applicationtracker.model.UserRole" table="UserRole">
 
-		<id name="userRoleId" column="userRoleId" unsaved-value="0">
-			<generator class="increment"/>
-		</id>
+        <id name="userRoleId" column="userRoleId" unsaved-value="0">
+            <generator class="increment"/>
+        </id>
 
-		<property name="authority" column="authority" not-null="false"/>
+        <property name="authority" column="authority" not-null="false"/>
 
-		<set name="appUserUserRoles" table="appUserUserRole"
-							inverse="true"
-							lazy="true"
-							fetch="select">
-			<key>
-				<column name="userRoleId" not-null="true" />
-			</key>
-			<one-to-many class="edu.khai.applicationtracker.model.AppUserUserRole" />
-		</set>
-	</class>
+        <set name="appUserUserRoles" table="appUserUserRole"
+                            inverse="true"
+                            lazy="true"
+                            fetch="select">
+            <key>
+                <column name="userRoleId" not-null="true" />
+            </key>
+            <one-to-many class="edu.khai.applicationtracker.model.AppUserUserRole" />
+        </set>
+    </class>
 </hibernate-mapping>

@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC
-	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="edu.khai.applicationtracker.model.Application" table="application">
+    <class name="edu.khai.applicationtracker.model.Application" table="application">
 
-		<id name="applicationId" column="applicationId" unsaved-value="0">
-			<generator class="increment"/>
-		</id>
+        <id name="applicationId" column="applicationId" unsaved-value="0">
+            <generator class="increment"/>
+        </id>
 
-		<property name="givenName"  column="givenName" not-null="false"/>
-		<property name="middleName"  column="middleName" not-null="false"/>
-		<property name="familyName"  column="familyName" not-null="false"/>
-		<property name="birthDate"  column="birthDate" not-null="false"/>
-		<property name="creationDate"  column="creationDate" not-null="false"/>
-		<property name="lastModificationDate"  column="lastModificationDate" not-null="false"/>
+        <property name="givenName"  column="givenName" not-null="false"/>
+        <property name="middleName"  column="middleName" not-null="false"/>
+        <property name="familyName"  column="familyName" not-null="false"/>
+        <property name="birthDate"  column="birthDate" not-null="false"/>
+        <property name="creationDate"  column="creationDate" not-null="false"/>
+        <property name="lastModificationDate"  column="lastModificationDate" not-null="false"/>
 
-		<set name="appUserApplications" table="appUserApplication"
-							inverse="true"
-							lazy="true"
-							fetch="select">
-			<key>
-				<column name="applicationId" not-null="true" />
-			</key>
-			<one-to-many class="edu.khai.applicationtracker.model.AppUserApplication" />
-		</set>
+        <set name="appUserApplications" table="appUserApplication"
+                            inverse="true"
+                            lazy="true"
+                            fetch="select">
+            <key>
+                <column name="applicationId" not-null="true" />
+            </key>
+            <one-to-many class="edu.khai.applicationtracker.model.AppUserApplication" />
+        </set>
 
-	</class>
+    </class>
 </hibernate-mapping>
