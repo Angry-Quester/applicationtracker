@@ -47,8 +47,4 @@ public class ApplicationServiceImpl implements ApplicationService{
 		applicationDAO.removeById(applicationId);
 	}
 
-	@Override
-	public boolean securityCheck(Long principalId, Long entityId) {
-		return applicationDAO.securityCheck(principalId, entityId);
-	}
 }

@@ -18,29 +18,87 @@ import edu.khai.applicationtracker.service.impl.AppUserServiceImpl;
 import static org.mockito.Mockito.*;
 import static org.mockito.BDDMockito.*;
 
-public class AppUserManagerUnitTest {
-	final static Logger logger = Logger.getLogger(AppUserManagerUnitTest.class);
-/*
+public class AppUserServiceUnitTest {
+	final static Logger logger = Logger.getLogger(AppUserServiceUnitTest.class);
+
 	private AppUserDAO mockAppUserDAO;
-	private AppUserServiceImpl appUserManagerImpl;
+
+	private AppUserServiceImpl appUserServiceImpl;
+
+	private AppUser appUser;
 
 
 	@Before
 	public void setUp() throws Exception {
 		//Делаем экземпляр AppUserManager'a
-		appUserManagerImpl = new AppUserServiceImpl();
+		appUserServiceImpl = new AppUserServiceImpl();
 		//Делаем mock объект для ApplicationDAO
 		mockAppUserDAO = mock(AppUserDAO.class);
 		//Устанавливаем зависимости, которые раньше делал Spring
-		appUserManagerImpl.setAppUserDAO(mockAppUserDAO);
+		appUserServiceImpl.setAppUserDAO(mockAppUserDAO);
+
+		//create fake Appuser
+		appUser = new AppUser();
+		appUser.setId(Long.valueOf(1));
+		appUser.setAppUserId(Long.valueOf(1));
+		appUser.setUsername("somename@mailbox.ru");
+		appUser.setPassword("password");
+		appUser.setAccountNonExpired(true);
+		appUser.setAccountNonLocked(true);
+		appUser.setCredentialsNonExpired(true);
+		appUser.setEnabled(true);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		appUserManagerImpl = null;
 		mockAppUserDAO = null;
+		appUserServiceImpl = null;
 	}
 
+	@Test
+	public void testGetAppUserByName() throws Exception {
+		String username = appUser.getUsername();
+		//given
+		willReturn(appUser).given(mockAppUserDAO).getAppUserByName(anyString());
+		//when
+		AppUser found = appUserServiceImpl.getAppUserByName(username);
+		//then
+		verify(mockAppUserDAO, times(1)).getAppUserByName(username);
+
+		assertEquals("Found appUser is Wrong!!! ::",
+				appUser.getUsername(),
+				found.getUsername());
+
+	}
+
+	@Test
+	public void testGetAppUserByNameWithRoles() throws Exception {
+		String username = appUser.getUsername();
+		//given
+		willReturn(appUser).given(mockAppUserDAO).getAppUserByNameWithRoles(anyString());
+		//when
+		AppUser found = appUserServiceImpl.getAppUserByNameWithRoles(username);
+		//then
+		verify(mockAppUserDAO, times(1)).getAppUserByNameWithRoles(username);
+
+		assertEquals("Found appUser is Wrong!!! ::",
+				appUser.getUsername(),
+				found.getUsername());
+	}
+
+
+	/*
+	 *
+	public AppUser getAppUser(Long appUserId);
+	public AppUser addAppUser(AppUser appUser);
+	public AppUser updateAppUser(AppUser appUser);
+	public void removeAppUser(Long appUserId);
+
+	public AppUser getAppUserByName(String appUserName);
+	public AppUser getAppUserByNameWithRoles(String appUserName);
+	 */
+
+	/*
 	@Test
 	public void testGetAppUsers() throws Exception {
 		List<AppUser> appUsers = new ArrayList<AppUser>();

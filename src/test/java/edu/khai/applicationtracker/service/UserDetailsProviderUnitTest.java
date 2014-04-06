@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 
 import static org.junit.Assert.*;
 import edu.khai.applicationtracker.model.AppUser;
+import edu.khai.applicationtracker.model.AppUserPrincipal;
 import edu.khai.applicationtracker.util.UserDetailsProvider;
 
 public class UserDetailsProviderUnitTest {
@@ -17,10 +18,9 @@ public class UserDetailsProviderUnitTest {
 
 	@Before
 	public void setUp() throws Exception {
-		//Делаем экземпляр userDetailsServiceImpl. Это как раз тот класс который нужно тестировать
+		//create userDetailsServiceImpl
 		userDetailsProvider = new UserDetailsProvider();
-			//тут не будет никаких mock объектов
-		//и зависимостей тоже нет
+		//no mocks no dependencies no nothing
 	}
 
 	@After
@@ -30,21 +30,26 @@ public class UserDetailsProviderUnitTest {
 
 	@Test
 	public void testloadUserByUsername() throws Exception {
-		String username = "somename@mailbox.ru";
-		String password = "password";
-
-
+		//create fake Appuser
 		AppUser appUser = new AppUser();
-			appUser.setUsername(username);
-			appUser.setPassword(password);
+		appUser.setId(Long.valueOf(1));
+		appUser.setAppUserId(Long.valueOf(1));
+		appUser.setUsername("somename@mailbox.ru");
+		appUser.setPassword("password");
+		appUser.setAccountNonExpired(true);
+		appUser.setAccountNonLocked(true);
+		appUser.setCredentialsNonExpired(true);
+		appUser.setEnabled(true);
 
 		//given
 
 		//when
-		User user = userDetailsProvider.getUserDetails(appUser);
+		AppUserPrincipal appUserPrincipal = userDetailsProvider.getUserDetails(appUser);
 		//then
-		assertNotNull(user);
-		assertEquals(user.getUsername(), appUser.getUsername());
+		assertNotNull(appUserPrincipal);
+		assertEquals("appUserPrincipal data is wrong ",
+						appUser.getUsername(),
+						appUserPrincipal.getUsername());
 	}
 
 }

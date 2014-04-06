@@ -52,14 +52,4 @@ public class TestDAOTest {
 		logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!! = "+ud);
 	}
 
-	@Test
-//	@Transactional(propagation = Propagation.REQUIRED)
-//	@Rollback(false)
-	@Ignore
-	public void testAs() throws Exception {
-		boolean securityMarker =
-				as.securityCheck(Long.valueOf(1), Long.valueOf(1));
-		logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!! = "+securityMarker);
-	}
-
 }
