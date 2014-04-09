@@ -4,19 +4,54 @@
 
 
 <!-- Application deafault properties -->
+<!--======================== DEFAULT PROPERTIES FOR THE PROJECT  -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~ APPLICATION NAME -->
     <property name="webapp.name" value="ApplicationTracker"/>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~ ENVIRONMENT VARIABLE -->
+    <property environment="env"/>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~ BUILD PATHS FOR *.class files -->
+    <property name="build.dir"              location="build" />
+    <property name="main.build.dir"         location="${build.dir}/classes" />
+    <property name="test.build.dir"         location="${build.dir}/test" />
+<!--~~~~~~~~~~~~~~~~~~~~~~~~ DIST PATHS -->
+    <property name="dist.dir"               location="dist" />
+<!--~~~~~~~~~~~~~~~~~~~~~~~~ PATHS FOR different types of LOG files -->
+    <property name="log.dir"                location="log" />
+    <property name="main.log.dir"           location="${log.dir}/main" />
+    <property name="test.log.dir"           location="${log.dir}/test" />
+<!--~~~~~~~~~~~~~~~~~~~~~~~~ PATHS FOR temporary DB SCHEMES (reserved but unused) -->
+    <property name="db.dir"                 location="db" />
+    <property name="test.db.dir"            location="${db.dir}/test" />
+<!--~~~~~~~~~~~~~~~~~~~~~~~~ SRC as is -->
+    <property name="src.dir"                location="src" />
+<!--~~~~~~~~~~~~~~~~~~~~~~~~ MAIN PRODUCTION CODE and PRUDUCTION SETUP -->
+    <property name="main.dir"               location="${src.dir}/main" />
+    <property name="main.java.dir"          location="${main.dir}/java" />
+    <property name="main.config.dir"        location="${main.dir}/config" />
+    <property name="main.resources.dir"     location="${main.dir}/resources" />
+    <property name="main.webapp.dir"        location="${main.dir}/webapp" />
+    <property name="main.webinf.dir"        location="${main.webapp.dir}/WEB-INF" />
+    <property name="main.lib.dir"           location="${main.webinf.dir}/lib" />
+<!--~~~~~~~~~~~~~~~~~~~~~~~~ TEST CODE and TEST SETUP -->
+    <property name="test.dir"               location="${src.dir}/test" />
+    <property name="test.java.dir"          location="${test.dir}/java" />
+    <property name="test.config.dir"        location="${test.dir}/config" />
+    <property name="test.resources.dir"     location="${test.dir}/resources" />
+    <property name="test.webapp.dir"        location="${test.dir}/webapp" />
+    <property name="test.webinf.dir"        location="${test.webapp.dir}/WEB-INF" />
+    <property name="test.lib.dir"           location="${test.webinf.dir}/lib" />
 
-    <property name="test.lib.dir" location="src/test/webapp/WEB-INF/lib" />
+<!--~~~~~~~~~~~~~~~~~~~~~~~~ PRODUCTION DB DRIVER -->
+    <property name="main.db.lib" location="${test.lib.dir}/mysql-connector-java-5.1.22-bin.jar"></property>
 
+<!--~~~~~~~~~~~~~~~~~~~~~~~~ TEST DB DRIVER (unused)-->
     <property name="test.db.lib" location="${test.lib.dir}/hsqldb.jar"></property>
-    <property name="test.db.dir" location="testdb"></property>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~ TEST DB NAME and PATH (unused)-->
     <property name="test.db.name" value="applicationTrackerDb"></property>
     <property name="test.db.path" location="${test.db.dir}/${test.db.name}"></property>
 
-    <property name="src.db.lib" location="${test.lib.dir}/mysql-connector-java-5.1.22-bin.jar"></property>
 
-
-<!-- Ant task list all available ant tasks in this project -->
+<!--======================== HELP TARGET -->
     <target name="help">
         <echo message=""/>
         <echo message="${webapp.name} build file"/>
@@ -25,12 +60,13 @@
         <echo message=""/>
         <echo message="hsql-start    --> Starts test DB"/>
         <echo message="hsql-stop     --> Stops test DB"/>
-        <echo message="ptmb          --> Populates Test Data Base (ptdb)"/>
+        <echo message="ptmb          --> Populates Main Data Base (pmdb)"/>
         <echo message="ptdb          --> Populates Test Data Base (ptdb)"/>
     </target>
 
 
-    <target name="hsql-start">
+<!--======================== START HSQLDB -->
+    <target name="hsql-start" description="START HSQLDB test database">
         <mkdir dir="${test.db.dir}"/>
         <java classname="org.hsqldb.server.Server"
                 fork="true"
@@ -44,7 +80,9 @@
         </java>
     </target>
 
-    <target name="hsql-stop">
+
+<!--======================== STOP HSQLDB -->
+    <target name="hsql-stop" description="STOP HSQLDB test database">
         <sql url="jdbc:hsqldb:hsql://localhost:9001/applicationTrackerDb"
             driver="org.hsqldb.jdbc.JDBCDriver"
             userid="SA"
@@ -57,28 +95,31 @@
         </sql>
     </target>
 
-    <target name="pmdb">
+
+<!--======================== POPULATE PRODUCTION applicationTrackerDb with data -->
+    <target name="pmdb" description="POPULATE PRODUCTION (MySql) database (applicationTrackerDb) with data">
         <sql url="jdbc:mysql://localhost:3306/applicationTrackerDb?useUnicode=true&amp;characterEncoding=UTF-8"
             driver="com.mysql.jdbc.Driver"
             userid="atroot"
             password="ghbdtnatroot"
             autocommit="true"
             encoding="UTF-8">
-                <classpath location="${src.db.lib}"/>
+                <classpath location="${main.db.lib}"/>
         <transaction  src="applicationtrackerdbScheme.sql"/>
         </sql>
     </target>
 
-    <target name="ptdb">
+
+<!--======================== POPULATE TEST applicationTrackerDbTest with data -->
+    <target name="ptdb" description="POPULATE TEST (MySql) database (applicationTrackerDbTest) with data">
         <sql url="jdbc:mysql://localhost:3306/applicationTrackerDbTest?useUnicode=true&amp;characterEncoding=UTF-8"
             driver="com.mysql.jdbc.Driver"
             userid="atroot"
             password="ghbdtnatroot"
             autocommit="true"
             encoding="UTF-8">
-                <classpath location="${src.db.lib}"/>
+                <classpath location="${main.db.lib}"/>
         <transaction  src="applicationtrackerdbtestScheme.sql"/>
         </sql>
     </target>
-
 </project>

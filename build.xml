@@ -1,7 +1,10 @@
 <?xml version="1.0"?>
 <project name="${webapp.name}" basedir="." default="help">
+    
+    
     <description>${webapp.name} application build file</description>
 
+    
 <!--======================== DEFAULT PROPERTIES FOR THE PROJECT  -->
 <!--~~~~~~~~~~~~~~~~~~~~~~~~ APPLICATION NAME -->
     <property name="webapp.name" value="ApplicationTracker"/>
@@ -39,6 +42,7 @@
     <property name="test.webinf.dir"        location="${test.webapp.dir}/WEB-INF" />
     <property name="test.lib.dir"           location="${test.webinf.dir}/lib" />
 
+    
 <!--======================== INFO TARGET TO CHECK PATHS CONSISTENCY -->
     <target name="project-structure">
         <echo>:: ${webapp.name} ::</echo>
@@ -82,12 +86,14 @@
             <echo>${test.webinf.dir}</echo>
             <echo>${test.lib.dir}</echo>
 
+        <!--
         <echo file="main-classpath.txt">${ant.refid:main.classpath}</echo>
         <echo file="test-classpath.txt">${ant.refid:test.classpath}</echo>
+        -->
     </target>
 
 
-<!--======================== CLASSPATH to compime SOURCE CODE -->
+<!--======================== CLASSPATH for SOURCE CODE -->
     <path id="main.classpath">
         <fileset dir="${main.lib.dir}">
             <include name="*.jar" />
@@ -95,7 +101,7 @@
     </path>
 
 
-<!--======================== CLASSPATH to compime TEST CODE -->
+<!--======================== CLASSPATH for TEST CODE -->
     <path id="test.classpath">
         <fileset dir="${main.lib.dir}">
             <include name="*.jar" />
@@ -204,7 +210,8 @@
               message="Please copy junit.jar into ${env.ANT_HOME}/lib"/>
 
         <mkdir dir="${test.log.dir}"/>
-
+        
+        <!-- RUN tests -->
         <junit
                showoutput="true"
                printsummary="true"
@@ -237,8 +244,6 @@
             check the log files
             in ${test.log.dir}.</fail>
     </target>
-
-
 
 
 <!--======================== *.WAR file ASSEMBLER -->
