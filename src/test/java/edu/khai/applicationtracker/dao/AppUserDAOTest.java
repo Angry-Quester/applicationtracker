@@ -29,6 +29,8 @@ import edu.khai.applicationtracker.model.AppUser;
 import edu.khai.applicationtracker.model.AppUserUserRole;
 import edu.khai.applicationtracker.model.UserRole;
 
+import static edu.khai.applicationtracker.dao.DBUnitSetup.*;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring-context/dao-context.xml"})
 @TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
@@ -50,8 +52,8 @@ public class AppUserDAOTest {
 
 	@Before
 	public void setUp() throws Exception {
-		dataSet = DBUnitSetup.readDataSet(DATASET_PATH);
-		databaseTester = DBUnitSetup.setUpDatabaseTester(dataSource, dataSet);
+		dataSet = readDataSet(DATASET_PATH);
+		databaseTester = setUpDatabaseTester(dataSource, dataSet);
 		databaseTester.onSetup();
 	}
 

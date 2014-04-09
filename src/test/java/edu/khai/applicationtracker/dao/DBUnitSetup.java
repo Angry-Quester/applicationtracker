@@ -13,7 +13,6 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 import org.dbunit.operation.DatabaseOperation;
-import org.junit.AfterClass;
 
 
 /**
@@ -37,6 +36,8 @@ public class DBUnitSetup {
 
 
 	/**
+	 * Read dataset from a flat xml file
+	 *
 	 * @param fileName The name of the file (full path actually) storing flat dataset information for the test
 	 * @return DBUnit IDataSet for the given file
 	 * @throws general Exception. I'm lazy to implement exception logic at this point
@@ -48,7 +49,8 @@ public class DBUnitSetup {
 
 
 	/**
-	 * Setc up working IDatabaseTester for the current test Suite
+	 * Set up working IDatabaseTester for the current test Suite
+	 *
 	 * @param dataSource data source to connect to DB. For now i just use data sources provided by Spring injections
 	 * @param dataSet
 	 * @return

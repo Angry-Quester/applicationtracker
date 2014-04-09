@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.dbunit.operation.DatabaseOperation;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import static org.junit.Assert.*;
@@ -21,7 +18,7 @@ import edu.khai.applicationtracker.model.AppUserPrincipal;
 import edu.khai.applicationtracker.dao.AppUserDAO;
 import edu.khai.applicationtracker.service.impl.UserDetailsServiceImpl;
 import edu.khai.applicationtracker.util.UserDetailsProvider;
-//import static org.mockito.Matchers.anyString;
+
 /*Mockito imports*/
 import static org.mockito.Mockito.*;
 import static org.mockito.BDDMockito.*;

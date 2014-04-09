@@ -1,15 +1,15 @@
-package edu.khai.applicationtracker.service;
+package edu.khai.applicationtracker.util;
 
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
-import org.springframework.security.core.userdetails.User;
 
-import static org.junit.Assert.*;
 import edu.khai.applicationtracker.model.AppUser;
 import edu.khai.applicationtracker.model.AppUserPrincipal;
-import edu.khai.applicationtracker.util.UserDetailsProvider;
+
+import static org.junit.Assert.*;
+
 
 public class UserDetailsProviderUnitTest {
 	final static Logger logger = Logger.getLogger(UserDetailsProviderUnitTest.class);

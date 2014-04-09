@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.khai.applicationtracker.model.Application;
 
+import static edu.khai.applicationtracker.dao.DBUnitSetup.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -50,8 +51,8 @@ public class ApplicationDAOTest{
 
 	@Before
 	public void setUp() throws Exception {
-		dataSet = DBUnitSetup.readDataSet(DATASET_PATH);
-		databaseTester = DBUnitSetup.setUpDatabaseTester(dataSource, dataSet);
+		dataSet = readDataSet(DATASET_PATH);
+		databaseTester = setUpDatabaseTester(dataSource, dataSet);
 		databaseTester.onSetup();
 	}
 
@@ -96,8 +97,8 @@ public class ApplicationDAOTest{
 	@Rollback(true)
 	public void testUpdate() throws Exception{
 		//get data from the dataset to check against
-		Long applicationId = Long.valueOf(DBUnitSetup.getTestData("application", 0, "applicationId"));
-		String familyName = DBUnitSetup.getTestData("application", 0, "familyName");
+		Long applicationId = Long.valueOf(getTestData("application", 0, "applicationId"));
+		String familyName = getTestData("application", 0, "familyName");
 
 		//get the application to update
 		Application application = applicationDAO.find(applicationId);
@@ -129,8 +130,8 @@ public class ApplicationDAOTest{
 	@Rollback(true)
 	public void testFind() throws Exception {
 		//get data from the dataset to check against
-		Long applicationId = Long.valueOf(DBUnitSetup.getTestData("application", 0, "applicationId"));
-		String familyName = DBUnitSetup.getTestData("application", 0, "familyName");
+		Long applicationId = Long.valueOf(getTestData("application", 0, "applicationId"));
+		String familyName = getTestData("application", 0, "familyName");
 
 		//Find application by id
 		Application found = applicationDAO.find(applicationId);
@@ -151,7 +152,7 @@ public class ApplicationDAOTest{
 	@Rollback(true)
 	public void testList() throws Exception {
 		//get row count from the application table
-		int rowCount =  DBUnitSetup.getRowCount("application");
+		int rowCount =  getRowCount("application");
 
 		//get applications list
 		List<Application> la = applicationDAO.list();
@@ -167,9 +168,9 @@ public class ApplicationDAOTest{
 	@Rollback(true)
 	public void testRemove() throws Exception {
 		//get row count from the application table
-		int rowCount =  DBUnitSetup.getRowCount("application");
+		int rowCount =  getRowCount("application");
 		//take the application before last - so it doesn't have any dependencies
-		Long applicationId = Long.valueOf(DBUnitSetup.getTestData("application", rowCount-1, "applicationId"));
+		Long applicationId = Long.valueOf(getTestData("application", rowCount-1, "applicationId"));
 
 		//get an application entity
 		Application application = applicationDAO.find(applicationId);
@@ -205,9 +206,9 @@ public class ApplicationDAOTest{
 	@Rollback(true)
 	public void testRemoveById() throws Exception {
 		//get row count from the application table
-		int rowCount =  DBUnitSetup.getRowCount("application");
+		int rowCount =  getRowCount("application");
 		//take the application before last - so it doesn't have any dependencies
-		Long applicationId = Long.valueOf(DBUnitSetup.getTestData("application", rowCount-1, "applicationId"));
+		Long applicationId = Long.valueOf(getTestData("application", rowCount-1, "applicationId"));
 
 		//get an application entity
 		Application application = applicationDAO.find(applicationId);
@@ -240,7 +241,7 @@ public class ApplicationDAOTest{
 	@Rollback(true)
 	public void testGetApplicationsByAppUserId () throws Exception {
 		//get data from the dataset to check against
-		Long appUserId = Long.valueOf(DBUnitSetup.getTestData("appUser", 0, "appUserId"));
+		Long appUserId = Long.valueOf(getTestData("appUser", 0, "appUserId"));
 
 		List<Application> la = applicationDAO.getApplicationsByAppUserId(appUserId);
 			logger.info("\n Found applications list size :: " + la.size() + "\n");

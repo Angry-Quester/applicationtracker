@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.hibernate.mapping.Array;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;

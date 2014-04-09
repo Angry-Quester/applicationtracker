@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 
 import edu.khai.applicationtracker.model.AppUser;
 import edu.khai.applicationtracker.model.AppUserPrincipal;

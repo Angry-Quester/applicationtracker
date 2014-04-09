@@ -12,7 +12,7 @@
     <property name="test.db.dir" location="testdb"></property>
     <property name="test.db.name" value="applicationTrackerDb"></property>
     <property name="test.db.path" location="${test.db.dir}/${test.db.name}"></property>
-    
+
     <property name="src.db.lib" location="${test.lib.dir}/mysql-connector-java-5.1.22-bin.jar"></property>
 
 
@@ -25,6 +25,7 @@
         <echo message=""/>
         <echo message="hsql-start    --> Starts test DB"/>
         <echo message="hsql-stop     --> Stops test DB"/>
+        <echo message="ptmb          --> Populates Test Data Base (ptdb)"/>
         <echo message="ptdb          --> Populates Test Data Base (ptdb)"/>
     </target>
 
@@ -42,7 +43,7 @@
                     <classpath location="${test.db.lib}"/>
         </java>
     </target>
-    
+
     <target name="hsql-stop">
         <sql url="jdbc:hsqldb:hsql://localhost:9001/applicationTrackerDb"
             driver="org.hsqldb.jdbc.JDBCDriver"
@@ -55,18 +56,29 @@
             ]]>
         </sql>
     </target>
-    
-        <target name="ptdb">
-            <sql url="jdbc:mysql://localhost:3306/applicationTrackerDbTest?useUnicode=true&amp;characterEncoding=UTF-8"
-                driver="com.mysql.jdbc.Driver"
-                userid="atroot"
-                password="ghbdtnatroot"
-                autocommit="true"
-                encoding="UTF-8">
-                    <classpath location="${src.db.lib}"/>
-            <transaction  src="applicationtrackerdbtestScheme.sql"/>
-            </sql>
-        </target>    
-    
-  
+
+    <target name="pmdb">
+        <sql url="jdbc:mysql://localhost:3306/applicationTrackerDb?useUnicode=true&amp;characterEncoding=UTF-8"
+            driver="com.mysql.jdbc.Driver"
+            userid="atroot"
+            password="ghbdtnatroot"
+            autocommit="true"
+            encoding="UTF-8">
+                <classpath location="${src.db.lib}"/>
+        <transaction  src="applicationtrackerdbScheme.sql"/>
+        </sql>
+    </target>
+
+    <target name="ptdb">
+        <sql url="jdbc:mysql://localhost:3306/applicationTrackerDbTest?useUnicode=true&amp;characterEncoding=UTF-8"
+            driver="com.mysql.jdbc.Driver"
+            userid="atroot"
+            password="ghbdtnatroot"
+            autocommit="true"
+            encoding="UTF-8">
+                <classpath location="${src.db.lib}"/>
+        <transaction  src="applicationtrackerdbtestScheme.sql"/>
+        </sql>
+    </target>
+
 </project>
