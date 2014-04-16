@@ -8,11 +8,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -20,12 +16,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import edu.khai.applicationtracker.model.AppUser;
-import edu.khai.applicationtracker.model.AppUserPrincipal;
+
 import edu.khai.applicationtracker.model.Application;
-import edu.khai.applicationtracker.service.AppUserService;
 import edu.khai.applicationtracker.service.ApplicationService;
-import edu.khai.applicationtracker.service.impl.UserDetailsServiceImpl;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
@@ -47,14 +40,11 @@ public class ApplicationControllerTest {
     private WebApplicationContext webApplicationContext;
 
 	@Autowired
-	private ApplicationService applicationService;
-
-	@Autowired
-	private UserDetailsServiceImpl userDetailService;
+	private ApplicationService mockApplicationService;
 
 	@Before
 	public void setUp() throws Exception {
-
+		reset(mockApplicationService);
 		mockMvc = webAppContextSetup(webApplicationContext).build();
 	}
 
@@ -74,14 +64,30 @@ public class ApplicationControllerTest {
 		/* Place fake securityContext into static SecurityContextHolder*/
 		SecurityContextHolder.setContext(SecuritySetup.buildMockSecurityContext());
 
-		when(applicationService.getApplicationsByAppUserId(anyLong())).thenReturn(Arrays.asList(app1, app2));
+		when(mockApplicationService.getApplicationsByAppUserId(anyLong())).thenReturn(Arrays.asList(app1, app2));
 
 		mockMvc.perform(get("/applications"))
 			.andExpect(status().isOk())
 			.andExpect(model().attribute("applications", hasSize(2)));
 
-		verify(applicationService, times(1)).getApplicationsByAppUserId(anyLong());
-		verifyNoMoreInteractions(applicationService);
+		verify(mockApplicationService, times(1)).getApplicationsByAppUserId(anyLong());
+		verifyNoMoreInteractions(mockApplicationService);
+	}
+
+	@Test
+	public void testApplicationPage() throws Exception {
+		/*Fake data to check call results from getApplicationsByAppUserId*/
+		Application app1 = new Application();
+			app1.setApplicationId(1L);
+
+		when(mockApplicationService.getApplication(anyLong())).thenReturn(app1);
+
+		mockMvc.perform(get("/applications/{applicationId}", 1L))
+			.andExpect(status().isOk())
+			.andExpect(model().attribute("application", hasProperty("applicationId", is(1L))));
+
+		verify(mockApplicationService, times(1)).getApplication(anyLong());
+		verifyNoMoreInteractions(mockApplicationService);
 	}
 
 }
