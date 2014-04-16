@@ -4,10 +4,14 @@
         <ol>
             <s:url var = "loginPath" value="/login" />
             <li><a href="${loginPath}">LOG IN</a></li>
-            <s:url var = "loginPath" value="/logout" />
-            <li><a href="${loginPath}">LOG OUT</a></li>
+            <s:url var = "logoutPath" value="/logout" />
+            <li><a href="${logoutPath}">LOG OUT</a></li>
             <s:url var = "testPath" value="/loginTest" />
-            <li><a href="${testPath}">login info</a></li>             
+            <li><a href="${testPath}">Login Data</a></li>
+            <hr />
+            <s:url var = "applicationsPath" value="/applications" />
+            <li><a href="${applicationsPath}">Applications</a></li>            
+            <hr />
             <s:url var = "testPath" value="/test" />
             <li><a href="${testPath}">test</a></li>            
         </ol>

@@ -33,9 +33,11 @@ public class ApplicationController {
 		//get authenticated user ID to create available applications list
 		AppUserPrincipal aup =
 				(AppUserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
 		//get applications list
 		List<Application> applications =
 				applicationService.getApplicationsByAppUserId(aup.getUserId());
+
 		//add applications into model
 		model.addAttribute("applications", applications);
 
