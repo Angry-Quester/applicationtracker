@@ -27,8 +27,8 @@
             </table>
         </c:if>
         <hr />
-        <s:url var = "loginPath" value="/login" />
-        <a href="${loginPath}">LOGIN</a>
+        <s:url var = "loginPath" value="/loginTest" />
+        <a href="${loginPath}">LOGIN DATA</a>    
         <hr />
         <s:url var = "testPath" value="/test" />
         <a href="${testPath}">test</a>

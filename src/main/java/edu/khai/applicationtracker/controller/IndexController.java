@@ -24,9 +24,12 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView getLogin() {
-
-		return new ModelAndView("login", "loginData", SecurityContextHolder.getContext().getAuthentication());
+	public void getLogin() {
 	}
 
+	@RequestMapping(value = "/loginTest", method = RequestMethod.GET)
+	public ModelAndView getLoginTest() {
+
+		return new ModelAndView("loginTest", "loginData", SecurityContextHolder.getContext().getAuthentication());
+	}
 }

@@ -60,7 +60,7 @@
         <echo message=""/>
         <echo message="hsql-start    --> Starts test DB"/>
         <echo message="hsql-stop     --> Stops test DB"/>
-        <echo message="ptmb          --> Populates Main Data Base (pmdb)"/>
+        <echo message="pmdb          --> Populates Main Data Base (pmdb)"/>
         <echo message="ptdb          --> Populates Test Data Base (ptdb)"/>
     </target>
 

@@ -19,13 +19,22 @@
 
             <intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
             <intercept-url pattern="/index" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+            <intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+            <intercept-url pattern="/loginTest" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+            
             <intercept-url pattern="/test*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-
             <intercept-url pattern="/test**" access="ROLE_ADMIN" />
+            
             <intercept-url pattern="/**" access="ROLE_ADMIN" />
 
-            <form-login />
-            <logout />
+            <form-login default-target-url="/applications"
+                        login-page="/login"
+                         />
+                                    
+            <logout logout-url="/logout" 
+                    logout-success-url="/" />
+
+            <csrf />                 
 
         </http>
 

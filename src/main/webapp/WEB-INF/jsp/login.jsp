@@ -1,22 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@ page language="java" contentType="text/html;"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="/WEB-INF/jsp/taglibs.jsp"%>
 <html>
-    <head>
-        <title>Test page with Spring-MVC</title>
-        <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
-        <link rel="stylesheet" href="css/style.css" type="text/css"/>
-    </head>
-    <body>
-        <h1>Login Page</h1>
-        <c:if test="${not empty data}" >
-            <p>${data}</p>
-        </c:if>
-        <hr/>
-        <c:if test="${not empty loginData}" >
-            <p>${loginData}</p>
-        </c:if>
-    </body>
+<head>
+    <title><tiles:getAsString name="title" /></title>
+    <link href="${cssCtx}/html5-doctor-reset-stylesheet.css" rel="stylesheet" type="text/css" />
+    <link href="${cssCtx}/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="${cssCtx}/bootstrap-theme.css" rel="stylesheet" type="text/css" />
+    <link href="${cssCtx}/styles.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div id="content-background"></div>
+    <div id="header">
+        <tiles:insertAttribute name="header"/>
+    </div>
+    <div id="login">
+        <tiles:insertAttribute name="login"/>
+    </div>
+    <div id="footer">
+        <tiles:insertAttribute name="footer"/>
+    </div>
+   
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="${jsCtx}/jquery-1.11.0.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="${jsCtx}/bootstrap.js"></script>
+</body>
 </html>
 

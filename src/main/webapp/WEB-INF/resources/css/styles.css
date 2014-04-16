@@ -1,6 +1,7 @@
 /*
     Custom made styles for the Application Tracker application
 */
+/*====================HTML defaults*/
 html {
   font-size: 100%;
 }
@@ -15,7 +16,7 @@ body {
 body#body-test {
     background-color: #eee;
 }
-
+/*====================BACKGROUND */
 #content-background {
     position: fixed;
     left: 0;
@@ -33,7 +34,7 @@ div {
     /*outline: 1px dashed #000000;*/
     background-color: #fff;
 }
-
+/*====================TILES  BASIC elements */
 #header {
     height: 80px;
 }
@@ -54,6 +55,7 @@ div {
     height: 80px;
 }
 
+/*====================HEADER FOOTER UNIQUE Style*/
 div#header, div#footer {
     /*outline: 1px dashed #000000;*/
     background-color: #ddd;
@@ -65,3 +67,17 @@ div#sidebar, div#content {
     padding: 0.5%;
     border-radius: 5px;
 }
+/*====================HEADER FOOTER UNIQUE Style END*/
+
+#login {
+	float : none;
+    width: 450px; 
+    background-color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    margin: 3px auto;
+    padding: 1px;
+}
+
+
+/*====================TILES elements END*/

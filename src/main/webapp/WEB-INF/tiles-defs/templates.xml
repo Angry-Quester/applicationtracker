@@ -5,26 +5,36 @@
 
 <tiles-definitions>
 
-    <!-- Default Main Template -->
-    <definition name="at.template" template="/WEB-INF/jsp/index.jsp">
+<!--================= Default Main Template -->
+    <definition name="at.content" template="/WEB-INF/jsp/content.jsp">
         <put-attribute name="title" value="Application Tracker" type="string" />
 
-        <put-attribute name="header" value="/WEB-INF/jspx/header.jsp" />
-        <put-attribute name="sidebar" value="/WEB-INF/jspx/sidebar.jsp" />
-        <put-attribute name="content" value="/WEB-INF/jspx/content.jsp" />        
-        <put-attribute name="footer" value="/WEB-INF/jspx/footer.jsp" />
+        <put-attribute name="header" value="/WEB-INF/jspx/tile-header.jsp" />
+        <put-attribute name="sidebar" value="/WEB-INF/jspx/tile-sidebar.jsp" />
+        <put-attribute name="content" value="/WEB-INF/jspx/tile-content.jsp" />        
+        <put-attribute name="footer" value="/WEB-INF/jspx/tile-footer.jsp" />
+    </definition>
+    
+ <!--================= Login Template -->
+     <definition name="login" template="/WEB-INF/jsp/login.jsp">
+        <put-attribute name="title" value="Application Tracker :: Login" type="string" />
+
+        <put-attribute name="header" value="/WEB-INF/jspx/tile-header.jsp" />
+        <put-attribute name="login" value="/WEB-INF/jspx/login.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/jspx/tile-footer.jsp" />
     </definition>
  
-    <definition name="index" extends="at.template">
+ 
+    <definition name="index" extends="at.content">
         <put-attribute name="content" value="/WEB-INF/jspx/index.jsp" />
     </definition>
 
-    <definition name="application" extends="at.template">
+    <definition name="application" extends="at.content">
         <put-attribute name="content" value="/WEB-INF/jspx/application.jsp" />
     </definition>
     
-    <definition name="applications" extends="at.template">
+    <definition name="applications" extends="at.content">
         <put-attribute name="content" value="/WEB-INF/jspx/applications.jsp" />
     </definition>
- 
+    
 </tiles-definitions>
