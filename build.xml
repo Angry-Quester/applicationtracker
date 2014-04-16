@@ -213,7 +213,6 @@
         
         <!-- RUN tests -->
         <junit
-               showoutput="true"
                printsummary="true"
                fork="true"
                errorProperty="test.failed"
@@ -222,7 +221,8 @@
             <classpath>
                 <path refid="test.classpath"/>
             </classpath>
-
+            
+            <formatter type="plain" usefile="false"/>
             <formatter type="plain" usefile="true"/>
 
             <batchtest todir="${test.log.dir}" skipNonTests="true" if="testcase">
