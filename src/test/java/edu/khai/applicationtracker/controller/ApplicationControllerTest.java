@@ -67,32 +67,12 @@ public class ApplicationControllerTest {
 	public void testApplicationsPage() throws Exception {
 		/*Fake data to check call results from getApplicationsByAppUserId*/
 		Application app1 = new Application();
-			app1.setApplicationId(1l);
+			app1.setApplicationId(1L);
 		Application app2 = new Application();
-			app2.setApplicationId(2l);
-
-
-		/* This code helps to test method where i explicitly use SecurityContextHolder
-		 * to get a principal from my Spring Security context
-		 */
-		Authentication authentication = mock(Authentication.class);
-		SecurityContext securityContext = mock(SecurityContext.class);
-
-		/* This is fake AppUserPrincipal to use inside the test*/
-		AppUserPrincipal aup = new AppUserPrincipal(1l,
-													"name@mail.net",
-													"pass",
-													true,
-													true,
-													true,
-													true,
-													Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN")));
-		/* Mock calls to the security infrastructure */
-		when(securityContext.getAuthentication()).thenReturn(authentication);
-		when(securityContext.getAuthentication().getPrincipal()).thenReturn(aup);
+			app2.setApplicationId(2L);
 
 		/* Place fake securityContext into static SecurityContextHolder*/
-		SecurityContextHolder.setContext(securityContext);
+		SecurityContextHolder.setContext(SecuritySetup.buildMockSecurityContext());
 
 		when(applicationService.getApplicationsByAppUserId(anyLong())).thenReturn(Arrays.asList(app1, app2));
 

@@ -52,8 +52,8 @@ public class AppUserDAOTest {
 
 	@Before
 	public void setUp() throws Exception {
-		dataSet = readDataSet(DATASET_PATH);
-		databaseTester = setUpDatabaseTester(dataSource, dataSet);
+		dataSet = buildDataSet(DATASET_PATH);
+		databaseTester = buildUpDatabaseTester(dataSource, dataSet);
 		databaseTester.onSetup();
 	}
 

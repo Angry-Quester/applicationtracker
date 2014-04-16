@@ -42,7 +42,7 @@ public class DBUnitSetup {
 	 * @return DBUnit IDataSet for the given file
 	 * @throws general Exception. I'm lazy to implement exception logic at this point
 	 */
-	public static IDataSet readDataSet(String fileName) throws Exception {
+	public static IDataSet buildDataSet(String fileName) throws Exception {
 		dataSet = new FlatXmlDataSetBuilder().build(new File(fileName));
 		return dataSet;
 	}
@@ -56,7 +56,7 @@ public class DBUnitSetup {
 	 * @return
 	 * @throws Exception
 	 */
-	public static IDatabaseTester setUpDatabaseTester(DataSource dataSource, IDataSet dataSet) throws Exception{
+	public static IDatabaseTester buildUpDatabaseTester(DataSource dataSource, IDataSet dataSet) throws Exception{
 
 		databaseTester =
 				new DataSourceDatabaseTester(dataSource) {
