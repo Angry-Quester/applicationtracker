@@ -17,10 +17,5 @@
                 </dl>
         </c:if>
         <hr />
-        <s:url var = "loginPath" value="/loginTest" />
-        <a href="${loginPath}">LOGIN DATA</a>
-        <hr />
-        <s:url var = "testPath" value="/test" />
-        <a href="${testPath}">test</a>
-        
+
         тестовый текст

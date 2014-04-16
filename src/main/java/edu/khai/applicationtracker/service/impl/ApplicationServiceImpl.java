@@ -23,8 +23,8 @@ public class ApplicationServiceImpl implements ApplicationService{
 	}
 
 	@Override
-	@PreAuthorize("hasRole('ROLE_ADMIN')" )
-	@PostAuthorize("hasPermission(returnObject, admin)")
+//	@PreAuthorize("hasRole('ROLE_ADMIN')" )
+//	@PostAuthorize("hasPermission(returnObject, admin)")
 	public Application getApplication(Long applicationId) {
 		Application application = applicationDAO.find(applicationId);
 		return application;

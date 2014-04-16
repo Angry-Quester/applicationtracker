@@ -30,67 +30,25 @@ public class ApplicationController {
 
 	@RequestMapping(value = "/applications", method = RequestMethod.GET)
 	public String getApplications(Model model) {
-		//getting authenticated user ID
+		//get authenticated user ID to create available applications list
 		AppUserPrincipal aup =
 				(AppUserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
+		//get applications list
 		List<Application> applications =
 				applicationService.getApplicationsByAppUserId(aup.getUserId());
-
+		//add applications into model
 		model.addAttribute("applications", applications);
 
 		return "applications";
 	}
 
 	@RequestMapping(value = "/applications/{applicationId}", method = RequestMethod.GET)
-	public String getApplicationById(@PathVariable Long applicationId, Model model) {
-		/*
-		 * Here i must check request validity
-		 * Compare applicationId with AppUserPrincipal id
-		 * and make descision abot further work
-		 */
-
-		/*
-		 * PreProcessor checks input data
-		 *
-		 * Call method boolean preProcessor(applicationId, principalId)
-		 *
-		 * true - everything works as usual
-		 * false - get en "error object" from PreProcessor
-		 *  		publish the "error object" through the model
-		 *
-		 *
-		 *
-		 * PreProcessor.preProcessor("type", entityId, principalId) {
-		 * 		type = application {
-		 * 			applicationDAO.checkSecurity(entityId, principalId)
-		 * 		}
-		 * }
-		 *
-		 * applicationDAO.checkSecurity(entityId, principalId) {
-		 *		currentSession.createQuery("CHECK QUERY")
-		 *						.setParameter(entityId)
-		 *						.setParameter(principalId)
-		 *
-		 * }
-		 *
-		 */
-
-		//getting authenticated user ID
-/*
-		AppUserPrincipal aup =
-				(AppUserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-		boolean securityMarker =
-					applicationService.securityCheck(aup.getUserId(), applicationId);
-
-		Application application=
-				securityMarker ?
-				applicationService.getApplication(applicationId) :
-				null;
-*/
+	public String getApplicationById(Model model,
+									 @PathVariable Long applicationId) {
+		//grab application if the user have an apropriate autority (ACL check)
 		Application application = applicationService.getApplication(applicationId);
 
+		//give it ot the user
 		model.addAttribute("application", application);
 
 		return "application";
