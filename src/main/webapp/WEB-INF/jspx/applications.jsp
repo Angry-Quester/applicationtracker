@@ -19,17 +19,18 @@
                 </tr>
             <c:forEach items="${applications}" var="application" varStatus="status">
                 <tr>
-                    <td><a href="${ctx}/applications/${application.applicationId}">${application.applicationId}</a></td>
+                    <td><a href="${ctx}/applications/${application.applicationId}/txt">DOC :: ${application.applicationId}</a> ||
+                        <a href="${ctx}/applications/${application.applicationId}">${application.applicationId}</a></td>
                     <td>${application.givenName}</td>
                     <td>${application.middleName}</td>
                     <td>${application.familyName}</td>
-                    <td>${application.birthDate}</td>
-                    <td>${application.creationDate}</td>
-                    <td>${application.lastModificationDate}</td>
+                    <td><fmt:formatDate pattern="dd.MM.yyyy" value="${application.birthDate}" /></td>
+                    <td><fmt:formatDate pattern="dd.MM.yyyy" value="${application.creationDate}" /></td>
+                    <td><fmt:formatDate pattern="dd.MM.yyyy" value="${application.lastModificationDate}" /></td>
                 </tr>
             </c:forEach>
             </table>
         </c:if>
         <hr />
-       
+
         тест русского текеста
