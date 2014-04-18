@@ -28,10 +28,15 @@
     <definition name="index" extends="at.content">
         <put-attribute name="content" value="/WEB-INF/jspx/index.jsp" />
     </definition>
-
+    
+ <!--================= Application Templates -->
     <definition name="application" extends="at.content">
         <put-attribute name="content" value="/WEB-INF/jspx/application.jsp" />
     </definition>
+
+    <definition name="applications/new" extends="at.content">
+        <put-attribute name="content" value="/WEB-INF/jspx/applications-new-update.jsp" />
+    </definition>    
     
     <definition name="applications" extends="at.content">
         <put-attribute name="content" value="/WEB-INF/jspx/applications.jsp" />

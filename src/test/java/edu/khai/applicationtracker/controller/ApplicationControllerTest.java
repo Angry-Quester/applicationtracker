@@ -1,5 +1,6 @@
 package edu.khai.applicationtracker.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.apache.log4j.Logger;
@@ -8,6 +9,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,11 +19,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 
+
+
 import edu.khai.applicationtracker.model.Application;
 import edu.khai.applicationtracker.service.ApplicationService;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 //import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.hamcrest.Matchers.*;
@@ -75,6 +80,15 @@ public class ApplicationControllerTest {
 	}
 
 	@Test
+	public void testApplicationsAddPage() throws Exception {
+		/*Fake data to check call results from getApplicationsByAppUserId*/
+
+		mockMvc.perform(get("/applications/new"))
+			.andExpect(status().isOk())
+			.andExpect(model().attribute("application", notNullValue()));
+	}
+
+	@Test
 	public void testApplicationPage() throws Exception {
 		/*Fake data to check call results from getApplicationsByAppUserId*/
 		Application app1 = new Application();
@@ -87,6 +101,37 @@ public class ApplicationControllerTest {
 			.andExpect(model().attribute("application", hasProperty("applicationId", is(1L))));
 
 		verify(mockApplicationService, times(1)).getApplication(anyLong());
+		verifyNoMoreInteractions(mockApplicationService);
+	}
+
+	@Test
+	public void testApplicationsAddPost() throws Exception {
+		/*Fake data to check call results from getApplicationsByAppUserId*/
+		Application app1 = new Application();
+			app1.setGivenName("Smarty");
+			app1.setMiddleName("Middle");
+			app1.setFamilyName("Guy");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+				app1.setBirthDate(sdf.parse("11.12.1980"));
+				app1.setCreationDate(sdf.parse("17.04.2014"));
+				app1.setLastModificationDate(sdf.parse("18.04.2014"));
+
+		when(mockApplicationService.addApplication((Application)anyObject())).thenReturn(app1);
+
+		mockMvc.perform(post("/applications")
+						.contentType(MediaType.APPLICATION_FORM_URLENCODED)
+						.param("givenName", "Smarty")
+						.param("middleName", "Middle")
+						.param("familyName", "Guy")
+						.param("birthDate", "11.12.1980")
+						.param("creationDate", "17.04.2014")
+						.param("lastModificationDate", "18.04.2014"))
+						.andDo(print())
+			.andExpect(status().isMovedTemporarily())
+			.andExpect(model().attribute("application", notNullValue()))
+			;
+
+		verify(mockApplicationService, times(1)).addApplication(app1);
 		verifyNoMoreInteractions(mockApplicationService);
 	}
 

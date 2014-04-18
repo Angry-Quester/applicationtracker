@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 public class Application extends BaseObject {
 
@@ -14,8 +16,11 @@ public class Application extends BaseObject {
 	private String givenName;
 	private String middleName;
 	private String familyName;
+	@DateTimeFormat(pattern="dd.MM.yyyy")
 	private Date birthDate;
+	@DateTimeFormat(pattern="dd.MM.yyyy")
 	private Date creationDate;
+	@DateTimeFormat(pattern="dd.MM.yyyy")
 	private Date lastModificationDate;
 
 

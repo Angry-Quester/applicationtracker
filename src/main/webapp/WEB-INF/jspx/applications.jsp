@@ -2,6 +2,10 @@
 <%@ include file="/WEB-INF/jsp/taglibs.jsp"%>
         <h1>Applications</h1>
 
+        <hr />
+        <p><a href="${ctx}/applications/new">Add application</a></p>
+        <hr />
+
         <c:if test="${not empty applications}">
             <table class="table table-bordered">
                 <tr>

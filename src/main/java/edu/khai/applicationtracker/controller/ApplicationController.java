@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,7 +29,8 @@ public class ApplicationController {
 	@Autowired
 	private AppUserService appUserManager;
 
-	@RequestMapping(value = "/applications", method = RequestMethod.GET)
+	@RequestMapping(value = "/applications",
+					method = RequestMethod.GET)
 	public String getApplications(Model model) {
 		//get authenticated user ID to create available applications list
 		AppUserPrincipal aup =
@@ -44,7 +46,29 @@ public class ApplicationController {
 		return "applications";
 	}
 
-	@RequestMapping(value = "/applications/{applicationId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/applications/new",
+					method = RequestMethod.GET)
+	public String newApplication(Application application) {
+		application = new Application();
+		return "applications/new";
+	}
+
+	@RequestMapping(value = "/applications",
+			method = RequestMethod.POST)
+	public String newApplicationAdd(Model model, Application application, BindingResult errors) {
+		if (errors.hasErrors()) {
+			model.addAttribute("errors", errors);
+            return "applications/new";
+        }
+
+		applicationService.addApplication(application);
+
+        return "redirect:applications";
+	}
+
+
+	@RequestMapping(value = "/applications/{applicationId}",
+					method = RequestMethod.GET)
 	public String getApplicationById(Model model,
 									 @PathVariable Long applicationId) {
 		//grab application if the user have an apropriate autority (ACL check)
@@ -55,4 +79,6 @@ public class ApplicationController {
 
 		return "application";
 	}
+
+
 }
