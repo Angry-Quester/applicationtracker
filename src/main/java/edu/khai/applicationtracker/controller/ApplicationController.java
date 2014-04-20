@@ -1,5 +1,7 @@
 package edu.khai.applicationtracker.controller;
 
+import java.beans.PropertyEditor;
+import java.beans.PropertyEditorSupport;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -13,6 +15,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +35,19 @@ public class ApplicationController {
 
 	@Autowired
 	private AppUserService appUserManager;
+
+
+	@InitBinder
+	public void bindingTrimmer(WebDataBinder binder) {
+		 PropertyEditor stringEditor = new PropertyEditorSupport() {
+			 @Override
+			 public void setValue(Object value) {
+				 super.setValue(String.valueOf(value).trim());
+			 }
+		 };
+
+		 binder.registerCustomEditor(String.class, stringEditor);
+	}
 
 
 /*==========================VIEW methods*/
@@ -116,7 +133,7 @@ public class ApplicationController {
         return "redirect:/applications";
 	}
 
-	/*==========================Delete methodds*/
+	/*==========================Delete methods*/
 	@RequestMapping(value = "/applications/{applicationId}", method = RequestMethod.DELETE)
 	public String deleteApplication(Model model,
 									@PathVariable("applicationId") Long applicationId) {
