@@ -17,7 +17,7 @@
         <property name="creationDate"  column="creationDate" not-null="false"/>
         <property name="lastModificationDate"  column="lastModificationDate" not-null="false"/>
 
-        <set name="appUserApplications" table="appUserApplication"
+        <set name="appUserApplications" table="appUserApplication" cascade="remove"
                             inverse="true"
                             lazy="true"
                             fetch="select">

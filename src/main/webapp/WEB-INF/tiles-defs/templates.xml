@@ -30,16 +30,22 @@
     </definition>
     
  <!--================= Application Templates -->
+    <definition name="applications" extends="at.content">
+        <put-attribute name="content" value="/WEB-INF/jspx/applications.jsp" />
+    </definition>
+    
     <definition name="application" extends="at.content">
         <put-attribute name="content" value="/WEB-INF/jspx/application.jsp" />
     </definition>
 
     <definition name="applications/new" extends="at.content">
-        <put-attribute name="content" value="/WEB-INF/jspx/applications-new-update.jsp" />
+        <put-attribute name="content" value="/WEB-INF/jspx/applications-new.jsp" />
+    </definition>
+    
+    <definition name="applications/edit" extends="at.content">
+        <put-attribute name="content" value="/WEB-INF/jspx/applications-edit.jsp" />
     </definition>    
     
-    <definition name="applications" extends="at.content">
-        <put-attribute name="content" value="/WEB-INF/jspx/applications.jsp" />
-    </definition>
+
     
 </tiles-definitions>

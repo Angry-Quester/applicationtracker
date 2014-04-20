@@ -2,6 +2,8 @@ package edu.khai.applicationtracker.service.impl;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;

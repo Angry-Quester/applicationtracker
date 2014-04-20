@@ -32,6 +32,8 @@ public class ApplicationController {
 	@Autowired
 	private AppUserService appUserManager;
 
+
+/*==========================VIEW methods*/
 	@RequestMapping(value = "/applications", method = RequestMethod.GET)
 	public String getApplications(Model model) {
 		//get authenticated user ID to create available applications list
@@ -48,16 +50,34 @@ public class ApplicationController {
 		return "applications";
 	}
 
+	@RequestMapping(value = "/applications/{applicationId}", method = RequestMethod.GET)
+	public String getApplication(Model model,
+									 @PathVariable Long applicationId) {
+		//grab application if the user have an apropriate autority (ACL check)
+		Application application = applicationService.getApplication(applicationId);
 
-	@RequestMapping(value = "/applications/new", method = RequestMethod.GET)
-	public String newApplication(Application application) {
-		application = new Application();
-		return "applications/new";
+		//give it ot the user
+		model.addAttribute("application", application);
+
+		return "application";
 	}
 
 
+/*==========================Add Edit Delete methodds*/
+	/*==========================Add methodds*/
+	@RequestMapping(value = "/applications/new", method = RequestMethod.GET)
+	public String newApplicationForm(Model model) {
+
+		Application application = new Application();
+
+		model.addAttribute("application", application);
+
+		return "applications/new";
+	}
+
 	@RequestMapping(value = "/applications", method = RequestMethod.POST)
-	public String newApplicationAdd(Model model, Application application, BindingResult errors) {
+	public String newApplication(Model model, Application application, BindingResult errors) {
+
 		if (errors.hasErrors()) {
 			model.addAttribute("errors", errors);
             return "applications/new";
@@ -68,7 +88,51 @@ public class ApplicationController {
         return "redirect:applications";
 	}
 
+	/*==========================Edit methodds*/
+	@RequestMapping(value = "/applications/{applicationId}/edit", method = RequestMethod.GET)
+	public String editApplicationForm(Model model,
+									@PathVariable("applicationId") Long applicationId) {
 
+		Application application = applicationService.getApplication(applicationId);
+
+		model.addAttribute("application", application);
+
+		return "applications/edit";
+	}
+
+	@RequestMapping(value = "/applications/{applicationId}", method = RequestMethod.POST)
+	public String editApplication(Model model,
+									@PathVariable("applicationId") Long applicationId,
+									Application application,
+									BindingResult errors) {
+		if (errors.hasErrors()) {
+			model.addAttribute("errors", errors);
+            return "applications/edit";
+        }
+
+		application.setApplicationId(applicationId);
+		applicationService.updateApplication(application);
+
+        return "redirect:/applications";
+	}
+
+	/*==========================Delete methodds*/
+	@RequestMapping(value = "/applications/{applicationId}", method = RequestMethod.DELETE)
+	public String deleteApplication(Model model,
+									@PathVariable("applicationId") Long applicationId) {
+
+		applicationService.removeApplication(applicationId);
+
+        return "redirect:/applications";
+	}
+
+
+
+
+
+
+/*==========================File methodds*/
+	/*==========================Just a stub for a while*/
 	@RequestMapping(value = "/applications/{applicationId}/txt", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public void getApplicationTxtById(Model model,
 			@PathVariable Long applicationId,
@@ -90,18 +154,5 @@ public class ApplicationController {
 
 	}
 
-
-
-	@RequestMapping(value = "/applications/{applicationId}", method = RequestMethod.GET)
-	public String getApplicationById(Model model,
-									 @PathVariable Long applicationId) {
-		//grab application if the user have an apropriate autority (ACL check)
-		Application application = applicationService.getApplication(applicationId);
-
-		//give it ot the user
-		model.addAttribute("application", application);
-
-		return "application";
-	}
 
 }
