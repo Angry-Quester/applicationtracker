@@ -14,7 +14,7 @@ public class UserRole extends BaseObject{
 	private Long userRoleId;
 	private String authority;
 
-	private Set<AppUserUserRole> appUserUserRoles = new HashSet<AppUserUserRole>(0);
+	private Set<AppUser> appUsers = new HashSet<AppUser>(0);
 
 
 	/**
@@ -65,15 +65,15 @@ public class UserRole extends BaseObject{
 	/**
 	 * @return the appUserUserRoles
 	 */
-	public Set<AppUserUserRole> getAppUserUserRoles() {
-		return appUserUserRoles;
+	public Set<AppUser> getAppUsers() {
+		return appUsers;
 	}
 
 	/**
 	 * @param appUserUserRoles the appUserUserRoles to set
 	 */
-	public void setAppUserUserRoles(Set<AppUserUserRole> appUserUserRoles) {
-		this.appUserUserRoles = appUserUserRoles;
+	public void setAppUsers(Set<AppUser> appUsers) {
+		this.appUsers = appUsers;
 	}
 
 	/* (non-Javadoc)

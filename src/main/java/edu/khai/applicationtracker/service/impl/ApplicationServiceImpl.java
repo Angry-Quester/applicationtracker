@@ -59,20 +59,18 @@ public class ApplicationServiceImpl implements ApplicationService{
 
 	@Override
 	public Application addApplication(Application application) {
+
 		applicationDAO.add(application);
 
-		//get principal's id to find AppUser to usi in wiring
-		AppUserPrincipal aup = (AppUserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		//get actual AppUser
+		//get authenticated user ID to get AppUser upstream
+		AppUserPrincipal aup =
+				(AppUserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		//get user entity and update it's applications list
 		AppUser appUser = appUserDAO.find(aup.getUserId());
+		appUser.getApplications().add(application);
 
-		//create Wiring object
-		AppUserApplication aua = new AppUserApplication();
-			aua.setApplication(application);
-			aua.setAppUser(appUser);
-
-		//Wire Application and AppUser together
-		appUserApplicationDAO.add(aua);
+		appUserDAO.update(appUser);
 
 		return application;
 	}

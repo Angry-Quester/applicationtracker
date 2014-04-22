@@ -26,9 +26,7 @@ public class AppUserDAOHibernate extends HibernateDAO<AppUser, Long> implements 
 		List<AppUser> appUsers = currentSession()
 				.createQuery("from AppUser au "
 						+ "inner join fetch "
-						+ "		au.appUserUserRoles auur "
-						+ "inner join fetch "
-						+ "		auur.userRole ur "
+						+ "		au.userRoles ur "
 						+ "where au.username=:username")
 						.setParameter("username", username)
 						.list();

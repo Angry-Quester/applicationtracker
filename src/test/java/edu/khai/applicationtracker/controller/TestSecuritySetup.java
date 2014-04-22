@@ -21,8 +21,8 @@ import static org.mockito.Mockito.*;
  * @author Quester
  *
  */
-public class SecuritySetup {
-	final static Logger logger = Logger.getLogger(SecuritySetup.class);
+public class TestSecuritySetup {
+	final static Logger logger = Logger.getLogger(TestSecuritySetup.class);
 
 
 	/**

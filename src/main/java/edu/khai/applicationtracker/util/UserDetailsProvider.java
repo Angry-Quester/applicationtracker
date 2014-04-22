@@ -9,7 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import edu.khai.applicationtracker.model.AppUser;
 import edu.khai.applicationtracker.model.AppUserPrincipal;
-import edu.khai.applicationtracker.model.AppUserUserRole;
+import edu.khai.applicationtracker.model.UserRole;
 
 public class UserDetailsProvider {
 
@@ -20,10 +20,10 @@ public class UserDetailsProvider {
 
 			Set<GrantedAuthority> grantedAuthority= new HashSet<GrantedAuthority>(0);
 
-				Iterator<AppUserUserRole> i = appUser.getAppUserUserRoles().iterator();
+				Iterator<UserRole> i = appUser.getUserRoles().iterator();
 				while(i.hasNext()) {
 					SimpleGrantedAuthority sga =
-							new SimpleGrantedAuthority(i.next().getUserRole().getAuthority());
+							new SimpleGrantedAuthority(i.next().getAuthority());
 						grantedAuthority.add(sga);
 				}
 

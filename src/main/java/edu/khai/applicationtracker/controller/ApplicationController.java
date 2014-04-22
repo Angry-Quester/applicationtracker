@@ -1,7 +1,6 @@
 package edu.khai.applicationtracker.controller;
 
 import java.beans.PropertyEditor;
-import java.beans.PropertyEditorSupport;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import edu.khai.applicationtracker.model.AppUser;
 import edu.khai.applicationtracker.model.AppUserPrincipal;
 import edu.khai.applicationtracker.model.Application;
 import edu.khai.applicationtracker.service.AppUserService;
@@ -33,7 +33,7 @@ public class ApplicationController {
 	private ApplicationService applicationService;
 
 	@Autowired
-	private AppUserService appUserManager;
+	private AppUserService appUserService;
 
 
 	@InitBinder
@@ -94,7 +94,8 @@ public class ApplicationController {
             return "applications/new";
         }
 
-		applicationService.addApplication(application);
+		//get application entity after it was created
+		Application newApplication = applicationService.addApplication(application);
 
         return "redirect:applications";
 	}

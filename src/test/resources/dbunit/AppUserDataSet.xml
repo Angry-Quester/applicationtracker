@@ -20,11 +20,12 @@
   <application applicationId="5" givenName="John" middleName="Doe" familyName="Layman" birthDate="1960-10-12 00:00:00.0" creationDate="2014-01-02 00:00:00.0" lastModificationDate="2014-01-13 00:00:00.0"/>
 
   <userrole userRoleId="1" authority="ROLE_ADMIN"/>
+  <userrole userRoleId="2" authority="ROLE_USER"/>
 
   <appuser appUserId="1" username="core@mailbox.net" password="password" accountNonExpired="1" accountNonLocked="1" credentialsNonExpired="1" enabled="1"/>
   <appuser appUserId="2" username="test@mailbox.net" password="password" accountNonExpired="1" accountNonLocked="1" credentialsNonExpired="1" enabled="1"/>  
 
-  <appuseruserrole appUserUserRoleId="1" appUserId="1" userRoleId="1"/>
+  <appuseruserrole appUserId="1" userRoleId="1"/>
 
   <appuserapplication appUserApplicationId="1" appUserId="1" applicationId="1"/>
   <appuserapplication appUserApplicationId="3" appUserId="1" applicationId="2"/>

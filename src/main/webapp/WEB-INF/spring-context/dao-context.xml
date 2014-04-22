@@ -52,9 +52,7 @@
             <list>
                 <value>edu/khai/applicationtracker/model/AppUser.hbm.xml</value>
                 <value>edu/khai/applicationtracker/model/UserRole.hbm.xml</value>
-                <value>edu/khai/applicationtracker/model/AppUserUserRole.hbm.xml</value>
                 <value>edu/khai/applicationtracker/model/Application.hbm.xml</value>
-                <value>edu/khai/applicationtracker/model/AppUserApplication.hbm.xml</value>
             </list>
         </property>
     </bean>
@@ -105,10 +103,5 @@
         class="edu.khai.applicationtracker.dao.hibernate.UserRoleDAOHibernate">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
-    
-    <bean id="appUserUserRoleDAO"
-        class="edu.khai.applicationtracker.dao.hibernate.AppUserUserRoleDAOHibernate">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>    
 
 </beans>

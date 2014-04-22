@@ -67,7 +67,7 @@ public class ApplicationControllerTest {
 			app2.setApplicationId(2L);
 
 		/* Place fake securityContext into static SecurityContextHolder*/
-		SecurityContextHolder.setContext(SecuritySetup.buildMockSecurityContext());
+		SecurityContextHolder.setContext(TestSecuritySetup.buildMockSecurityContext());
 
 		when(mockApplicationService.getApplicationsByAppUserId(anyLong())).thenReturn(Arrays.asList(app1, app2));
 

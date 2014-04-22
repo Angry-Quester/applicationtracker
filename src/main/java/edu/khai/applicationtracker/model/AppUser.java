@@ -15,8 +15,8 @@ public class AppUser extends BaseObject{
 	private boolean credentialsNonExpired;
 	private boolean enabled;
 
-	private Set<AppUserUserRole> appUserUserRoles = new HashSet<AppUserUserRole>(0);
-	private Set<AppUserApplication> appUserApplications= new HashSet<AppUserApplication>(0);
+	private Set<UserRole> userRoles = new HashSet<UserRole>(0);
+	private Set<Application> applications= new HashSet<Application>(0);
 
 
 	/**
@@ -135,31 +135,31 @@ public class AppUser extends BaseObject{
 	}
 
 	/**
-	 * @return the appUserUserRoles
+	 * @return the userRoles
 	 */
-	public Set<AppUserUserRole> getAppUserUserRoles() {
-		return appUserUserRoles;
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
 	}
 
 	/**
-	 * @param appUserUserRoles the appUserUserRoles to set
+	 * @param userRoles the userRoles to set
 	 */
-	public void setAppUserUserRoles(Set<AppUserUserRole> appUserUserRoles) {
-		this.appUserUserRoles = appUserUserRoles;
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
 	}
 
 	/**
 	 * @return the appUserApplications
 	 */
-	public Set<AppUserApplication> getAppUserApplications() {
-		return appUserApplications;
+	public Set<Application> getApplications() {
+		return applications;
 	}
 
 	/**
 	 * @param appUserApplications the appUserApplications to set
 	 */
-	public void setAppUserApplications(Set<AppUserApplication> appUserApplications) {
-		this.appUserApplications = appUserApplications;
+	public void setApplications(Set<Application> applications) {
+		this.applications = applications;
 	}
 
 	/* (non-Javadoc)

@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="edu.khai.applicationtracker.model.UserRole" table="UserRole">
+    <class name="edu.khai.applicationtracker.model.UserRole" table="userRole">
 
         <id name="userRoleId" column="userRoleId" unsaved-value="0">
             <generator class="increment"/>
@@ -12,14 +12,13 @@
 
         <property name="authority" column="authority" not-null="false"/>
 
-        <set name="appUserUserRoles" table="appUserUserRole"
+        <set name="appUsers" table="appUserUserRole"
                             inverse="true"
                             lazy="true"
                             fetch="select">
-            <key>
-                <column name="userRoleId" not-null="true" />
-            </key>
-            <one-to-many class="edu.khai.applicationtracker.model.AppUserUserRole" />
+            <key column="userRoleId" not-null="true" />
+            <many-to-many column="appUserId" class="edu.khai.applicationtracker.model.AppUser" />
         </set>
+        
     </class>
 </hibernate-mapping>

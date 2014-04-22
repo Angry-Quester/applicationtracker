@@ -7,34 +7,30 @@
     <class name="edu.khai.applicationtracker.model.AppUser" table="appUser">
 
         <id name="appUserId" column="appUserId" unsaved-value="0">
-            <generator class="increment"/>
+            <generator class="increment" />
         </id>
 
-        <property name="username" column="username" not-null="false"/>
-        <property name="password" column="password" not-null="false"/>
-        <property name="accountNonExpired" column="accountNonExpired" not-null="false"/>
-        <property name="accountNonLocked" column="accountNonLocked" not-null="false"/>
-        <property name="credentialsNonExpired" column="credentialsNonExpired" not-null="false"/>
-        <property name="enabled" column="enabled" not-null="false"/>
+        <property name="username" column="username" not-null="false" />
+        <property name="password" column="password" not-null="false" />
+        <property name="accountNonExpired" column="accountNonExpired" not-null="false" />
+        <property name="accountNonLocked" column="accountNonLocked" not-null="false" />
+        <property name="credentialsNonExpired" column="credentialsNonExpired" not-null="false" />
+        <property name="enabled" column="enabled" not-null="false" />
 
-        <set name="appUserUserRoles" table="appUserUserRole"
-                            inverse="true"
+        <set name="userRoles" table="appUserUserRole"
                             lazy="true"
                             fetch="select">
-            <key>
-                <column name="appUserId" not-null="true" />
-            </key>
-            <one-to-many class="edu.khai.applicationtracker.model.AppUserUserRole" />
+
+            <key column="appUserId" not-null="true" />
+            <many-to-many column="userRoleId" class="edu.khai.applicationtracker.model.UserRole" />
         </set>
 
-        <set name="appUserApplications" table="appUserApplication"
-                            inverse="true"
+        <set name="applications" table="appUserApplication"
                             lazy="true"
                             fetch="select">
-            <key>
-                <column name="appUserId" not-null="true" />
-            </key>
-            <one-to-many class="edu.khai.applicationtracker.model.AppUserApplication" />
+
+            <key column="appUserId" not-null="true" />
+            <many-to-many column="applicationId" class="edu.khai.applicationtracker.model.Application" />
         </set>
 
     </class>

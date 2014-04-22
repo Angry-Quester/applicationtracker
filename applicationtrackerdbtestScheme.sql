@@ -1,9 +1,8 @@
-USE `applicationtrackerdbtest`;
--- MySQL dump 10.13  Distrib 5.6.13, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.6.11, for Win32 (x86)
 --
--- Host: 127.0.0.1    Database: applicationtrackerdb
+-- Host: 127.0.0.1    Database: applicationtrackerdbtest
 -- ------------------------------------------------------
--- Server version	5.6.16-log
+-- Server version	5.0.18-nt
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -17,6 +16,10 @@ USE `applicationtrackerdbtest`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Not dumping tablespaces as no INFORMATION_SCHEMA.FILES table on this server
+--
+
+--
 -- Table structure for table `acl_class`
 --
 
@@ -24,11 +27,11 @@ DROP TABLE IF EXISTS `acl_class`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `acl_class` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL auto_increment,
   `class` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_uk_2` (`class`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +42,7 @@ DROP TABLE IF EXISTS `acl_entry`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `acl_entry` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL auto_increment,
   `acl_object_identity` bigint(20) NOT NULL,
   `ace_order` int(11) NOT NULL,
   `sid` bigint(20) NOT NULL,
@@ -47,12 +50,12 @@ CREATE TABLE `acl_entry` (
   `granting` tinyint(1) NOT NULL,
   `audit_success` tinyint(1) NOT NULL,
   `audit_failure` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_uk_4` (`acl_object_identity`,`ace_order`),
   KEY `foreign_fk_5` (`sid`),
   CONSTRAINT `foreign_fk_4` FOREIGN KEY (`acl_object_identity`) REFERENCES `acl_object_identity` (`id`),
   CONSTRAINT `foreign_fk_5` FOREIGN KEY (`sid`) REFERENCES `acl_sid` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -63,20 +66,20 @@ DROP TABLE IF EXISTS `acl_object_identity`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `acl_object_identity` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL auto_increment,
   `object_id_class` bigint(20) NOT NULL,
   `object_id_identity` bigint(20) NOT NULL,
-  `parent_object` bigint(20) DEFAULT NULL,
-  `owner_sid` bigint(20) DEFAULT NULL,
+  `parent_object` bigint(20) default NULL,
+  `owner_sid` bigint(20) default NULL,
   `entries_inheriting` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_uk_3` (`object_id_class`,`object_id_identity`),
   KEY `foreign_fk_1` (`parent_object`),
   KEY `foreign_fk_3` (`owner_sid`),
   CONSTRAINT `foreign_fk_1` FOREIGN KEY (`parent_object`) REFERENCES `acl_object_identity` (`id`),
   CONSTRAINT `foreign_fk_2` FOREIGN KEY (`object_id_class`) REFERENCES `acl_class` (`id`),
   CONSTRAINT `foreign_fk_3` FOREIGN KEY (`owner_sid`) REFERENCES `acl_sid` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,12 +90,12 @@ DROP TABLE IF EXISTS `acl_sid`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `acl_sid` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL auto_increment,
   `principal` tinyint(1) NOT NULL,
   `sid` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY  (`id`),
   UNIQUE KEY `unique_uk_1` (`sid`,`principal`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -104,13 +107,13 @@ DROP TABLE IF EXISTS `application`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `application` (
   `applicationId` bigint(20) NOT NULL,
-  `givenName` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `middleName` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `familyName` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `birthDate` datetime DEFAULT NULL,
-  `creationDate` datetime DEFAULT NULL,
-  `lastModificationDate` datetime DEFAULT NULL,
-  PRIMARY KEY (`applicationId`)
+  `givenName` varchar(255) collate utf8_unicode_ci default NULL,
+  `middleName` varchar(255) collate utf8_unicode_ci default NULL,
+  `familyName` varchar(255) collate utf8_unicode_ci default NULL,
+  `birthDate` datetime default NULL,
+  `creationDate` datetime default NULL,
+  `lastModificationDate` datetime default NULL,
+  PRIMARY KEY  (`applicationId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -123,13 +126,13 @@ DROP TABLE IF EXISTS `appuser`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `appuser` (
   `appUserId` bigint(20) NOT NULL,
-  `username` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `accountNonExpired` bit(1) DEFAULT NULL,
-  `accountNonLocked` bit(1) DEFAULT NULL,
-  `credentialsNonExpired` bit(1) DEFAULT NULL,
-  `enabled` bit(1) DEFAULT NULL,
-  PRIMARY KEY (`appUserId`)
+  `username` varchar(255) collate utf8_unicode_ci default NULL,
+  `password` varchar(255) collate utf8_unicode_ci default NULL,
+  `accountNonExpired` bit(1) default NULL,
+  `accountNonLocked` bit(1) default NULL,
+  `credentialsNonExpired` bit(1) default NULL,
+  `enabled` bit(1) default NULL,
+  PRIMARY KEY  (`appUserId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -141,15 +144,14 @@ DROP TABLE IF EXISTS `appuserapplication`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `appuserapplication` (
-  `appUserApplicationId` bigint(20) NOT NULL,
   `appUserId` bigint(20) NOT NULL,
   `applicationId` bigint(20) NOT NULL,
-  PRIMARY KEY (`appUserApplicationId`),
+  PRIMARY KEY  (`appUserId`,`applicationId`),
   KEY `FK8BF9C24F07C69A1` (`applicationId`),
   KEY `FK8BF9C24D65FF9F9` (`appUserId`),
   CONSTRAINT `FK8BF9C24D65FF9F9` FOREIGN KEY (`appUserId`) REFERENCES `appuser` (`appUserId`),
   CONSTRAINT `FK8BF9C24F07C69A1` FOREIGN KEY (`applicationId`) REFERENCES `application` (`applicationId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,15 +162,14 @@ DROP TABLE IF EXISTS `appuseruserrole`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `appuseruserrole` (
-  `appUserUserRoleId` bigint(20) NOT NULL,
   `appUserId` bigint(20) NOT NULL,
   `userRoleId` bigint(20) NOT NULL,
-  PRIMARY KEY (`appUserUserRoleId`),
+  PRIMARY KEY  (`appUserId`,`userRoleId`),
   KEY `FK2A0FC8DD65FF9F9` (`appUserId`),
   KEY `FK2A0FC8D5CADC657` (`userRoleId`),
   CONSTRAINT `FK2A0FC8D5CADC657` FOREIGN KEY (`userRoleId`) REFERENCES `userrole` (`userRoleId`),
   CONSTRAINT `FK2A0FC8DD65FF9F9` FOREIGN KEY (`appUserId`) REFERENCES `appuser` (`appUserId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -180,8 +181,8 @@ DROP TABLE IF EXISTS `userrole`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `userrole` (
   `userRoleId` bigint(20) NOT NULL,
-  `authority` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`userRoleId`)
+  `authority` varchar(255) collate utf8_unicode_ci default NULL,
+  PRIMARY KEY  (`userRoleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -194,4 +195,4 @@ CREATE TABLE `userrole` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-04-05 13:26:37
+-- Dump completed on 2014-04-22 19:12:53

@@ -17,14 +17,11 @@
         <property name="creationDate"  column="creationDate" not-null="false"/>
         <property name="lastModificationDate"  column="lastModificationDate" not-null="false"/>
 
-        <set name="appUserApplications" table="appUserApplication" cascade="remove"
-                            inverse="true"
+        <set name="appUsers" table="appUserApplication" 
                             lazy="true"
                             fetch="select">
-            <key>
-                <column name="applicationId" not-null="true" />
-            </key>
-            <one-to-many class="edu.khai.applicationtracker.model.AppUserApplication" />
+            <key column="applicationId" not-null="true" />
+            <many-to-many column="appUserId" class="edu.khai.applicationtracker.model.AppUser"/>
         </set>
 
     </class>
