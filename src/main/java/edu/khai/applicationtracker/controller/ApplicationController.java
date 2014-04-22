@@ -2,14 +2,13 @@ package edu.khai.applicationtracker.controller;
 
 import java.beans.PropertyEditor;
 import java.beans.PropertyEditorSupport;
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -39,14 +38,9 @@ public class ApplicationController {
 
 	@InitBinder
 	public void bindingTrimmer(WebDataBinder binder) {
-		 PropertyEditor stringEditor = new PropertyEditorSupport() {
-			 @Override
-			 public void setValue(Object value) {
-				 super.setValue(String.valueOf(value).trim());
-			 }
-		 };
+		 PropertyEditor pe = new StringTrimmerEditor(false);
 
-		 binder.registerCustomEditor(String.class, stringEditor);
+		 binder.registerCustomEditor(String.class, pe);
 	}
 
 
