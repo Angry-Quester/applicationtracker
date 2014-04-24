@@ -10,22 +10,29 @@
             <generator class="increment"/>
         </id>
 
-        <property name="givenName"  column="givenName" not-null="false"/>
-        <property name="middleName"  column="middleName" not-null="false"/>
-        <property name="familyName"  column="familyName" not-null="false"/>
-        <property name="birthDate"  column="birthDate" not-null="false"/>
-        <property name="creationDate"  column="creationDate" not-null="false"/>
-        <property name="lastModificationDate"  column="lastModificationDate" not-null="false"/>
+        <property name="givenName"  column="givenName" not-null="false" />
+        <property name="middleName"  column="middleName" not-null="false" />
+        <property name="familyName"  column="familyName" not-null="false" />
+        <property name="birthDate"  column="birthDate" not-null="false" />
+        <property name="creationDate"  column="creationDate" not-null="false" />
+        <property name="lastModificationDate"  column="lastModificationDate" not-null="false" />
 
-        <set name="appUsers" table="appUserApplication" 
+        <set name="appUsers" table="appUserApplication"
                              inverse="true"
                              lazy="true"
                              fetch="select">
-            <key column="applicationId" 
+            <key column="applicationId"
                  not-null="true" />
-            <many-to-many column="appUserId" 
-                          class="edu.khai.applicationtracker.model.AppUser"/>
+            <many-to-many column="appUserId"
+                          class="edu.khai.applicationtracker.model.AppUser" />
         </set>
+
+        <many-to-one name="applicationType"
+                     class="edu.khai.applicationtracker.model.ApplicationType"
+                     fetch="select">
+            <column name="applicationTypeId"
+                    not-null="false" />
+        </many-to-one>
 
     </class>
 </hibernate-mapping>

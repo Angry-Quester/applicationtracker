@@ -53,6 +53,7 @@
                 <value>edu/khai/applicationtracker/model/AppUser.hbm.xml</value>
                 <value>edu/khai/applicationtracker/model/UserRole.hbm.xml</value>
                 <value>edu/khai/applicationtracker/model/Application.hbm.xml</value>
+                <value>edu/khai/applicationtracker/model/ApplicationType.hbm.xml</value>
             </list>
         </property>
     </bean>

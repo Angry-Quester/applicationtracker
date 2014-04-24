@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import edu.khai.applicationtracker.model.AppUser;
 import edu.khai.applicationtracker.model.AppUserPrincipal;
 import edu.khai.applicationtracker.model.Application;
 import edu.khai.applicationtracker.service.AppUserService;
@@ -95,7 +94,8 @@ public class ApplicationController {
         }
 
 		//get application entity after it was created
-		Application newApplication = applicationService.addApplication(application);
+		//Application newApplication =
+				applicationService.addApplication(application);
 
         return "redirect:applications";
 	}
