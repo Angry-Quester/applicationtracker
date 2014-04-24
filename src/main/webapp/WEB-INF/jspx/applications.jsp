@@ -23,8 +23,9 @@
                 <tr>
                     <td><a href="${ctx}/applications/${application.applicationId}/edit">Edit</a></td>
                     <td>
-                        <sf:form method="DELETE" action='${ctx}/applications/${application.applicationId}'  >
-                            <input type="submit" id="save" value="Delete" class="btn btn-default" />
+                        <sf:form method="DELETE" action='${ctx}/applications/${application.applicationId}' id="deleteFor${application.applicationId}" >
+                            <!--   <input type="submit" id="save" value="Delete" class="btn btn-default" /> -->
+                            <a href="#" onclick="this.parentNode.submit();">Delete</a>
                         </sf:form>
                     </td>
                     <td><a href="${ctx}/applications/${application.applicationId}/txt">DOC :: ${application.applicationId}</a> ||
