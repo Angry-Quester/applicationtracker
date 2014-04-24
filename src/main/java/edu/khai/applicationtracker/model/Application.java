@@ -23,6 +23,8 @@ public class Application extends BaseObject {
 	@DateTimeFormat(pattern="dd.MM.yyyy")
 	private Date lastModificationDate;
 
+	private ApplicationType applicationType;
+
 	private Set<AppUser> appUsers = new HashSet<AppUser>(0);
 
 
@@ -50,8 +52,8 @@ public class Application extends BaseObject {
 	 * @param applicationId the applicationId to set
 	 */
 	public void setApplicationId(Long applicationId) {
+		this.id = applicationId;
 		this.applicationId = applicationId;
-		this.id=applicationId;
 	}
 	/**
 	 * @return the givenName
@@ -149,6 +151,18 @@ public class Application extends BaseObject {
 		appUser.getApplications().remove(this);
 	}
 
+	/**
+	 * @return the applicationType
+	 */
+	public ApplicationType getApplicationType() {
+		return applicationType;
+	}
+	/**
+	 * @param applicationType the applicationType to set
+	 */
+	public void setApplicationType(ApplicationType applicationType) {
+		this.applicationType = applicationType;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
