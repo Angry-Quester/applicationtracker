@@ -9,6 +9,7 @@ import org.dbunit.IDatabaseTester;
 import org.dbunit.dataset.IDataSet;
 
 import static org.junit.Assert.*;
+import static testsetup.DBUnitSetup.*;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -26,11 +27,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 
+
+import testsetup.DBUnitSetup;
 import edu.khai.applicationtracker.dao.AppUserDAO;
 import edu.khai.applicationtracker.model.AppUser;
 import edu.khai.applicationtracker.model.AppUserUserRole;
 import edu.khai.applicationtracker.model.UserRole;
-import static edu.khai.applicationtracker.dao.DBUnitSetup.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring-context/dao-context.xml"})

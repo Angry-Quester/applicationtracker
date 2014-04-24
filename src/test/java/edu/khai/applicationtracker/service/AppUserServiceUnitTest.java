@@ -31,6 +31,7 @@ public class AppUserServiceUnitTest {
 		appUserServiceImpl = new AppUserServiceImpl();
 		//Делаем mock объект для ApplicationDAO
 		mockAppUserDAO = mock(AppUserDAO.class);
+
 		//Устанавливаем зависимости, которые раньше делал Spring
 		appUserServiceImpl.setAppUserDAO(mockAppUserDAO);
 

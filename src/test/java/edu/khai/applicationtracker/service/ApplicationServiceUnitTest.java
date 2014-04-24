@@ -8,10 +8,13 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.After;
 import org.junit.Test;
+import org.springframework.security.core.context.SecurityContextHolder;
 
+import testsetup.TestSecuritySetup;
 import static org.junit.Assert.*;
-
+import edu.khai.applicationtracker.model.AppUser;
 import edu.khai.applicationtracker.model.Application;
+import edu.khai.applicationtracker.dao.AppUserDAO;
 import edu.khai.applicationtracker.dao.ApplicationDAO;
 import edu.khai.applicationtracker.service.impl.ApplicationServiceImpl;
 
@@ -24,16 +27,23 @@ public class ApplicationServiceUnitTest {
 
 	private Application application;
 	private ApplicationDAO mockApplicationDAO;
+	private AppUserDAO mockAppUserDAO;
 	private ApplicationServiceImpl applicationManagerImpl;
 
 	@Before
 	public void setUp() throws Exception {
 		//Делаем экземпляр UserManager'a
 		applicationManagerImpl = new ApplicationServiceImpl();
+
 		//Делаем mock объект для ApplicationDAO
 		mockApplicationDAO = mock(ApplicationDAO.class);
+		//Делаем mock объект для ApplicationDAO
+		mockAppUserDAO = mock(AppUserDAO.class);
+
 		//Устанавливаем зависимости, которые раньше делал Spring
 		applicationManagerImpl.setApplicationDAO(mockApplicationDAO);
+		//Устанавливаем зависимости, которые раньше делал Spring
+		applicationManagerImpl.setAppUserDAO(mockAppUserDAO);
 
 		//Creating some random application for the test
 		application = new Application();
@@ -44,6 +54,9 @@ public class ApplicationServiceUnitTest {
 				application.setBirthDate(sdf.parse("12-10-1960"));
 				application.setCreationDate(sdf.parse("02-01-2014"));
 				application.setLastModificationDate(sdf.parse("13-01-2014"));
+
+		/* Place fake securityContext into static SecurityContextHolder*/
+		SecurityContextHolder.setContext(TestSecuritySetup.buildMockSecurityContext());
 	}
 
 	@After
@@ -93,13 +106,20 @@ public class ApplicationServiceUnitTest {
 
 	@Test
 	public void testAddApplication() throws Exception {
-		//Long applicationId = Long.valueOf(33);
+		AppUser fakeAppUser = TestSecuritySetup.getFakeAppUserFromPrincipal();
+
 		//given
+		willReturn(fakeAppUser).given(mockAppUserDAO).find(anyLong());
 		willDoNothing().given(mockApplicationDAO).add(application);
 		//when
 		Application found = applicationManagerImpl.addApplication(application);
 		//then
 		verify(mockApplicationDAO, times(1)).add(application);
+		verifyNoMoreInteractions(mockApplicationDAO);
+
+		verify(mockAppUserDAO, times(1)).find(anyLong());
+		verifyNoMoreInteractions(mockAppUserDAO);
+
 		assertEquals("Found application is Wrong!!! ::",
 						application.getFamilyName(),
 						found.getFamilyName());
@@ -115,6 +135,8 @@ public class ApplicationServiceUnitTest {
 		Application found = applicationManagerImpl.updateApplication(application);
 		//then
 		verify(mockApplicationDAO, times(1)).update(application);
+		verifyNoMoreInteractions(mockApplicationDAO);
+
 		assertEquals("Updated application is Wrong!!! ::",
 						application.getFamilyName(),
 						found.getFamilyName());
@@ -123,13 +145,23 @@ public class ApplicationServiceUnitTest {
 
 	@Test
 	public void testRemoveApplication() throws Exception {
+
 		Long applicationId = Long.valueOf(33);
+
+		AppUser fakeAppUser = TestSecuritySetup.getFakeAppUserFromPrincipal();
 		//given
+		willReturn(fakeAppUser).given(mockAppUserDAO).find(anyLong());
+		willReturn(application).given(mockApplicationDAO).find(anyLong());
 		willDoNothing().given(mockApplicationDAO).removeById(applicationId);
 		//when
 		applicationManagerImpl.removeApplication(applicationId);
 		//then
-		verify(mockApplicationDAO, times(1)).removeById(applicationId);
+		verify(mockApplicationDAO, times(1)).find(anyLong());
+		verify(mockApplicationDAO, times(1)).remove(application);
+		verifyNoMoreInteractions(mockApplicationDAO);
+
+		verify(mockAppUserDAO, times(1)).find(anyLong());
+		verifyNoMoreInteractions(mockAppUserDAO);
 	}
 
 }
