@@ -10,6 +10,7 @@ import org.dbunit.IDatabaseTester;
 import org.dbunit.dataset.IDataSet;
 
 import static org.junit.Assert.*;
+import static testsetup.DBUnitSetup.*;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -25,8 +26,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import testsetup.DBUnitSetup;
 import edu.khai.applicationtracker.model.Application;
-import static edu.khai.applicationtracker.dao.DBUnitSetup.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)

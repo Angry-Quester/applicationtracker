@@ -21,6 +21,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 
 
+
+import testsetup.TestSecuritySetup;
 import edu.khai.applicationtracker.model.Application;
 import edu.khai.applicationtracker.service.ApplicationService;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;

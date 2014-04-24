@@ -1,15 +1,17 @@
-package edu.khai.applicationtracker.controller;
+package testsetup;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 
+import edu.khai.applicationtracker.model.AppUser;
 import edu.khai.applicationtracker.model.AppUserPrincipal;
-
+import edu.khai.applicationtracker.model.UserRole;
 import static org.mockito.Mockito.*;
 
 
@@ -63,6 +65,25 @@ public class TestSecuritySetup {
 		when(securityContext.getAuthentication().getPrincipal()).thenReturn(aup);
 
 		return securityContext;
+	}
+
+	public static AppUser getFakeAppUserFromPrincipal() {
+		AppUser fakeAppUser = new AppUser();
+				fakeAppUser.setAppUserId(1L);
+				fakeAppUser.setUsername("name@mail.net");
+				fakeAppUser.setPassword("pass");
+				fakeAppUser.setEnabled(true);
+				fakeAppUser.setAccountNonExpired(true);
+				fakeAppUser.setCredentialsNonExpired(true);
+				fakeAppUser.setAccountNonLocked(true);
+				UserRole userRole = new UserRole();
+						userRole.setUserRoleId(1L);
+						userRole.setAuthority("ROLE_ADMIN");
+				Set<UserRole> userRoles = new HashSet<UserRole>();
+							userRoles.add(userRole);
+				fakeAppUser.setUserRoles(userRoles);
+
+		return fakeAppUser;
 	}
 
 }
