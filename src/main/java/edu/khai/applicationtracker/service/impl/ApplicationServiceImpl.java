@@ -2,17 +2,11 @@ package edu.khai.applicationtracker.service.impl;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import edu.khai.applicationtracker.dao.AppUserApplicationDAO;
 import edu.khai.applicationtracker.dao.AppUserDAO;
 import edu.khai.applicationtracker.dao.ApplicationDAO;
 import edu.khai.applicationtracker.model.AppUser;
-import edu.khai.applicationtracker.model.AppUserApplication;
 import edu.khai.applicationtracker.model.AppUserPrincipal;
 import edu.khai.applicationtracker.model.Application;
 import edu.khai.applicationtracker.service.ApplicationService;
@@ -21,7 +15,6 @@ public class ApplicationServiceImpl implements ApplicationService{
 
 	private AppUserDAO appUserDAO;
 	private ApplicationDAO applicationDAO;
-	private AppUserApplicationDAO appUserApplicationDAO;
 
 	/**
 	 * @param appUserDAO the appUserDAO to set
@@ -35,13 +28,6 @@ public class ApplicationServiceImpl implements ApplicationService{
 	 */
 	public void setApplicationDAO(ApplicationDAO applicationDAO) {
 		this.applicationDAO = applicationDAO;
-	}
-
-	/**
-	 * @param appUserApplicationDAO the appUserApplicationDAO to set
-	 */
-	public void setAppUserApplicationDAO(AppUserApplicationDAO appUserApplicationDAO) {
-		this.appUserApplicationDAO = appUserApplicationDAO;
 	}
 
 	@Override
@@ -60,23 +46,24 @@ public class ApplicationServiceImpl implements ApplicationService{
 	@Override
 	public Application addApplication(Application application) {
 
+		//persist an application
 		applicationDAO.add(application);
 
-		//get authenticated user ID to get AppUser upstream
-		AppUserPrincipal aup =
-				(AppUserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
 		//get user entity and update it's applications list
-		AppUser appUser = appUserDAO.find(aup.getUserId());
-		appUser.getApplications().add(application);
+		AppUser appUser = this.getAppUserFromPrincipal();
 
-		appUserDAO.update(appUser);
+		//add link between Appuser and Application
+		application.addToUsers(appUser);
+		//save the link
+		//		appUserDAO.update(appUser);
+		//link saves automatically after the session flush()
 
 		return application;
 	}
 
 	@Override
 	public Application updateApplication(Application application) {
+		//update doesn't affect link on the inverse side of the association
 		applicationDAO.update(application);
 
 		return application;
@@ -84,7 +71,24 @@ public class ApplicationServiceImpl implements ApplicationService{
 
 	@Override
 	public void removeApplication(Long applicationId) {
-		applicationDAO.removeById(applicationId);
+		Application application = applicationDAO.find(applicationId);
+
+		//get current secured user entity
+		AppUser appUser = this.getAppUserFromPrincipal();
+
+		//severe the link between AppUser and Application beforehand
+		application.removeFromUsers(appUser);
+
+		//and remove application
+		applicationDAO.remove(application);
+	}
+
+	private AppUser getAppUserFromPrincipal() {
+		//get authenticated user ID to get AppUser afterwards
+		AppUserPrincipal aup =
+				(AppUserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		return appUserDAO.find(aup.getUserId());
 	}
 
 }

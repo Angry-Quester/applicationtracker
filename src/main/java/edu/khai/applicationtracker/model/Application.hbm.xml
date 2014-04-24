@@ -18,10 +18,13 @@
         <property name="lastModificationDate"  column="lastModificationDate" not-null="false"/>
 
         <set name="appUsers" table="appUserApplication" 
-                            lazy="true"
-                            fetch="select">
-            <key column="applicationId" not-null="true" />
-            <many-to-many column="appUserId" class="edu.khai.applicationtracker.model.AppUser"/>
+                             inverse="true"
+                             lazy="true"
+                             fetch="select">
+            <key column="applicationId" 
+                 not-null="true" />
+            <many-to-many column="appUserId" 
+                          class="edu.khai.applicationtracker.model.AppUser"/>
         </set>
 
     </class>

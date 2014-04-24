@@ -18,19 +18,23 @@
         <property name="enabled" column="enabled" not-null="false" />
 
         <set name="userRoles" table="appUserUserRole"
-                            lazy="true"
-                            fetch="select">
+                              lazy="true"
+                              fetch="select">
 
-            <key column="appUserId" not-null="true" />
-            <many-to-many column="userRoleId" class="edu.khai.applicationtracker.model.UserRole" />
+            <key column="appUserId" 
+                 not-null="true" />
+            <many-to-many column="userRoleId" 
+                          class="edu.khai.applicationtracker.model.UserRole" />
         </set>
 
         <set name="applications" table="appUserApplication"
-                            lazy="true"
-                            fetch="select">
+                                 lazy="true"
+                                 fetch="select">
 
-            <key column="appUserId" not-null="true" />
-            <many-to-many column="applicationId" class="edu.khai.applicationtracker.model.Application" />
+            <key column="appUserId" 
+                 not-null="true" />
+            <many-to-many column="applicationId" 
+                          class="edu.khai.applicationtracker.model.Application" />
         </set>
 
     </class>

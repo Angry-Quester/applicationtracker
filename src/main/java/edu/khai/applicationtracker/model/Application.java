@@ -138,6 +138,17 @@ public class Application extends BaseObject {
 	public void setAppUsers(Set<AppUser> appUsers) {
 		this.appUsers = appUsers;
 	}
+
+	public void addToUsers(AppUser appUser) {
+		this.appUsers.add(appUser);
+		appUser.getApplications().add(this);
+	}
+
+	public void removeFromUsers(AppUser appUser) {
+		this.appUsers.remove(appUser);
+		appUser.getApplications().remove(this);
+	}
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
