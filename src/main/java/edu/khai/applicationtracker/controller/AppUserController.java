@@ -20,37 +20,37 @@ import edu.khai.applicationtracker.service.ApplicationService;
 @Controller
 public class AppUserController {
 
-	@Autowired
-	private AppUserService appUserService;
+    @Autowired
+    private AppUserService appUserService;
 
-	@Autowired
-	private ApplicationService applicationManager;
+    @Autowired
+    private ApplicationService applicationManager;
 
 
-	@RequestMapping(value = "/appUsers", method = RequestMethod.GET)
-	public String getAppUsers(Model model) {
-		//getting authenticated user name
-		AppUserPrincipal aup =
-				(AppUserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    @RequestMapping(value = "/appUsers", method = RequestMethod.GET)
+    public String getAppUsers(Model model) {
+        //getting authenticated user name
+        AppUserPrincipal aup =
+                (AppUserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-		//use the name to load appUser
-		AppUser au = appUserService.getAppUser(aup.getUserId());
+        //use the name to load appUser
+        AppUser au = appUserService.getAppUser(aup.getUserId());
 
-		List<AppUser> appUsers = new ArrayList<AppUser>();
-						appUsers.add(appUserService.getAppUser(au.getAppUserId()));
+        List<AppUser> appUsers = new ArrayList<AppUser>();
+                        appUsers.add(appUserService.getAppUser(au.getAppUserId()));
 
-			model.addAttribute("appUsers", appUsers);
+            model.addAttribute("appUsers", appUsers);
 
-		return "appUsers";
-	}
+        return "appUsers";
+    }
 
-	@RequestMapping(value = "/appUsers/{appUserId}", method = RequestMethod.GET)
-	public String getAppUserById(@PathVariable Long appUserId, Model model) {
+    @RequestMapping(value = "/appUsers/{appUserId}", method = RequestMethod.GET)
+    public String getAppUserById(@PathVariable Long appUserId, Model model) {
 
-		AppUser appUser = appUserService.getAppUser(appUserId);
-			model.addAttribute("appUser", appUser);
+        AppUser appUser = appUserService.getAppUser(appUserId);
+            model.addAttribute("appUser", appUser);
 
-		return "appUser";
-	}
+        return "appUser";
+    }
 
 }

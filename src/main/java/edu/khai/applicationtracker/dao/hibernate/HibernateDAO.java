@@ -15,7 +15,7 @@ public class HibernateDAO<E, K extends Serializable> implements GenericDao<E, K>
 
     protected Class<? extends E> daoType;
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public HibernateDAO() {
         daoType = (Class<E>) ((ParameterizedType) getClass().getGenericSuperclass())
                         .getActualTypeArguments()[0];
@@ -47,18 +47,18 @@ public class HibernateDAO<E, K extends Serializable> implements GenericDao<E, K>
     @SuppressWarnings("unchecked")
     @Override
     public void removeById(K key) {
-    	E entity = (E) currentSession().get(daoType, key);
+        E entity = (E) currentSession().get(daoType, key);
 
-    	currentSession().delete(entity);
+        currentSession().delete(entity);
     }
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     @Override
     public E find(K key) {
         return (E) currentSession().get(daoType, key);
     }
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     @Override
     public List<E> list() {
         return currentSession().createCriteria(daoType).list();

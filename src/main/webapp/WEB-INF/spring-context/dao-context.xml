@@ -89,6 +89,11 @@
         class="edu.khai.applicationtracker.dao.hibernate.ApplicationDAOHibernate">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+    
+    <bean id="applicationTypeDAO"
+        class="edu.khai.applicationtracker.dao.hibernate.ApplicationTypeDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>    
 
     <bean id="appUserDAO"
         class="edu.khai.applicationtracker.dao.hibernate.AppUserDAOHibernate">

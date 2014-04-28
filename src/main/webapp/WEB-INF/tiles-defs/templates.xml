@@ -42,10 +42,18 @@
         <put-attribute name="content" value="/WEB-INF/jspx/applications-new.jsp" />
     </definition>
     
+    
+    <definition name="applications/new/f1" extends="at.content">
+        <put-attribute name="content" value="/WEB-INF/jspx/applications-new-f1.jsp" />
+    </definition>
+    
+    <definition name="applications/new/f1a" extends="at.content">
+        <put-attribute name="content" value="/WEB-INF/jspx/applications-new-f1a.jsp" />
+    </definition>    
+            
+    
     <definition name="applications/edit" extends="at.content">
         <put-attribute name="content" value="/WEB-INF/jspx/applications-edit.jsp" />
     </definition>    
-    
-
     
 </tiles-definitions>

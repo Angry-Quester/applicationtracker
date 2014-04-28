@@ -16,6 +16,10 @@
         <bean id="applicationService" class="org.mockito.Mockito" factory-method="mock">
             <constructor-arg value="edu.khai.applicationtracker.service.ApplicationService" />
         </bean>
+        
+        <bean id="applicationTypeService" class="org.mockito.Mockito" factory-method="mock">
+            <constructor-arg value="edu.khai.applicationtracker.service.ApplicationTypeService" />            
+        </bean>        
 
         <bean id="userDetailService" class="org.mockito.Mockito" factory-method="mock">
             <constructor-arg value="edu.khai.applicationtracker.service.impl.UserDetailsServiceImpl" />

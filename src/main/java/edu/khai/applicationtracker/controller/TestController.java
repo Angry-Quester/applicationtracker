@@ -23,79 +23,79 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class TestController {
 
-	@Autowired
-	private AppUserService appUserManager;
+    @Autowired
+    private AppUserService appUserManager;
 
-	/**
-	 * @return the appUserManager
-	 */
-	public AppUserService getAppUserManager() {
-		return appUserManager;
-	}
+    /**
+     * @return the appUserManager
+     */
+    public AppUserService getAppUserManager() {
+        return appUserManager;
+    }
 
-	/**
-	 * @param appUserManager the appUserManager to set
-	 */
-	public void setAppUserManager(AppUserService appUserManager) {
-		this.appUserManager = appUserManager;
-	}
-
-
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public String getTest(@RequestParam Map<String, String> rqMap, Model testModel) {
-		AppUser appUser = appUserManager.getAppUser(new Long(5));
-
-		//эти данные можно будет получить на jsp странице
-		//по типу переданных данных т.е. так: ${string}
-		testModel.addAttribute("smartModelContent");
-
-		//эти данные можно будет получить на jsp странице
-		//по типу переданных данных т.е. так: ${appUser}
-		//
-		//org.springframework.core.Conventions
-		//
-		//Determine the conventional variable name for
-		//the supplied Object based on its concrete type.
-		//The convention used is to return the uncapitalized short name of the Class,
-		//according to JavaBeans property naming rules:
-		//So,
-		//com.myapp.Product becomes product;
-		//com.myapp.MyProduct becomes myProduct;
-		//com.myapp.UKProduct becomes UKProduct.
-
-		testModel.addAttribute(appUser);
-
-		//эти данные можно будет получить на jsp странице явным образом
-		//по имени т.е. так: ${data}
-		testModel.addAttribute("data", appUser);
+    /**
+     * @param appUserManager the appUserManager to set
+     */
+    public void setAppUserManager(AppUserService appUserManager) {
+        this.appUserManager = appUserManager;
+    }
 
 
-		return "test";
-	}
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String getTest(@RequestParam Map<String, String> rqMap, Model testModel) {
+        AppUser appUser = appUserManager.getAppUser(new Long(5));
 
-	@RequestMapping(value = "/test/{someData}", method = RequestMethod.GET)
-	public ModelAndView getTest(@PathVariable String someData) {
-		return new ModelAndView("test", "data", someData);
-	}
+        //эти данные можно будет получить на jsp странице
+        //по типу переданных данных т.е. так: ${string}
+        testModel.addAttribute("smartModelContent");
 
-	@RequestMapping(value = "/test", method = RequestMethod.POST)
-	public ModelAndView getPost(
-			@Valid TestModel testModel, BindingResult bindingResult,
-			@RequestParam("id") Long appUserId,
-			ModelMap modelMap) {
+        //эти данные можно будет получить на jsp странице
+        //по типу переданных данных т.е. так: ${appUser}
+        //
+        //org.springframework.core.Conventions
+        //
+        //Determine the conventional variable name for
+        //the supplied Object based on its concrete type.
+        //The convention used is to return the uncapitalized short name of the Class,
+        //according to JavaBeans property naming rules:
+        //So,
+        //com.myapp.Product becomes product;
+        //com.myapp.MyProduct becomes myProduct;
+        //com.myapp.UKProduct becomes UKProduct.
+
+        testModel.addAttribute(appUser);
+
+        //эти данные можно будет получить на jsp странице явным образом
+        //по имени т.е. так: ${data}
+        testModel.addAttribute("data", appUser);
+
+
+        return "test";
+    }
+
+    @RequestMapping(value = "/test/{someData}", method = RequestMethod.GET)
+    public ModelAndView getTest(@PathVariable String someData) {
+        return new ModelAndView("test", "data", someData);
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    public ModelAndView getPost(
+            @Valid TestModel testModel, BindingResult bindingResult,
+            @RequestParam("id") Long appUserId,
+            ModelMap modelMap) {
 
         ModelAndView mav = new ModelAndView("test");
 
         mav.addObject("modelMap", modelMap);
-       	mav.addObject("data", testModel);
-       	mav.addObject("errors", bindingResult);
+           mav.addObject("data", testModel);
+           mav.addObject("errors", bindingResult);
 
-		if (bindingResult.hasErrors()) {
-			mav.addObject("errors", bindingResult);
-			return mav;
-		}
+        if (bindingResult.hasErrors()) {
+            mav.addObject("errors", bindingResult);
+            return mav;
+        }
 
-		return mav;
-	}
+        return mav;
+    }
 
 }

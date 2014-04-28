@@ -24,32 +24,32 @@ import edu.khai.applicationtracker.service.ApplicationService;
 @ContextConfiguration({"classpath:application-servlet.xml"})
 @TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
 public class TestDAOTest {
-	final static Logger logger = Logger.getLogger(TestDAOTest.class);
+    final static Logger logger = Logger.getLogger(TestDAOTest.class);
 
-	@Autowired
-	private ApplicationContext applicationContext;
+    @Autowired
+    private ApplicationContext applicationContext;
 
-	UserDetailsService uds = null;
-	ApplicationService as = null;
+    UserDetailsService uds = null;
+    ApplicationService as = null;
 
-	@Before
-	public void setUp() throws Exception {
-		 uds = (UserDetailsService)applicationContext.getBean("userDetailService");
-		 as = (ApplicationService)applicationContext.getBean("applicationService");
-	}
+    @Before
+    public void setUp() throws Exception {
+         uds = (UserDetailsService)applicationContext.getBean("userDetailService");
+         as = (ApplicationService)applicationContext.getBean("applicationService");
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		uds = null;
-	}
+    @After
+    public void tearDown() throws Exception {
+        uds = null;
+    }
 
-	@Test
-	@Ignore
-//	@Transactional(propagation = Propagation.REQUIRED)
-//	@Rollback(false)
-	public void testTest() throws Exception {
-		UserDetails ud = uds.loadUserByUsername("myname@mailbox.net");
-		logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!! = "+ud);
-	}
+    @Test
+    @Ignore
+//    @Transactional(propagation = Propagation.REQUIRED)
+//    @Rollback(false)
+    public void testTest() throws Exception {
+        UserDetails ud = uds.loadUserByUsername("myname@mailbox.net");
+        logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!! = "+ud);
+    }
 
 }

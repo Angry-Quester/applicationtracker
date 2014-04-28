@@ -5,6 +5,6 @@ import edu.khai.applicationtracker.model.AppUserApplication;
 
 
 public class AppUserApplicationDAOHibernate  extends HibernateDAO<AppUserApplication, Long>
-												implements AppUserApplicationDAO {
+                                                implements AppUserApplicationDAO {
 
 }

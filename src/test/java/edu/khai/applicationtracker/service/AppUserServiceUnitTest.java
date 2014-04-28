@@ -16,72 +16,72 @@ import static org.mockito.Mockito.*;
 import static org.mockito.BDDMockito.*;
 
 public class AppUserServiceUnitTest {
-	final static Logger logger = Logger.getLogger(AppUserServiceUnitTest.class);
+    final static Logger logger = Logger.getLogger(AppUserServiceUnitTest.class);
 
-	private AppUserDAO mockAppUserDAO;
+    private AppUserDAO mockAppUserDAO;
 
-	private AppUserServiceImpl appUserServiceImpl;
+    private AppUserServiceImpl appUserServiceImpl;
 
-	private AppUser appUser;
+    private AppUser appUser;
 
 
-	@Before
-	public void setUp() throws Exception {
-		//Делаем экземпляр AppUserManager'a
-		appUserServiceImpl = new AppUserServiceImpl();
-		//Делаем mock объект для ApplicationDAO
-		mockAppUserDAO = mock(AppUserDAO.class);
+    @Before
+    public void setUp() throws Exception {
+        //Делаем экземпляр AppUserManager'a
+        appUserServiceImpl = new AppUserServiceImpl();
+        //Делаем mock объект для ApplicationDAO
+        mockAppUserDAO = mock(AppUserDAO.class);
 
-		//Устанавливаем зависимости, которые раньше делал Spring
-		appUserServiceImpl.setAppUserDAO(mockAppUserDAO);
+        //Устанавливаем зависимости, которые раньше делал Spring
+        appUserServiceImpl.setAppUserDAO(mockAppUserDAO);
 
-		//create fake Appuser
-		appUser = new AppUser();
-		appUser.setId(Long.valueOf(1));
-		appUser.setAppUserId(Long.valueOf(1));
-		appUser.setUsername("somename@mailbox.ru");
-		appUser.setPassword("password");
-		appUser.setAccountNonExpired(true);
-		appUser.setAccountNonLocked(true);
-		appUser.setCredentialsNonExpired(true);
-		appUser.setEnabled(true);
-	}
+        //create fake Appuser
+        appUser = new AppUser();
+        appUser.setId(Long.valueOf(1));
+        appUser.setAppUserId(Long.valueOf(1));
+        appUser.setUsername("somename@mailbox.ru");
+        appUser.setPassword("password");
+        appUser.setAccountNonExpired(true);
+        appUser.setAccountNonLocked(true);
+        appUser.setCredentialsNonExpired(true);
+        appUser.setEnabled(true);
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		mockAppUserDAO = null;
-		appUserServiceImpl = null;
-	}
+    @After
+    public void tearDown() throws Exception {
+        mockAppUserDAO = null;
+        appUserServiceImpl = null;
+    }
 
-	@Test
-	public void testGetAppUserByName() throws Exception {
-		String username = appUser.getUsername();
-		//given
-		willReturn(appUser).given(mockAppUserDAO).getAppUserByName(anyString());
-		//when
-		AppUser found = appUserServiceImpl.getAppUserByName(username);
-		//then
-		verify(mockAppUserDAO, times(1)).getAppUserByName(username);
+    @Test
+    public void testGetAppUserByName() throws Exception {
+        String username = appUser.getUsername();
+        //given
+        willReturn(appUser).given(mockAppUserDAO).getAppUserByName(anyString());
+        //when
+        AppUser found = appUserServiceImpl.getAppUserByName(username);
+        //then
+        verify(mockAppUserDAO, times(1)).getAppUserByName(username);
 
-		assertEquals("Found appUser is Wrong!!! ::",
-				appUser.getUsername(),
-				found.getUsername());
+        assertEquals("Found appUser is Wrong!!! ::",
+                appUser.getUsername(),
+                found.getUsername());
 
-	}
+    }
 
-	@Test
-	public void testGetAppUserByNameWithRoles() throws Exception {
-		String username = appUser.getUsername();
-		//given
-		willReturn(appUser).given(mockAppUserDAO).getAppUserByNameWithRoles(anyString());
-		//when
-		AppUser found = appUserServiceImpl.getAppUserByNameWithRoles(username);
-		//then
-		verify(mockAppUserDAO, times(1)).getAppUserByNameWithRoles(username);
+    @Test
+    public void testGetAppUserByNameWithRoles() throws Exception {
+        String username = appUser.getUsername();
+        //given
+        willReturn(appUser).given(mockAppUserDAO).getAppUserByNameWithRoles(anyString());
+        //when
+        AppUser found = appUserServiceImpl.getAppUserByNameWithRoles(username);
+        //then
+        verify(mockAppUserDAO, times(1)).getAppUserByNameWithRoles(username);
 
-		assertEquals("Found appUser is Wrong!!! ::",
-				appUser.getUsername(),
-				found.getUsername());
-	}
+        assertEquals("Found appUser is Wrong!!! ::",
+                appUser.getUsername(),
+                found.getUsername());
+    }
 
 }

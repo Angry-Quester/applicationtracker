@@ -39,88 +39,88 @@ import edu.khai.applicationtracker.model.UserRole;
 @TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
 public class AppUserDAOTest {
 
-	final static Logger logger = Logger.getLogger(AppUserDAOTest.class);
+    final static Logger logger = Logger.getLogger(AppUserDAOTest.class);
 
-	//path to the prepeared DBUnit flat dataset
-	private static final String DATASET_PATH = "src/test/resources/dbunit/AppUserDataSet.xml";
+    //path to the prepeared DBUnit flat dataset
+    private static final String DATASET_PATH = "src/test/resources/dbunit/AppUserDataSet.xml";
 
-	private IDatabaseTester databaseTester = null;
-	private IDataSet dataSet = null;
+    private IDatabaseTester databaseTester = null;
+    private IDataSet dataSet = null;
 
-	@Autowired
-	DataSource dataSource; 	//ComboPooledDataSource
+    @Autowired
+    DataSource dataSource;     //ComboPooledDataSource
 
-	@Autowired
-	AppUserDAO appUserDAO;
+    @Autowired
+    AppUserDAO appUserDAO;
 
-	@Autowired
-	UserRoleDAO userRoleDAO;
+    @Autowired
+    UserRoleDAO userRoleDAO;
 
-	@Before
-	public void setUp() throws Exception {
-		dataSet = buildDataSet(DATASET_PATH);
-		databaseTester = buildUpDatabaseTester(dataSource, dataSet);
-		databaseTester.onSetup();
-	}
+    @Before
+    public void setUp() throws Exception {
+        dataSet = buildDataSet(DATASET_PATH);
+        databaseTester = buildUpDatabaseTester(dataSource, dataSet);
+        databaseTester.onSetup();
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		//databaseTester.onTearDown();
-	}
+    @After
+    public void tearDown() throws Exception {
+        //databaseTester.onTearDown();
+    }
 
-	@AfterClass
-	public static void afterClass() throws Exception {
-		//DBUnitSetup.afterTestCleanUp(DATASET_PATH);
-	}
-
-
-	@Test
-	@Ignore
-	@Transactional(propagation = Propagation.REQUIRED)
-	@Rollback(false)
-	public void testGetAppUserByName() throws Exception {
-		//get data from the dataset to check against
-		Long appUserId = Long.valueOf(DBUnitSetup.getTestData("appUser", 0, "appUserId"));
-		String username = DBUnitSetup.getTestData("appUser", 0, "username");
-
-		//get appuser from database
-		AppUser found = appUserDAO.getAppUserByName(username);
-			logger.info("\n found appUser DATA ::" + found + "\n");
-
-		//assert id and name
-		assertEquals(found.getAppUserId(), appUserId);
-		assertEquals(found.getUsername(), username);
-	}
+    @AfterClass
+    public static void afterClass() throws Exception {
+        //DBUnitSetup.afterTestCleanUp(DATASET_PATH);
+    }
 
 
-	@Test
-	@Ignore
-	@Transactional(propagation = Propagation.REQUIRED)
-	@Rollback(false)
-	public void testGetAppUserByNameWithRoles() throws Exception {
-		//get data from the dataset to check against
-		Long appUserId = Long.valueOf(DBUnitSetup.getTestData("appUser", 0, "appUserId"));
-		String username = DBUnitSetup.getTestData("appUser", 0, "username");
+    @Test
+    @Ignore
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Rollback(false)
+    public void testGetAppUserByName() throws Exception {
+        //get data from the dataset to check against
+        Long appUserId = Long.valueOf(DBUnitSetup.getTestData("appUser", 0, "appUserId"));
+        String username = DBUnitSetup.getTestData("appUser", 0, "username");
 
-		//get appuser from database
-		AppUser found = appUserDAO.getAppUserByNameWithRoles(username);
-			logger.info("\n found appUser DATA ::" + found + "\n");
+        //get appuser from database
+        AppUser found = appUserDAO.getAppUserByName(username);
+            logger.info("\n found appUser DATA ::" + found + "\n");
 
-		//assert id and name
-		assertEquals(found.getAppUserId(), appUserId);
-		assertEquals(found.getUsername(), username);
+        //assert id and name
+        assertEquals(found.getAppUserId(), appUserId);
+        assertEquals(found.getUsername(), username);
+    }
 
-			logger.info("\n found AppUserUserRoles roles ::" + found.getUserRoles() + "\n");
-		//assert AppUserUserRoles is present in the resulting dataset
-		assertTrue(found.getUserRoles().size()>0);
 
-			//assert roles are not null
-			Iterator<UserRole> ur = found.getUserRoles().iterator();
-			while(ur.hasNext()) {
-				UserRole foundRole = ur.next();
-					logger.info("\n found UserRoles roles ::" + foundRole + "\n");
-				assertNotNull(ur);
-			}
-	}
+    @Test
+    @Ignore
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Rollback(false)
+    public void testGetAppUserByNameWithRoles() throws Exception {
+        //get data from the dataset to check against
+        Long appUserId = Long.valueOf(DBUnitSetup.getTestData("appUser", 0, "appUserId"));
+        String username = DBUnitSetup.getTestData("appUser", 0, "username");
+
+        //get appuser from database
+        AppUser found = appUserDAO.getAppUserByNameWithRoles(username);
+            logger.info("\n found appUser DATA ::" + found + "\n");
+
+        //assert id and name
+        assertEquals(found.getAppUserId(), appUserId);
+        assertEquals(found.getUsername(), username);
+
+            logger.info("\n found AppUserUserRoles roles ::" + found.getUserRoles() + "\n");
+        //assert AppUserUserRoles is present in the resulting dataset
+        assertTrue(found.getUserRoles().size()>0);
+
+            //assert roles are not null
+            Iterator<UserRole> ur = found.getUserRoles().iterator();
+            while(ur.hasNext()) {
+                UserRole foundRole = ur.next();
+                    logger.info("\n found UserRoles roles ::" + foundRole + "\n");
+                assertNotNull(ur);
+            }
+    }
 
 }

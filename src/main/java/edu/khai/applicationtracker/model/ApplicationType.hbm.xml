@@ -15,7 +15,7 @@
         <property name="shortName" column="shortName" not-null="false" />
         <property name="fullName" column="fullName" not-null="false" />
         <property name="description" column="description" not-null="false" />
-
+        <property name="viewAttribute" column="viewAttribute" not-null="false" />
 
         <set name="applications" table="application"
                              inverse="true"

@@ -21,23 +21,23 @@ import static org.mockito.BDDMockito.*;
 @ContextConfiguration({"classpath*:spring-context/test-context.xml"})
 @ActiveProfiles({"test1"})
 public class ProfileTest {
-	final static Logger logger = Logger.getLogger(ProfileTest.class);
+    final static Logger logger = Logger.getLogger(ProfileTest.class);
 
-	@Autowired
-	String profileString;
+    @Autowired
+    String profileString;
 
-	@Before
-	public void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 
-	}
+    }
 
-	@After
-	public void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
 
-	}
+    }
 
-	@Test
-	public void loadUserByUsername() throws Exception {
-		System.out.printf("%n%n%s%n%n", profileString);
-	}
+    @Test
+    public void loadUserByUsername() throws Exception {
+        System.out.printf("%n%n%s%n%n", profileString);
+    }
 }

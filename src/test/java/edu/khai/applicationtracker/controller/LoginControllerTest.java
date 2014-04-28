@@ -25,45 +25,45 @@ import static org.hamcrest.Matchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath*:spring-context/service-context.xml",
-						"classpath:spring-context/controller-context.xml"})
+                        "classpath:spring-context/controller-context.xml"})
 @ActiveProfiles({"test"})
 @WebAppConfiguration
 public class LoginControllerTest {
-	final static Logger logger = Logger.getLogger(LoginControllerTest.class);
+    final static Logger logger = Logger.getLogger(LoginControllerTest.class);
 
-	private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
 
 
-	@Before
-	public void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 
-		mockMvc = webAppContextSetup(webApplicationContext).build();
-	}
+        mockMvc = webAppContextSetup(webApplicationContext).build();
+    }
 
-	@After
-	public void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
 
-	}
+    }
 
-	@Test
-	public void testLoginPage() throws Exception {
+    @Test
+    public void testLoginPage() throws Exception {
 
-		mockMvc.perform(get("/login"))
-			.andExpect(status().isOk())
-			.andExpect(view().name("login"));
+        mockMvc.perform(get("/login"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("login"));
 
-		mockMvc.perform(get("/login").param("error", ""))
-		.andExpect(status().isOk())
-		.andExpect(view().name("login"))
-		.andExpect(model().attribute("error", notNullValue()));
+        mockMvc.perform(get("/login").param("error", ""))
+        .andExpect(status().isOk())
+        .andExpect(view().name("login"))
+        .andExpect(model().attribute("error", notNullValue()));
 
-		mockMvc.perform(get("/login").param("logout", ""))
-		.andExpect(status().isOk())
-		.andExpect(view().name("login"))
-		.andExpect(model().attribute("logout", notNullValue()));
-	}
+        mockMvc.perform(get("/login").param("logout", ""))
+        .andExpect(status().isOk())
+        .andExpect(view().name("login"))
+        .andExpect(model().attribute("logout", notNullValue()));
+    }
 
 }

@@ -13,37 +13,37 @@ import edu.khai.applicationtracker.model.UserRole;
 
 public class UserDetailsProvider {
 
-	public AppUserPrincipal getUserDetails(AppUser appUser) {
-		Long userId = appUser.getAppUserId();
-		String username = appUser.getUsername();
-		String password = appUser.getPassword();
+    public AppUserPrincipal getUserDetails(AppUser appUser) {
+        Long userId = appUser.getAppUserId();
+        String username = appUser.getUsername();
+        String password = appUser.getPassword();
 
-			Set<GrantedAuthority> grantedAuthority= new HashSet<GrantedAuthority>(0);
+            Set<GrantedAuthority> grantedAuthority= new HashSet<GrantedAuthority>(0);
 
-				Iterator<UserRole> i = appUser.getUserRoles().iterator();
-				while(i.hasNext()) {
-					SimpleGrantedAuthority sga =
-							new SimpleGrantedAuthority(i.next().getAuthority());
-						grantedAuthority.add(sga);
-				}
+                Iterator<UserRole> i = appUser.getUserRoles().iterator();
+                while(i.hasNext()) {
+                    SimpleGrantedAuthority sga =
+                            new SimpleGrantedAuthority(i.next().getAuthority());
+                        grantedAuthority.add(sga);
+                }
 
-		boolean accountNonExpired = appUser.isAccountNonExpired();
-		boolean accountNonLocked = appUser.isAccountNonLocked();
-		boolean credentialsNonExpired = appUser.isCredentialsNonExpired();
-		boolean enabled = appUser.isEnabled();
+        boolean accountNonExpired = appUser.isAccountNonExpired();
+        boolean accountNonLocked = appUser.isAccountNonLocked();
+        boolean credentialsNonExpired = appUser.isCredentialsNonExpired();
+        boolean enabled = appUser.isEnabled();
 
-		AppUserPrincipal appUserPrincipal
-					= new AppUserPrincipal(
-								userId,
-								username,
-								password,
-								enabled,
-								accountNonExpired,
-								credentialsNonExpired,
-								accountNonLocked,
-								grantedAuthority);
+        AppUserPrincipal appUserPrincipal
+                    = new AppUserPrincipal(
+                                userId,
+                                username,
+                                password,
+                                enabled,
+                                accountNonExpired,
+                                credentialsNonExpired,
+                                accountNonLocked,
+                                grantedAuthority);
 
-		return appUserPrincipal;
-	}
+        return appUserPrincipal;
+    }
 
 }
