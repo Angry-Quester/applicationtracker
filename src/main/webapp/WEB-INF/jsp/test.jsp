@@ -51,6 +51,10 @@
             <input type="text" name="testIntegerField" type="text" placeholder="Введите Id" class="form-control" /> <br />
             <input type="text" name="testField" type="email" placeholder="Введите Email" class="form-control" /> <br />
             <input type="submit" value="Push" class="btn btn-default"/>
+            
+        <input type="hidden"
+            name="${_csrf.parameterName}"
+            value="${_csrf.token}"/>            
         </form>
 
         <c:if test="${not empty errors}" >

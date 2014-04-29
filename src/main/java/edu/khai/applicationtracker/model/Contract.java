@@ -1,32 +1,23 @@
 package edu.khai.applicationtracker.model;
 
-import java.util.Date;
+public class Contract extends Application {
 
-import javax.validation.constraints.NotNull;
+    private static final long serialVersionUID = -1253069388098152146L;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-
-public class ApplicationC extends Application {
-
-    private static final long serialVersionUID = -1404967325013613791L;
-
-    @NotNull
-    @DateTimeFormat(pattern="dd.MM.yyyy")
-    private Date cField;
+    private Long contractNumber;
 
     /**
-     * @return the cField
+     * @return the contractNumber
      */
-    public Date getcField() {
-        return cField;
+    public Long getContractNumber() {
+        return contractNumber;
     }
 
     /**
-     * @param cField the cField to set
+     * @param contractNumber the contractNumber to set
      */
-    public void setcField(Date cField) {
-        this.cField = cField;
+    public void setContractNumber(Long contractNumber) {
+        this.contractNumber = contractNumber;
     }
 
     /* (non-Javadoc)
@@ -36,7 +27,8 @@ public class ApplicationC extends Application {
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + ((cField == null) ? 0 : cField.hashCode());
+        result = prime * result
+                + ((contractNumber == null) ? 0 : contractNumber.hashCode());
         return result;
     }
 
@@ -51,11 +43,11 @@ public class ApplicationC extends Application {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        ApplicationC other = (ApplicationC) obj;
-        if (cField == null) {
-            if (other.cField != null)
+        Contract other = (Contract) obj;
+        if (contractNumber == null) {
+            if (other.contractNumber != null)
                 return false;
-        } else if (!cField.equals(other.cField))
+        } else if (!contractNumber.equals(other.contractNumber))
             return false;
         return true;
     }
@@ -65,7 +57,7 @@ public class ApplicationC extends Application {
      */
     @Override
     public String toString() {
-        return "ApplicationC [cField=" + cField + "]";
+        return "Contract [contractNumber=" + contractNumber + "]";
     }
 
 }

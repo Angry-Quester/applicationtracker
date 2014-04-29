@@ -12,6 +12,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -25,6 +26,7 @@ import org.springframework.validation.DataBinder;
 import org.springframework.validation.SmartValidator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -112,14 +114,14 @@ public class ApplicationController {
         //get an applicationType to put it into application
         ApplicationType applicationType = applicationTypeService.getApplicationType(applicationTypeId);
 
-        Application application = new Application();
+        Application application = new ApplicationC();
                     application.setApplicationType(applicationType);
+                    application.setGivenName("zzzzzzzzzzzzzzz");
 
         String viewName = "";
         switch (applicationTypeId.toString()) {
         case "1":
             viewName = "applications/new/f1";
-                application = new ApplicationC();
                 model.addAttribute("application", application);
             break;
         case "2":
@@ -132,14 +134,13 @@ public class ApplicationController {
     }
 
     @RequestMapping(value = "/applications", method = RequestMethod.POST)
-    public String newApplication(Model model, Application application, BindingResult errors, SessionStatus sessionStatus) {
-
+    public String newApplication(Model model, @ModelAttribute("application") @Valid Application application, BindingResult errors, SessionStatus sessionStatus) {
 
         for (String key : model.asMap().keySet()){
             System.out.printf("------------- key :: %s --- value %s %n ",key, model.asMap().get(key));
         }
 
-        ApplicationC c = (ApplicationC)model.asMap().get("application");
+//        ApplicationC c = (ApplicationC)model.asMap().get("application");
 
         if (errors.hasErrors()) {
             model.addAttribute("errors", errors);
