@@ -134,7 +134,7 @@ public class ApplicationController {
     }
 
     @RequestMapping(value = "/applications", method = RequestMethod.POST)
-    public String newApplication(Model model, @ModelAttribute("application") @Valid Application application, BindingResult errors, SessionStatus sessionStatus) {
+    public String newApplication(Model model, @Valid Application application, BindingResult errors, SessionStatus sessionStatus) {
 
         for (String key : model.asMap().keySet()){
             System.out.printf("------------- key :: %s --- value %s %n ",key, model.asMap().get(key));

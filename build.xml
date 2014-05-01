@@ -225,13 +225,13 @@
             <formatter type="plain" usefile="false"/>
             <formatter type="plain" usefile="true"/>
 
-            <batchtest todir="${test.log.dir}" skipNonTests="true" if="testcase">
+            <batchtest todir="${test.log.dir}" if="testcase">
                 <fileset dir="${test.build.dir}">
                     <include name="**/*${testcase}*.class"/>
                 </fileset>
             </batchtest>
 
-            <batchtest todir="${test.log.dir}" skipNonTests="yes" unless="testcase">
+            <batchtest todir="${test.log.dir}" unless="testcase">
                 <fileset dir="${test.build.dir}">
                     <include name="**/*.class*"/>
                 </fileset>

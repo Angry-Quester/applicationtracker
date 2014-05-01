@@ -25,10 +25,12 @@ import org.springframework.web.context.WebApplicationContext;
 import testsetup.TestSecuritySetup;
 import edu.khai.applicationtracker.model.Application;
 import edu.khai.applicationtracker.service.ApplicationService;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+
 //import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 import static org.hamcrest.Matchers.*;
@@ -87,7 +89,7 @@ public class ApplicationControllerTest {
 
         mockMvc.perform(get("/applications/new"))
             .andExpect(status().isOk())
-            .andExpect(model().attribute("application", notNullValue()));
+            .andExpect(model().attribute("applicationTypes", notNullValue()));
     }
 
     @Test
