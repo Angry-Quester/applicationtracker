@@ -52,10 +52,14 @@
             <list>
                 <value>edu/khai/applicationtracker/model/AppUser.hbm.xml</value>
                 <value>edu/khai/applicationtracker/model/UserRole.hbm.xml</value>
-                <value>edu/khai/applicationtracker/model/Application.hbm.xml</value>
                 <!-- All kinds of Applications -->
                 <value>edu/khai/applicationtracker/model/ApplicationType.hbm.xml</value>
-                <value>edu/khai/applicationtracker/model/application/Contract.hbm.xml</value>
+                    <value>edu/khai/applicationtracker/model/Application.hbm.xml</value>
+                        <value>edu/khai/applicationtracker/model/application/FixedRate.hbm.xml</value>
+                        <value>edu/khai/applicationtracker/model/application/HourlyRate.hbm.xml</value>
+                        <value>edu/khai/applicationtracker/model/application/NoRate.hbm.xml</value>
+                <value>edu/khai/applicationtracker/model/application/ApplicationForm1.hbm.xml</value>
+                <value>edu/khai/applicationtracker/model/application/ApplicationForm11.hbm.xml</value>                
             </list>
         </property>
     </bean>
@@ -102,16 +106,16 @@
         class="edu.khai.applicationtracker.dao.hibernate.ApplicationDAOHibernate">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
-    
+
     <bean id="applicationTypeDAO"
         class="edu.khai.applicationtracker.dao.hibernate.ApplicationTypeDAOHibernate">
         <property name="sessionFactory" ref="sessionFactory" />
-    </bean>    
+    </bean>
     <!--===========================Other DAOs=========================== -->
     <bean id="appUserApplicationDAO"
         class="edu.khai.applicationtracker.dao.hibernate.AppUserApplicationDAOHibernate">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
-    
+
 
 </beans>

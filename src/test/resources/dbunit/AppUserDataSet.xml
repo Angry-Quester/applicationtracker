@@ -27,10 +27,10 @@
 
   <appuseruserrole appUserId="1" userRoleId="1"/>
 
-  <appuserapplication appUserApplicationId="1" appUserId="1" applicationId="1"/>
-  <appuserapplication appUserApplicationId="3" appUserId="1" applicationId="2"/>
-  <appuserapplication appUserApplicationId="4" appUserId="1" applicationId="4"/>
-  <appuserapplication appUserApplicationId="5" appUserId="1" applicationId="5"/>
+  <appuserapplication appUserId="1" applicationId="1"/>
+  <appuserapplication appUserId="1" applicationId="2"/>
+  <appuserapplication appUserId="1" applicationId="4"/>
+  <appuserapplication appUserId="1" applicationId="5"/>
 
 
 </dataset>

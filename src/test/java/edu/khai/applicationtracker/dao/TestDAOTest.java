@@ -1,5 +1,9 @@
 package edu.khai.applicationtracker.dao;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
+
 import org.apache.log4j.Logger;
 
 //import static org.junit.Assert.*;
@@ -20,22 +24,22 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import edu.khai.applicationtracker.service.ApplicationService;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath:application-servlet.xml"})
-@TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration({"classpath:application-servlet.xml"})
+//@TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
 public class TestDAOTest {
     final static Logger logger = Logger.getLogger(TestDAOTest.class);
 
-    @Autowired
-    private ApplicationContext applicationContext;
+  //  @Autowired
+//    private ApplicationContext applicationContext;
 
     UserDetailsService uds = null;
     ApplicationService as = null;
 
     @Before
     public void setUp() throws Exception {
-         uds = (UserDetailsService)applicationContext.getBean("userDetailService");
-         as = (ApplicationService)applicationContext.getBean("applicationService");
+//         uds = (UserDetailsService)applicationContext.getBean("userDetailService");
+  //       as = (ApplicationService)applicationContext.getBean("applicationService");
     }
 
     @After
@@ -50,6 +54,15 @@ public class TestDAOTest {
     public void testTest() throws Exception {
         UserDetails ud = uds.loadUserByUsername("myname@mailbox.net");
         logger.info("!!!!!!!!!!!!!!!!!!!!!!!!!!! = "+ud);
+    }
+
+    @Test
+    public void bdTest() throws Exception {
+        BigDecimal bd = new BigDecimal(12.2);
+        logger.info("[BD] :: " + bd);
+        Float f = new Float(1.221);
+        f = f + new Float(1.22);
+        logger.info("[F] :: " + f);
     }
 
 }

@@ -4,9 +4,10 @@
     
         <c:if test="${not empty application.applicationType}" >
             <p>Application type data :: ${application.applicationType}</p>
-        </c:if>
+       
+        <h1>${application.applicationType.shortName} :: ${application.applicationType.fullName}</h1>
+        </c:if>     
         
-        <h1>Форма ф1 (контракт) </h1>
         <sf:form commandName="application" method="POST" action="${ctx}/applications" >
             <sf:label path="givenName">GIVENNAME</sf:label>
                 <sf:input path="givenName" class="form-control"/>

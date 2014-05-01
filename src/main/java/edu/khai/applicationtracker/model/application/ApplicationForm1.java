@@ -1,8 +1,6 @@
 package edu.khai.applicationtracker.model.application;
 
-import edu.khai.applicationtracker.model.Application;
-
-public class Contract extends Application {
+public class ApplicationForm1 extends NoRate {
 
     private static final long serialVersionUID = -1253069388098152146L;
 
@@ -45,7 +43,7 @@ public class Contract extends Application {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Contract other = (Contract) obj;
+        ApplicationForm1 other = (ApplicationForm1) obj;
         if (contractNumber == null) {
             if (other.contractNumber != null)
                 return false;
@@ -59,7 +57,6 @@ public class Contract extends Application {
      */
     @Override
     public String toString() {
-        return "Contract [contractNumber=" + contractNumber + "]";
+        return "ApplicationForm1 [contractNumber=" + contractNumber + "]";
     }
-
 }

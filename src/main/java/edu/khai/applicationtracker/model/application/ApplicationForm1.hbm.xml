@@ -4,11 +4,11 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <joined-subclass extends="edu.khai.applicationtracker.model.Application" 
-                     name="edu.khai.applicationtracker.model.application.Contract" 
-                     table="contract" >
+    <joined-subclass extends="edu.khai.applicationtracker.model.application.NoRate" 
+                     name="edu.khai.applicationtracker.model.application.ApplicationForm1" 
+                     table="applicationForm1" >
 
-                     <key column="contractId" />
+                     <key column="applicationForm1Id" />
                      
                      <property name="contractNumber" column="contractNumber" not-null="false"/>
     </joined-subclass>

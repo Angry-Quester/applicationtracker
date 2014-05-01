@@ -4,9 +4,10 @@
     
         <c:if test="${not empty application.applicationType}" >
             <p>Application type data :: ${application.applicationType}</p>
-        </c:if>
-         
-        <h1>Форма ф1а (дополнительное соглашение) </h1>
+       
+        <h1>${application.applicationType.shortName} :: ${application.applicationType.fullName}</h1>
+        </c:if>     
+        
         <sf:form commandName="application" method="POST" action="${ctx}/applications" >
             <sf:label path="givenName">GIVENNAME</sf:label>
                 <sf:input path="givenName" class="form-control"/>
@@ -26,6 +27,9 @@
             <sf:label path="lastModificationDate">LASTMODIFICATIONDATE</sf:label>
                 <sf:input path="lastModificationDate" class="form-control"/>
                     <sf:errors path="lastModificationDate" />
-
+            <sf:label path="rate">rate</sf:label>
+                <sf:input path="rate" class="form-control"/>
+                    <sf:errors path="rate" />    
+                    
             <input type="submit" id="save" value="Save" class="btn btn-default" />
         </sf:form>

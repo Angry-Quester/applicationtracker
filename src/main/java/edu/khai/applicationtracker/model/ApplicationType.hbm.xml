@@ -10,7 +10,6 @@
             <generator class="increment"/>
         </id>
 
-
         <property name="abbreviation" column="abbreviation" not-null="false" />
         <property name="shortName" column="shortName" not-null="false" />
         <property name="fullName" column="fullName" not-null="false" />
@@ -24,7 +23,6 @@
             <key column="applicationTypeId" />
             <one-to-many class="edu.khai.applicationtracker.model.Application" />
         </set>
-
 
     </class>
 </hibernate-mapping>

@@ -37,7 +37,8 @@ import edu.khai.applicationtracker.model.AppUserPrincipal;
 import edu.khai.applicationtracker.model.Application;
 import edu.khai.applicationtracker.model.ApplicationC;
 import edu.khai.applicationtracker.model.ApplicationType;
-import edu.khai.applicationtracker.model.application.Contract;
+import edu.khai.applicationtracker.model.application.ApplicationForm1;
+import edu.khai.applicationtracker.model.application.ApplicationForm11;
 import edu.khai.applicationtracker.service.AppUserService;
 import edu.khai.applicationtracker.service.ApplicationService;
 import edu.khai.applicationtracker.service.ApplicationTypeService;
@@ -108,29 +109,24 @@ public class ApplicationController {
         return "applications/new";
     }
 
+
     @RequestMapping(value = "/applications/new/{applicationTypeId}", method = RequestMethod.GET)
     public String newApplicationForm(Model model,
                                     @PathVariable("applicationTypeId") Long applicationTypeId) {
 
-        Class<? extends Application> applicationClass = null;
-
-        switch (applicationTypeId.intValue()) {
-        case 1:
-            applicationClass = Contract.class;
-            break;
-        case 2:
-            applicationClass = Application.class;
-            break;
-        }
+        //Choose a class from the applications list
+        Class<? extends Application> applicationClass = applicationClassSwitchBoard(applicationTypeId);
 
         //get an applicationType to put it into application and compile fresh application
         ApplicationType applicationType = applicationTypeService.getApplicationType(applicationTypeId);
-        Application application = applicationFactory(applicationClass, applicationType);
 
+        //get an application instance to use it in the conversation and put it inside the model
+        Application application = applicationFactory(applicationClass, applicationType);
         model.addAttribute("application", application);
 
         return "applications/new/" + applicationTypeId;
     }
+
 
     @RequestMapping(value = "/applications", method = RequestMethod.POST)
     public String newApplication(Model model, @Valid Application application, BindingResult errors, SessionStatus sessionStatus) {
@@ -147,7 +143,7 @@ public class ApplicationController {
         applicationService.addApplication(application);
 
         //this line of code perfoms cleanup for the current session
-        //An application attribute of the session to be exact
+        //ob an application attribute of the session to be exact
         sessionStatus.setComplete();
 
         return "redirect:applications";
@@ -160,9 +156,11 @@ public class ApplicationController {
 
         Application application = applicationService.getApplication(applicationId);
 
+        ApplicationType applicationType = application.getApplicationType();
+
         model.addAttribute("application", application);
 
-        return "applications/edit";
+        return "applications/edit/" + applicationType.getApplicationTypeId();
     }
 
     @RequestMapping(value = "/applications/{applicationId}", method = RequestMethod.POST)
@@ -172,7 +170,7 @@ public class ApplicationController {
                                     BindingResult errors) {
         if (errors.hasErrors()) {
             model.addAttribute("errors", errors);
-            return "applications/edit";
+            return "applications/edit/" + application.getApplicationType().getApplicationTypeId();
         }
 
         application.setApplicationId(applicationId);
@@ -217,6 +215,14 @@ public class ApplicationController {
 
     }
 
+    /**
+     * This contraption creates Application instances according to the class given to it
+     * and populates it with the given application type
+     *
+     * @param clazz - application instance type
+     * @param applicationType - application instance type to use inside this application
+     * @return application instance. If it's impossible to create such an instance - returns null
+     */
     @SuppressWarnings("unchecked")
     private <T extends Application> T applicationFactory(Class<T> clazz, ApplicationType applicationType) {
         try {
@@ -232,15 +238,17 @@ public class ApplicationController {
 
     /**
      * Very crude implementation.
+     * Some sort of an application classes switchboard.
+     * It is intended as a temporary substitude for a better solution i can't think of right now.
      * I must find the way to implement it in a better way
      *
      * @param applicationTypeId
-     * @return
+     * @return - application class according to the applicationTypeId. If no class found returns null
      */
     private Class<? extends Application> applicationClassSwitchBoard(Long applicationTypeId) {
         switch (applicationTypeId.intValue()) {
-            case 1: return Contract.class;
-            case 2: return Application.class;
+            case 1: return ApplicationForm1.class;
+            case 2: return ApplicationForm11.class;
             default : return null;
         }
     }

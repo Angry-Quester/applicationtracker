@@ -75,7 +75,6 @@ public class AppUserDAOTest {
 
 
     @Test
-    @Ignore
     @Transactional(propagation = Propagation.REQUIRED)
     @Rollback(false)
     public void testGetAppUserByName() throws Exception {
@@ -94,7 +93,6 @@ public class AppUserDAOTest {
 
 
     @Test
-    @Ignore
     @Transactional(propagation = Propagation.REQUIRED)
     @Rollback(false)
     public void testGetAppUserByNameWithRoles() throws Exception {

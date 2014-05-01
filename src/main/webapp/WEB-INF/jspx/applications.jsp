@@ -12,6 +12,7 @@
                     <td>EDIT</td>
                     <td>DELETE</td>
                     <td>applicationId</td>
+                    <td>applicationType</td>                    
                     <td>givenName</td>
                     <td>middleName</td>
                     <td>familyName</td>
@@ -30,6 +31,7 @@
                     </td>
                     <td><a href="${ctx}/applications/${application.applicationId}/txt">DOC :: ${application.applicationId}</a> ||
                         <a href="${ctx}/applications/${application.applicationId}">${application.applicationId}</a></td>
+                    <td>${application.applicationType.abbreviation}</td>                        
                     <td>${application.givenName}</td>
                     <td>${application.middleName}</td>
                     <td>${application.familyName}</td>

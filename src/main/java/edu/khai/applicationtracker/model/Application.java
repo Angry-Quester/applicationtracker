@@ -28,6 +28,8 @@ public class Application extends BaseObject {
 
     private Set<AppUser> appUsers = new HashSet<AppUser>(0);
 
+    private Application parentApplication;
+    private Set<Application> childApplications = new HashSet<Application>(0);
 
 
     /**
@@ -163,6 +165,32 @@ public class Application extends BaseObject {
      */
     public void setApplicationType(ApplicationType applicationType) {
         this.applicationType = applicationType;
+    }
+
+
+    /**
+     * @return the parentApplication
+     */
+    public Application getParentApplication() {
+        return parentApplication;
+    }
+    /**
+     * @param parentApplication the parentApplication to set
+     */
+    public void setParentApplication(Application parentApplication) {
+        this.parentApplication = parentApplication;
+    }
+    /**
+     * @return the childApplications
+     */
+    public Set<Application> getChildApplications() {
+        return childApplications;
+    }
+    /**
+     * @param childApplications the childApplications to set
+     */
+    public void setChildApplications(Set<Application> childApplications) {
+        this.childApplications = childApplications;
     }
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()

@@ -21,18 +21,34 @@
                              inverse="true"
                              lazy="true"
                              fetch="select">
+
             <key column="applicationId"
                  not-null="true" />
             <many-to-many column="appUserId"
                           class="edu.khai.applicationtracker.model.AppUser" />
         </set>
 
+        <!-- i don't use lazy initialization here as an application have no meaning without it's type -->
         <many-to-one name="applicationType"
                      class="edu.khai.applicationtracker.model.ApplicationType"
-                     fetch="select">
+                     fetch="select"
+                     lazy="false">
             <column name="applicationTypeId"
                     not-null="false" />
         </many-to-one>
+
+         <many-to-one name="parentApplication"
+                    column="parentApplicationId"
+                    update="false"/>
+
+        <set name="childApplications"
+             inverse="true"
+             lazy="true">
+
+            <key column="parentApplicationId"
+                 not-null="true" />
+            <one-to-many class="edu.khai.applicationtracker.model.Application"/>
+        </set>
 
     </class>
 </hibernate-mapping>
