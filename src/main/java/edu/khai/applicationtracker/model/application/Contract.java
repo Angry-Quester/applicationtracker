@@ -1,4 +1,6 @@
-package edu.khai.applicationtracker.model;
+package edu.khai.applicationtracker.model.application;
+
+import edu.khai.applicationtracker.model.Application;
 
 public class Contract extends Application {
 

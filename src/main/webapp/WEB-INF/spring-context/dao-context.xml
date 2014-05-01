@@ -53,9 +53,9 @@
                 <value>edu/khai/applicationtracker/model/AppUser.hbm.xml</value>
                 <value>edu/khai/applicationtracker/model/UserRole.hbm.xml</value>
                 <value>edu/khai/applicationtracker/model/Application.hbm.xml</value>
+                <!-- All kinds of Applications -->
                 <value>edu/khai/applicationtracker/model/ApplicationType.hbm.xml</value>
-                <value>edu/khai/applicationtracker/model/Contract.hbm.xml</value>
-                
+                <value>edu/khai/applicationtracker/model/application/Contract.hbm.xml</value>
             </list>
         </property>
     </bean>
@@ -86,7 +86,18 @@
     </tx:advice>
 
 
-<!-- DAOs-->
+<!--===========================DAOs=========================== -->
+    <!--===========================AppUser DAOs=========================== -->
+    <bean id="appUserDAO"
+        class="edu.khai.applicationtracker.dao.hibernate.AppUserDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="userRoleDAO"
+        class="edu.khai.applicationtracker.dao.hibernate.UserRoleDAOHibernate">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <!--===========================Application DAOs=========================== -->
     <bean id="applicationDAO"
         class="edu.khai.applicationtracker.dao.hibernate.ApplicationDAOHibernate">
         <property name="sessionFactory" ref="sessionFactory" />
@@ -96,20 +107,11 @@
         class="edu.khai.applicationtracker.dao.hibernate.ApplicationTypeDAOHibernate">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>    
-
-    <bean id="appUserDAO"
-        class="edu.khai.applicationtracker.dao.hibernate.AppUserDAOHibernate">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-
+    <!--===========================Other DAOs=========================== -->
     <bean id="appUserApplicationDAO"
         class="edu.khai.applicationtracker.dao.hibernate.AppUserApplicationDAOHibernate">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
-    <bean id="userRoleDAO"
-        class="edu.khai.applicationtracker.dao.hibernate.UserRoleDAOHibernate">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
 
 </beans>

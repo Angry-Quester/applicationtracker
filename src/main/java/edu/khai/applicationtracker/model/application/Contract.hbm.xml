@@ -5,12 +5,12 @@
 
 <hibernate-mapping>
     <joined-subclass extends="edu.khai.applicationtracker.model.Application" 
-                     name="edu.khai.applicationtracker.model.Contract" 
+                     name="edu.khai.applicationtracker.model.application.Contract" 
                      table="contract" >
 
                      <key column="contractId" />
                      
-                     <property name="contractNumber" column="contractNumber" />
+                     <property name="contractNumber" column="contractNumber" not-null="false"/>
     </joined-subclass>
 
 </hibernate-mapping>

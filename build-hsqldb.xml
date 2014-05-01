@@ -22,7 +22,7 @@
 <!--~~~~~~~~~~~~~~~~~~~~~~~~ PATHS FOR temporary DB SCHEMES (reserved but unused) -->
     <property name="db.dir"                 location="db" />
     <property name="test.db.dir"            location="${db.dir}/test" />
-<!--~~~~~~~~~~~~~~~~~~~~~~~~ SRC as is -->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~ SRC as it is -->
     <property name="src.dir"                location="src" />
 <!--~~~~~~~~~~~~~~~~~~~~~~~~ MAIN PRODUCTION CODE and PRUDUCTION SETUP -->
     <property name="main.dir"               location="${src.dir}/main" />

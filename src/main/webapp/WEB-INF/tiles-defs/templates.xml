@@ -41,19 +41,17 @@
     <definition name="applications/new" extends="at.content">
         <put-attribute name="content" value="/WEB-INF/jspx/applications-new.jsp" />
     </definition>
-    
-    
-    <definition name="applications/new/f1" extends="at.content">
-        <put-attribute name="content" value="/WEB-INF/jspx/applications-new-f1.jsp" />
-    </definition>
-    
-    <definition name="applications/new/f1a" extends="at.content">
-        <put-attribute name="content" value="/WEB-INF/jspx/applications-new-f1a.jsp" />
-    </definition>    
-            
-    
     <definition name="applications/edit" extends="at.content">
         <put-attribute name="content" value="/WEB-INF/jspx/applications-edit.jsp" />
+    </definition>        
+   
+    <!--================= Wildcard New Application Templates -->
+    <definition name="applications/new/*" extends="at.content">
+        <put-attribute name="content" value="/WEB-INF/jspx/applications-new-{1}.jsp" />
+    </definition>
+    <!--================= Edit Application Templates -->    
+    <definition name="applications/edit/*" extends="at.content">
+        <put-attribute name="content" value="/WEB-INF/jspx/applications-edit-{1}.jsp" />
     </definition>    
     
 </tiles-definitions>

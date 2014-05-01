@@ -1,8 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@ include file="/WEB-INF/jsp/taglibs.jsp"%>
-    <h1>Add new Application</h1>
-        <h1>Форма ф1 (контракт) </h1>
-        <sf:form commandName="application" method="POST" action="${ctx}/applications" >
+    <h1>Edit Application</h1>
+    
+        <c:if test="${not empty application.applicationType}" >
+            <p>Application type data :: ${application.applicationType}</p>
+        </c:if>    
+        
+        <sf:form commandName="application" method="POST" action="${ctx}/applications/${application.applicationId}">
             <sf:label path="givenName">GIVENNAME</sf:label>
                 <sf:input path="givenName" class="form-control"/>
                     <sf:errors path="givenName" />
@@ -21,9 +25,9 @@
             <sf:label path="lastModificationDate">LASTMODIFICATIONDATE</sf:label>
                 <sf:input path="lastModificationDate" class="form-control"/>
                     <sf:errors path="lastModificationDate" />
-            <sf:label path="cField">cField</sf:label>
-                <sf:input path="cField" class="form-control"/>
-                    <sf:errors path="cField" />                    
+            <sf:label path="contractNumber">contractNumber</sf:label>
+                <sf:input path="contractNumber" class="form-control"/>
+                    <sf:errors path="contractNumber" />
 
             <input type="submit" id="save" value="Save" class="btn btn-default" />
         </sf:form>

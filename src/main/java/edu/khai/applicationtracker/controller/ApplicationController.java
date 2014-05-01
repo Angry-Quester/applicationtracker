@@ -37,6 +37,7 @@ import edu.khai.applicationtracker.model.AppUserPrincipal;
 import edu.khai.applicationtracker.model.Application;
 import edu.khai.applicationtracker.model.ApplicationC;
 import edu.khai.applicationtracker.model.ApplicationType;
+import edu.khai.applicationtracker.model.application.Contract;
 import edu.khai.applicationtracker.service.AppUserService;
 import edu.khai.applicationtracker.service.ApplicationService;
 import edu.khai.applicationtracker.service.ApplicationTypeService;
@@ -111,40 +112,34 @@ public class ApplicationController {
     public String newApplicationForm(Model model,
                                     @PathVariable("applicationTypeId") Long applicationTypeId) {
 
-        //get an applicationType to put it into application
-        ApplicationType applicationType = applicationTypeService.getApplicationType(applicationTypeId);
+        Class<? extends Application> applicationClass = null;
 
-        Application application = new ApplicationC();
-                    application.setApplicationType(applicationType);
-                    application.setGivenName("zzzzzzzzzzzzzzz");
-
-        String viewName = "";
-        switch (applicationTypeId.toString()) {
-        case "1":
-            viewName = "applications/new/f1";
-                model.addAttribute("application", application);
+        switch (applicationTypeId.intValue()) {
+        case 1:
+            applicationClass = Contract.class;
             break;
-        case "2":
-            viewName = "applications/new/f1a";
-                model.addAttribute("application", application);
+        case 2:
+            applicationClass = Application.class;
             break;
         }
 
-        return viewName;
+        //get an applicationType to put it into application and compile fresh application
+        ApplicationType applicationType = applicationTypeService.getApplicationType(applicationTypeId);
+        Application application = applicationFactory(applicationClass, applicationType);
+
+        model.addAttribute("application", application);
+
+        return "applications/new/" + applicationTypeId;
     }
 
     @RequestMapping(value = "/applications", method = RequestMethod.POST)
     public String newApplication(Model model, @Valid Application application, BindingResult errors, SessionStatus sessionStatus) {
 
-        for (String key : model.asMap().keySet()){
-            System.out.printf("------------- key :: %s --- value %s %n ",key, model.asMap().get(key));
-        }
-
-//        ApplicationC c = (ApplicationC)model.asMap().get("application");
-
+        //Somehow databinding is polymorthic so there is nothing to worry about
         if (errors.hasErrors()) {
             model.addAttribute("errors", errors);
-            return "applications/new/f1";
+            //return the a user to the form where an error occured
+            return "applications/new/" + application.getApplicationType().getApplicationTypeId();
         }
 
         //get application entity after it was created
@@ -154,8 +149,6 @@ public class ApplicationController {
         //this line of code perfoms cleanup for the current session
         //An application attribute of the session to be exact
         sessionStatus.setComplete();
-
-
 
         return "redirect:applications";
     }
@@ -201,8 +194,6 @@ public class ApplicationController {
 
 
 
-
-
 /*==========================File methodds*/
     /*==========================Just a stub for a while*/
     @RequestMapping(value = "/applications/{applicationId}/txt", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
@@ -226,5 +217,31 @@ public class ApplicationController {
 
     }
 
+    @SuppressWarnings("unchecked")
+    private <T extends Application> T applicationFactory(Class<T> clazz, ApplicationType applicationType) {
+        try {
+            T application = (T)Class.forName(clazz.getCanonicalName()).newInstance();
+                application.setApplicationType(applicationType);
+            return application;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
 
+
+    /**
+     * Very crude implementation.
+     * I must find the way to implement it in a better way
+     *
+     * @param applicationTypeId
+     * @return
+     */
+    private Class<? extends Application> applicationClassSwitchBoard(Long applicationTypeId) {
+        switch (applicationTypeId.intValue()) {
+            case 1: return Contract.class;
+            case 2: return Application.class;
+            default : return null;
+        }
+    }
 }
