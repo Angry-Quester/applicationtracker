@@ -110,9 +110,12 @@ CREATE TABLE `application` (
   `creationDate` datetime DEFAULT NULL,
   `lastModificationDate` datetime DEFAULT NULL,
   `applicationTypeId` bigint(20) DEFAULT NULL,
+  `parentApplicationId` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`applicationId`),
   KEY `FK5CA40550374662B5` (`applicationTypeId`),
-  CONSTRAINT `FK5CA40550374662B5` FOREIGN KEY (`applicationTypeId`) REFERENCES `applicationtype` (`applicationTypeId`)
+  KEY `FK5CA4055045464537` (`parentApplicationId`),
+  CONSTRAINT `FK5CA40550374662B5` FOREIGN KEY (`applicationTypeId`) REFERENCES `applicationtype` (`applicationTypeId`),
+  CONSTRAINT `FK5CA4055045464537` FOREIGN KEY (`parentApplicationId`) REFERENCES `application` (`applicationId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -124,11 +127,71 @@ DROP TABLE IF EXISTS `applicationform1`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `applicationform1` (
-  `contractId` bigint(20) NOT NULL,
+  `applicationForm1Id` bigint(20) NOT NULL,
   `contractNumber` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`contractId`),
-  KEY `FKFEA9687D51F98CE3` (`contractId`),
-  CONSTRAINT `FKFEA9687D51F98CE3` FOREIGN KEY (`contractId`) REFERENCES `application` (`applicationId`)
+  PRIMARY KEY (`applicationForm1Id`),
+  KEY `FKFEA9687DEBAD3A71` (`applicationForm1Id`),
+  CONSTRAINT `FKFEA9687DEBAD3A71` FOREIGN KEY (`applicationForm1Id`) REFERENCES `norate` (`noRateId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `applicationform11`
+--
+
+DROP TABLE IF EXISTS `applicationform11`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `applicationform11` (
+  `applicationForm11Id` bigint(20) NOT NULL,
+  PRIMARY KEY (`applicationForm11Id`),
+  KEY `FKD683A75463651D0B` (`applicationForm11Id`),
+  CONSTRAINT `FKD683A75463651D0B` FOREIGN KEY (`applicationForm11Id`) REFERENCES `fixedrate` (`fixedRateId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `applicationform12`
+--
+
+DROP TABLE IF EXISTS `applicationform12`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `applicationform12` (
+  `applicationForm12Id` bigint(20) NOT NULL,
+  PRIMARY KEY (`applicationForm12Id`),
+  KEY `FKD683A75595515709` (`applicationForm12Id`),
+  CONSTRAINT `FKD683A75595515709` FOREIGN KEY (`applicationForm12Id`) REFERENCES `norate` (`noRateId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `applicationform13`
+--
+
+DROP TABLE IF EXISTS `applicationform13`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `applicationform13` (
+  `applicationForm13Id` bigint(20) NOT NULL,
+  PRIMARY KEY (`applicationForm13Id`),
+  KEY `FKD683A75695515ACA` (`applicationForm13Id`),
+  CONSTRAINT `FKD683A75695515ACA` FOREIGN KEY (`applicationForm13Id`) REFERENCES `norate` (`noRateId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `applicationform14`
+--
+
+DROP TABLE IF EXISTS `applicationform14`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `applicationform14` (
+  `applicationForm14Id` bigint(20) NOT NULL,
+  PRIMARY KEY (`applicationForm14Id`),
+  KEY `FKD683A75795515E8B` (`applicationForm14Id`),
+  CONSTRAINT `FKD683A75795515E8B` FOREIGN KEY (`applicationForm14Id`) REFERENCES `norate` (`noRateId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -206,6 +269,53 @@ CREATE TABLE `appuseruserrole` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `fixedrate`
+--
+
+DROP TABLE IF EXISTS `fixedrate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fixedrate` (
+  `fixedRateId` bigint(20) NOT NULL,
+  `rate` float DEFAULT NULL,
+  PRIMARY KEY (`fixedRateId`),
+  KEY `FK2C8CCE749FF28DA5` (`fixedRateId`),
+  CONSTRAINT `FK2C8CCE749FF28DA5` FOREIGN KEY (`fixedRateId`) REFERENCES `application` (`applicationId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `hourlyrate`
+--
+
+DROP TABLE IF EXISTS `hourlyrate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `hourlyrate` (
+  `hourlyRateId` bigint(20) NOT NULL,
+  `hours` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`hourlyRateId`),
+  KEY `FK4F0D3AF12409CEE2` (`hourlyRateId`),
+  CONSTRAINT `FK4F0D3AF12409CEE2` FOREIGN KEY (`hourlyRateId`) REFERENCES `application` (`applicationId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `norate`
+--
+
+DROP TABLE IF EXISTS `norate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `norate` (
+  `noRateId` bigint(20) NOT NULL,
+  PRIMARY KEY (`noRateId`),
+  KEY `FKC1F80641876F0632` (`noRateId`),
+  CONSTRAINT `FKC1F80641876F0632` FOREIGN KEY (`noRateId`) REFERENCES `application` (`applicationId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `userrole`
 --
 
@@ -228,4 +338,4 @@ CREATE TABLE `userrole` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-05-01 18:51:32
+-- Dump completed on 2014-05-02 11:50:12

@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <joined-subclass extends="edu.khai.applicationtracker.model.application.FixedRate" 
+    <joined-subclass extends="edu.khai.applicationtracker.model.application.NoRate" 
                      name="edu.khai.applicationtracker.model.application.ApplicationForm12" 
                      table="applicationForm12" >
 

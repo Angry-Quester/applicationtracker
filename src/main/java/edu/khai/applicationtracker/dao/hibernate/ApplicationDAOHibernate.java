@@ -14,7 +14,8 @@ public class ApplicationDAOHibernate extends HibernateDAO<Application, Long> imp
         return currentSession()
                 .createQuery("select app from Application as app "
                         + "inner join app.appUsers au "
-                        + "where au.appUserId=:appUserId")
+                        + "where au.appUserId=:appUserId "
+                        + "order by app.applicationId")
                 .setParameter("appUserId", appUserId)
                 .list();
     }

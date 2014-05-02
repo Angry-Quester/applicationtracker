@@ -53,13 +53,19 @@
                 <value>edu/khai/applicationtracker/model/AppUser.hbm.xml</value>
                 <value>edu/khai/applicationtracker/model/UserRole.hbm.xml</value>
                 <!-- All kinds of Applications -->
-                <value>edu/khai/applicationtracker/model/ApplicationType.hbm.xml</value>
-                    <value>edu/khai/applicationtracker/model/Application.hbm.xml</value>
+                <value>edu/khai/applicationtracker/model/Application.hbm.xml</value>
+                    <!-- Application types -->
+                    <value>edu/khai/applicationtracker/model/ApplicationType.hbm.xml</value>
+                        <!-- Classes to describe Applications category -->
                         <value>edu/khai/applicationtracker/model/application/FixedRate.hbm.xml</value>
                         <value>edu/khai/applicationtracker/model/application/HourlyRate.hbm.xml</value>
                         <value>edu/khai/applicationtracker/model/application/NoRate.hbm.xml</value>
-                <value>edu/khai/applicationtracker/model/application/ApplicationForm1.hbm.xml</value>
-                <value>edu/khai/applicationtracker/model/application/ApplicationForm11.hbm.xml</value>                
+                    <!-- Contract Applications -->
+                    <value>edu/khai/applicationtracker/model/application/ApplicationForm1.hbm.xml</value>
+                    <value>edu/khai/applicationtracker/model/application/ApplicationForm11.hbm.xml</value>
+                    <value>edu/khai/applicationtracker/model/application/ApplicationForm12.hbm.xml</value>
+                    <value>edu/khai/applicationtracker/model/application/ApplicationForm13.hbm.xml</value>
+                    <value>edu/khai/applicationtracker/model/application/ApplicationForm14.hbm.xml</value>
             </list>
         </property>
     </bean>

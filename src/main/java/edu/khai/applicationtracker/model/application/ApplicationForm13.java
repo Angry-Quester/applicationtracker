@@ -12,7 +12,7 @@ package edu.khai.applicationtracker.model.application;
  *
  */
 
-public class ApplicationForm13 extends FixedRate {
+public class ApplicationForm13 extends NoRate {
 
     private static final long serialVersionUID = 7349222690353262257L;
 
