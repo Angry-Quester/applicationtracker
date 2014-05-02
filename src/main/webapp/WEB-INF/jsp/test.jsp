@@ -30,6 +30,7 @@
     </div>
     <div id="content">
         <h1>Page</h1>
+        
   <center>
     <s:hasBindErrors name="testModel">
       <c:if test="${errors.errorCount > 0 }">
@@ -46,10 +47,10 @@
     
         <hr/>        
         
-        <form action="<c:url value="/test"/>" method="post">
-            <input type="text" name="id" type="text" placeholder="Введите Id" class="form-control" /> <br />
-            <input type="text" name="testIntegerField" type="text" placeholder="Введите Id" class="form-control" /> <br />
-            <input type="text" name="testField" type="email" placeholder="Введите Email" class="form-control" /> <br />
+        <form action="<c:url value="/test"/>" method="POST">
+            <input type="text" name="id" type="text" placeholder="Not required ID" class="form-control" /> <br />
+            <input type="text" name="testIntegerField" type="text" placeholder="Binded ID" class="form-control" /> <br />
+            <input type="text" name="testField" type="text" placeholder="Binded Email" class="form-control" /> <br />
             <input type="submit" value="Push" class="btn btn-default"/>
             
         <input type="hidden"
@@ -64,24 +65,14 @@
             </p>]
         </c:if>
 
-
-        <c:if test="${not empty data}" >
-            <p>data = ${data}</p>
+        <hr />
+        <c:if test="${not empty string}">
+            <p>Test Data Binding By Type :: ${string}</p>
         </c:if>
-        <c:if test="${not empty appUser}" >
-            <p>appUser = ${appUser}</p>
-        </c:if>
-        <c:if test="${not empty info}" >
-            <p>INFO=${info}</p>
-        </c:if>
-        <c:if test="${not empty string}" >
-            <p>smartModel ( string )=${string}</p>
+        <c:if test="${not empty appUserPrincipal}">
+            <p>Test Data Binding By Type :: ${appUserPrincipal}</p>
         </c:if>        
-        <c:if test="${not empty modelMap}" >
-            <p>MODEL-MAP=${modelMap}</p>
-        </c:if> 
-               
-         <a href="/applications/1">111111111111</a>
+        <hr />
 
 <!--  Test matherials-->
 
@@ -91,7 +82,6 @@
         <h2>Somethig is really Happening</h2>
         <h2>Somethig is really Happening</h2>
         <p> test</p>
-
 
         <table class="table table-bordered">
             <tr>

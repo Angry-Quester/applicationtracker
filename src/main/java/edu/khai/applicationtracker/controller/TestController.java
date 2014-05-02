@@ -5,10 +5,12 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import edu.khai.applicationtracker.model.AppUser;
+import edu.khai.applicationtracker.model.AppUserPrincipal;
 import edu.khai.applicationtracker.model.TestModel;
 import edu.khai.applicationtracker.service.AppUserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -42,15 +44,16 @@ public class TestController {
 
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String getTest(@RequestParam Map<String, String> rqMap, Model testModel) {
-        AppUser appUser = appUserManager.getAppUser(new Long(5));
+    public String getTest(Model testModel) {
+        AppUserPrincipal aup =
+                (AppUserPrincipal)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         //эти данные можно будет получить на jsp странице
         //по типу переданных данных т.е. так: ${string}
         testModel.addAttribute("smartModelContent");
 
         //эти данные можно будет получить на jsp странице
-        //по типу переданных данных т.е. так: ${appUser}
+        //по типу переданных данных т.е. так: ${aup}
         //
         //org.springframework.core.Conventions
         //
@@ -63,11 +66,11 @@ public class TestController {
         //com.myapp.MyProduct becomes myProduct;
         //com.myapp.UKProduct becomes UKProduct.
 
-        testModel.addAttribute(appUser);
+        testModel.addAttribute(aup);
 
         //эти данные можно будет получить на jsp странице явным образом
         //по имени т.е. так: ${data}
-        testModel.addAttribute("data", appUser);
+        testModel.addAttribute("data", aup);
 
 
         return "test";
@@ -80,9 +83,9 @@ public class TestController {
 
     @RequestMapping(value = "/test", method = RequestMethod.POST)
     public ModelAndView getPost(
-            @Valid TestModel testModel, BindingResult bindingResult,
-            @RequestParam("id") Long appUserId,
-            ModelMap modelMap) {
+                                @Valid TestModel testModel, BindingResult bindingResult,
+                                @RequestParam(value="id", required=false) Long appUserId,
+                                ModelMap modelMap) {
 
         ModelAndView mav = new ModelAndView("test");
 
