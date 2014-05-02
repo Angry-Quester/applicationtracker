@@ -10,7 +10,7 @@
 
                      <key column="applicationForm1Id" />
                      
-                     <property name="contractNumber" column="contractNumber" not-null="false"/>
+                     <property name="contractNumber" column="contractNumber" not-null="false" />
     </joined-subclass>
 
 </hibernate-mapping>

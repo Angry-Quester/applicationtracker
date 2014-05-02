@@ -1,5 +1,18 @@
 package edu.khai.applicationtracker.model.application;
 
+/**
+ * Контракт (Форма 1)
+ *
+ *  Родитель для
+ *  Формы 1а == ApplicationForm11 (Дополнительного соглашения)
+ *  Формы 1в == ApplicationForm13 (Заявление к контракту)
+ *  Формы 1п == ApplicationForm14 (Дополнительное соглашение для пенсионеров)
+ *
+ * Заявление не несёт информации о ставках
+ *
+ * @author Quester
+ *
+ */
 public class ApplicationForm1 extends NoRate {
 
     private static final long serialVersionUID = -1253069388098152146L;
