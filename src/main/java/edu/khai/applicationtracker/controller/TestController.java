@@ -90,6 +90,16 @@ public class TestController {
                   testModel.setTestIntegerField(Long.valueOf(1234567890));
                   testModel.setTestField("crash@meme.to");
 
+                  TestModel l4 = new TestModel();
+                  l4.setTestIntegerField(Long.valueOf(444));
+                  l4.setTestField("w444w@meme.to");
+
+                  TestModel l5 = new TestModel();
+                  l5.setTestIntegerField(Long.valueOf(555));
+                  l5.setTestField("w555w@meme.to");
+
+                  testModel.setTestModels(Arrays.asList(l4, l5));
+
         mav.addObject("testModel", testModel);
         //model.addAttribute("testModel", testModel);
 

@@ -20,6 +20,7 @@ public class TestModel {
     @Valid
     private TestModel testModel;
 
+    @Valid
     private List<TestModel> testModels;
 
     /**

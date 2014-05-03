@@ -72,10 +72,19 @@
             <sf:label path="testField">Binded testField</sf:label>
                 <sf:input path="testField" class="form-control"/>
                     <sf:errors path="testField" />
+            <hr />
+            <c:forEach items="${testModel.testModels}" var="testModelItem" varStatus="status">
+                <sf:input path="testModels[${status.index}].testIntegerField" class="form-control"/>
+                    <sf:errors path="testModels[${status.index}].testIntegerField"/>
+                <sf:input path="testModels[${status.index}].testField" class="form-control"/>
+                    <sf:errors path="testModels[${status.index}].testField"/>
+                <p> ${status.index}</p> 
+            </c:forEach>
+
 
             <input type="submit" value="Push" class="btn btn-default"/>
 
-        <input type="hidden"
+        <input type="hidden" 
             name="${_csrf.parameterName}"
             value="${_csrf.token}"/>
 
