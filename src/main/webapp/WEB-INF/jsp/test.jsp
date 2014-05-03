@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 
@@ -30,40 +30,74 @@
     </div>
     <div id="content">
         <h1>Page</h1>
-        
+
   <center>
     <s:hasBindErrors name="testModel">
       <c:if test="${errors.errorCount > 0 }">
         <h4>Following errors need to be corrected:</h4>
         <font color="red">
           <c:forEach items="${errors.allErrors}" var="error">
-            <s:message code="${error.code}" arguments="${err.arguments}" text="${error.defaultMessage} :: ${error.code}"/><br />
+            <s:message code="${error.code}" arguments="${error.arguments}" text="${error.defaultMessage} :: ${error.code}"/><br />
+            <br />
+            ${error.code} --- {error.arguments} --- ${error.defaultMessage}<br />
+            <hr />
           </c:forEach>
         </font>
       </c:if>
     </s:hasBindErrors>
   </center>
 
-    
-        <hr/>        
-        
-        <form action="<c:url value="/test"/>" method="POST">
-            <input type="text" name="id" type="text" placeholder="Not required ID" class="form-control" /> <br />
-            <input type="text" name="testIntegerField" type="text" placeholder="Binded ID" class="form-control" /> <br />
-            <input type="text" name="testField" type="text" placeholder="Binded Email" class="form-control" /> <br />
+
+        <hr/>
+
+        <sf:form commandName="testModel" method="POST" action="${ctx}/test">
+
+            <select id="testModel" name="testModel" class="form-control">
+                <option value="">--select-something--</option>            
+                    <c:forEach items="${testModelsList}" var="testModelItem" varStatus="Status">
+                        <c:choose>
+                            <c:when test="${testModel.testModel.testIntegerField eq testModelItem.testIntegerField}" >
+                                <option value="${testModelItem.testIntegerField}" selected="selected">${testModelItem.testField}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="${testModelItem.testIntegerField}">${testModelItem.testField}</option>
+                            </c:otherwise>
+                            </c:choose>
+                    </c:forEach>
+            </select>
+            <sf:label path="testIntegerField">Binded testIntegerField</sf:label>
+                <sf:input path="testIntegerField" class="form-control"/>
+                    <sf:errors path="testIntegerField" />
+
+            <sf:label path="testField">Binded testField</sf:label>
+                <sf:input path="testField" class="form-control"/>
+                    <sf:errors path="testField" />
+
             <input type="submit" value="Push" class="btn btn-default"/>
-            
+
         <input type="hidden"
             name="${_csrf.parameterName}"
-            value="${_csrf.token}"/>            
+            value="${_csrf.token}"/>
+
+        </sf:form>
+
+        <form action="">
+            <select>
+
+            </select>
         </form>
 
         <c:if test="${not empty errors}" >
             <p><c:forEach items="${errors}" var="singleError" varStatus="status">
-                    <c:out value="<<<"/> ${status.index} <c:out value=">>>"/> :: ${singleError} <br /> 
+                    <c:out value="<<<"/> ${status.index} <c:out value=">>>"/> :: ${singleError} <br />
                 </c:forEach>
-            </p>]
+            </p>
         </c:if>
+
+        <c:if test="${not empty err}" >
+            ${err.allErrors}
+        </c:if>
+
 
         <hr />
         <c:if test="${not empty string}">
@@ -71,7 +105,7 @@
         </c:if>
         <c:if test="${not empty appUserPrincipal}">
             <p>Test Data Binding By Type :: ${appUserPrincipal}</p>
-        </c:if>        
+        </c:if>
         <hr />
 
 <!--  Test matherials-->
@@ -146,13 +180,20 @@
     </div>
 
 
+<script type="text/javascript">
+
+var readyEvent = function () {console.log("alarma");};
+
+    jQuery(document).ready(readyEvent);
+</script>
+
+
 <!--  Test matherials end-->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="${jsCtx}/jquery-1.11.0.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="${jsCtx}/bootstrap.js"></script>
-
 
     </body>
 </html>
