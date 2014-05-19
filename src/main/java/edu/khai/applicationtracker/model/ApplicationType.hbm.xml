@@ -16,6 +16,7 @@
         <property name="description" column="description" not-null="false" />
         <property name="viewAttribute" column="viewAttribute" not-null="false" />
 
+<!-- 
         <set name="applications" table="application"
                              inverse="true"
                              lazy="true"
@@ -23,6 +24,7 @@
             <key column="applicationTypeId" />
             <one-to-many class="edu.khai.applicationtracker.model.Application" />
         </set>
-
+ -->
+ 
     </class>
 </hibernate-mapping>

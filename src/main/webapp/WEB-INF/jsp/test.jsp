@@ -74,11 +74,14 @@
                     <sf:errors path="testField" />
             <hr />
             <c:forEach items="${testModel.testModels}" var="testModelItem" varStatus="status">
+            
                 <sf:input path="testModels[${status.index}].testIntegerField" class="form-control"/>
                     <sf:errors path="testModels[${status.index}].testIntegerField"/>
+                    
                 <sf:input path="testModels[${status.index}].testField" class="form-control"/>
                     <sf:errors path="testModels[${status.index}].testField"/>
-                <p> ${status.index}</p> 
+                <p> ${status.index}</p>
+                 
             </c:forEach>
 
 
@@ -90,10 +93,8 @@
 
         </sf:form>
 
-        <form action="">
-            <select>
-
-            </select>
+        <form action="" class="select-test">
+            
         </form>
 
         <c:if test="${not empty errors}" >
@@ -188,21 +189,47 @@
 
     </div>
 
-
-<script type="text/javascript">
-
-var readyEvent = function () {console.log("alarma");};
-
-    jQuery(document).ready(readyEvent);
-</script>
-
-
 <!--  Test matherials end-->
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="${jsCtx}/jquery-1.11.0.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="${jsCtx}/bootstrap.js"></script>
+
+<script type="text/javascript">
+
+var readyEvent = function () {
+    $.getJSON( "applicationtypes", function( applicationTypes ) {
+        var selectRows = [];
+
+        for (var i=0; i<applicationTypes.length; i++) {
+            selectRows.push("<option value=\""
+                    + applicationTypes[i].applicationTypeId
+                    + "\">" 
+                    + applicationTypes[i].abbreviation
+                    + " :: "
+                    + applicationTypes[i].shortName
+                    + " :: "
+                    + applicationTypes[i].fullName
+                    + "</value>");
+        }
+
+        
+        $("<select/>", {"class": "form-control",
+            html: selectRows.join( "" )
+        }).appendTo( ".select-test" );
+
+        console.log(selectRows.join( "" ));
+
+    }); 
+    
+    console.log("alarma");
+};
+
+    $(document).ready(readyEvent); 
+
+</script>
+
 
     </body>
 </html>
