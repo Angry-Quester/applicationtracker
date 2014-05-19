@@ -2,33 +2,31 @@ function FormBuilder (){
 
 }
 
-FormBuilder.prototype.init = function(listId, listElementTemplateId, addButtonClass, deleteButtonClass) {
-    console.log("FormBuilder ======================= init( " + listId +" )");
-    /*========= global initializations to use in "this" namespace*/
-        this.listId = listId;
-        this.listElementTemplateId = listElementTemplateId;
-        this.addButtonClass = addButtonClass;
-        this.deleteButtonClass = deleteButtonClass;
-    /*========= global initializations to use in "this" namespace*/
 
-    this.templateReader(listElementTemplateId);
-
+FormBuilder.prototype.init = function(smartListInitData) {
+    console.log("FormBuilder ======================= init( " + smartListInitData.toString() +" )");
+    /*========= global initializations to use in "this" namespace*/
+        this.initData = smartListInitData;
+        this.$template = this.templateReader(this.initData.templateId);
+    /*========= global initializations to use in "this" namespace*/
+    this.templateReader(this.initData.templateId);
 };
 
-FormBuilder.prototype.templateReader= function(templateName) {
-    console.log("FormBuilder ======================= templateReader( " + templateName +" )");
 
-    /*========= global initializations to use in "this" namespace*/
+FormBuilder.prototype.templateReader = function(templateId) {
+
+    console.log("FormBuilder ======================= templateReader( " + templateId +" )");
+
         //read template and detach it from the page
-        this.$templateDiv = $("#" + templateName).detach();
-    /*========= global initializations to use in "this" namespace*/
+        return $("#" + templateId).detach();
 };
+
 
 FormBuilder.prototype.addListElementEvent = function(elementNumber) {
     console.log("FormBuilder ======================= addListElement( " + elementNumber +" )");
 
     //local copy of the global template
-    var $template = this.$templateDiv;
+    var $template = this.$template;
 
     //if new element number hadn't been supplied calculate it
     if (!elementNumber) {
@@ -42,7 +40,8 @@ FormBuilder.prototype.addListElementEvent = function(elementNumber) {
     var $element = this.buildListElement($clonedTemplateElement, $template, elementNumber);
 
     //attach element to the list <div>
-    $($element).appendTo("#" + this.listId);
+    //$($element).appendTo("#" + this.listId);
+    $("#" + this.initData.wrapperId).find("." + this.initData.addButtonClass).before($element);
 
 };
 
@@ -52,9 +51,8 @@ FormBuilder.prototype.deleteElementEventGenerator = function(elementId) {
 
     return function() {
         console.log("FormBuilder ======================= deleteElementEvent( " + elementId +" )");
-        /*  remove element and save it's index for
-            further processing
-        */
+        //  remove element and save it's index for
+        //  further processing
         var $elementToDelete = $("#" + elementId);
             var elementIndex = $elementToDelete.index();
         $elementToDelete.remove();
@@ -65,70 +63,97 @@ FormBuilder.prototype.deleteElementEventGenerator = function(elementId) {
 };
 
 FormBuilder.prototype.buildListElement = function($element, $template, elementNumber) {
+    console.log("FormBuilder ======================= buildListElement( $element, $template, " + elementNumber +" )");
+
     //Create correct listElement id and use it as a delete button hook
-    var templateDivId = this.listDivIdGenerator(this.listId, elementNumber);
+    var templateDivId = this.listDivIdGenerator(this.initData.parentWrapperId, this.initData.wrapperId, elementNumber);
+
     $($element).attr("id", templateDivId);
 
+    /*========== "-" button ==========*/
     // find delete button for this element
-    var $deleteButton = $($element).find(".delete-button");
         //Remove all events from the "-" button
-        $($deleteButton).off();
         //bind delete event to the button "-"
+    var $deleteButton = $($element).find("." + this.initData.deleteButtonClass);
+        $($deleteButton).off();
         $($deleteButton).click(this.deleteElementEventGenerator(templateDivId));
 
+    /*========== controls ==========*/
     //get all inputs of the new element
-    var $elementInputs = $($element).children();
+    //get id and name for the current element from the template
+    var $elementControls = $($element).children();
+    var $templateControls = $($template).children();
 
     // look through inputs and apply changes to id's and name's
     // and maybe do some additional job
-    for (var i=0; i<$elementInputs.length; i++) {
-        console.log("======= applying new names to :: " + $elementInputs[i].id + " :: " + $elementInputs[i].name);
+    for (var i=0; i<$elementControls.length; i++) {
+        //determine weather the element is a "control" or not
+        var flag = $($elementControls[i]).hasClass(this.initData.formControlClass);
+        if (flag) {
+            console.log("======= applying new names to :: " + $elementControls[i].id + " :: " + $elementControls[i].name);
 
-        //get id and name for the current element from the template
-        var $templateInputs = $($template).children();
-            //id and name i want to change
-            var idValue = $templateInputs[i].id;
-            var nameValue = $templateInputs[i].name;
-            //and change them
-            $($elementInputs[i]).attr("id", this.listControlIdGenerator(this.listId, idValue, elementNumber));
-            $($elementInputs[i]).attr("name", this.listControlNameGenerator(this.listId, nameValue, elementNumber));
+            //initial id and name from the template
+            var idValue = $templateControls[i].id;
+            var nameValue = $templateControls[i].name;
+
+            //here i generate full names for every field
+            var generatedId = this.listControlIdGenerator(this.initData.parentWrapperId,
+                                                          this.initData.wrapperId,
+                                                          idValue,
+                                                          elementNumber)
+            $($elementControls[i]).attr("id", generatedId);
+
+            var generatedName = this.listControlNameGenerator(this.initData.parentWrapperId,
+                                                              this.initData.wrapperId,
+                                                              nameValue,
+                                                              elementNumber)
+            $($elementControls[i]).attr("name", generatedName);
+        }
     }
     //return prepared element of whatever
     return $element;
 };
+
 
 FormBuilder.prototype.reindexator = function(elementIndex) {
     console.log("FormBuilder ======================= reindexator( " + elementIndex +" )");
     //if no elements left - return
     var elementsCount = this.getListLength();
     if (elementsCount) {
-        //get element at the index mark
-        var $listElementDiv = $("#" + this.listId).children().eq(elementIndex);
+        //get an element at the index mark
+        var $listElementDiv = $("#" + this.initData.wrapperId).children().eq(elementIndex);
 
         //go through all the elements lower than this element and do re-indexation
         for (var i=elementIndex; i<elementsCount; i++) {
+            // reindex the element
+            // and jump on the next one
+            this.buildListElement($listElementDiv, this.$template, i);
 
-            //reindex the element
-            this.buildListElement($listElementDiv, this.$templateDiv, i);
-
-            // jump on the next element
             $listElementDiv = $($listElementDiv).next();
         }
     }
 };
 
+
 FormBuilder.prototype.getListLength = function() {
-    return $("#" + this.listId).children().length;
+    //-1 because of the addButton
+    return $("#" + this.initData.wrapperId).children().length-1;
 };
 
-FormBuilder.prototype.listDivIdGenerator = function(listId, elementNumber) {
-    return listId + "_" + elementNumber;
+FormBuilder.prototype.listDivIdGenerator = function(parentWrapperId, wrapperId, elementNumber) {
+    var result = parentWrapperId !== null ? (parentWrapperId + "_") : "";
+        result += wrapperId + "_" + elementNumber;
+    return result;
 };
 
-FormBuilder.prototype.listControlIdGenerator = function(listId, inputId, elementNumber) {
-    return listId + elementNumber + "." + inputId;
+FormBuilder.prototype.listControlIdGenerator = function(parentWrapperId, wrapperId, inputId, elementNumber) {
+    var result = parentWrapperId !== null ? (parentWrapperId + ".") : "";
+        result += wrapperId + elementNumber + "." + inputId;
+    return result;
 };
 
-FormBuilder.prototype.listControlNameGenerator = function(listId, inputName, elementNumber) {
-    return listId + "[" + elementNumber + "]" + "." + inputName;
+FormBuilder.prototype.listControlNameGenerator = function(parentWrapperId, wrapperId, inputName, elementNumber) {
+    var result = parentWrapperId !== null ? (parentWrapperId + ".") : "";
+        result += wrapperId + "[" + elementNumber + "]" + "." + inputName;
+    return result;
 };
