@@ -15,7 +15,6 @@ public class ApplicationType extends BaseObject {
     private String description;
     private String viewAttribute;
 
-    private Set<Application> applications = new HashSet<Application>(0);
 
     /**
      * @return the id
@@ -115,20 +114,6 @@ public class ApplicationType extends BaseObject {
      */
     public void setViewAttribute(String viewAttribute) {
         this.viewAttribute = viewAttribute;
-    }
-
-    /**
-     * @return the applications
-     */
-    public Set<Application> getApplications() {
-        return applications;
-    }
-
-    /**
-     * @param applications the applications to set
-     */
-    public void setApplications(Set<Application> applications) {
-        this.applications = applications;
     }
 
     /* (non-Javadoc)
