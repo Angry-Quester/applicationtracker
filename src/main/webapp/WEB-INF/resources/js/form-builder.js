@@ -5,9 +5,19 @@ function FormBuilder (){
 
 FormBuilder.prototype.init = function(smartListInitData) {
     console.log("FormBuilder ======================= init( " + smartListInitData.toString() +" )");
+
+    var that = this;
+
     /*========= global initializations to use in "this" namespace*/
         this.initData = smartListInitData;
         this.$template = this.templateReader(this.initData.templateId);
+
+        var addButtonId = "#" + this.initData.wrapperId + " ." + this.initData.addButtonClass;
+        var $addButton = $(addButtonId);
+            $($addButton).click(that.addElementEventGenerator());
+
+        this.$addButton = $addButton;
+
     /*========= global initializations to use in "this" namespace*/
     this.templateReader(this.initData.templateId);
 };
@@ -40,11 +50,21 @@ FormBuilder.prototype.addListElementEvent = function(elementNumber) {
     var $element = this.buildListElement($clonedTemplateElement, $template, elementNumber);
 
     //attach element to the list <div>
-    //$($element).appendTo("#" + this.listId);
-    $("#" + this.initData.wrapperId).find("." + this.initData.addButtonClass).before($element);
+    //before add button
+    $(this.$addButton).before($element);
 
 };
 
+FormBuilder.prototype.addElementEventGenerator = function() {
+    var that = this;
+
+    return function() {
+        console.log("FormBuilder ======================= addElementEvent( )");
+
+        // fire add element event
+        that.addListElementEvent();
+    };
+};
 
 FormBuilder.prototype.deleteElementEventGenerator = function(elementId) {
     var that = this;
@@ -100,13 +120,13 @@ FormBuilder.prototype.buildListElement = function($element, $template, elementNu
             var generatedId = this.listControlIdGenerator(this.initData.parentWrapperId,
                                                           this.initData.wrapperId,
                                                           idValue,
-                                                          elementNumber)
+                                                          elementNumber);
             $($elementControls[i]).attr("id", generatedId);
 
             var generatedName = this.listControlNameGenerator(this.initData.parentWrapperId,
                                                               this.initData.wrapperId,
                                                               nameValue,
-                                                              elementNumber)
+                                                              elementNumber);
             $($elementControls[i]).attr("name", generatedName);
         }
     }
