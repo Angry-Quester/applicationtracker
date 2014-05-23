@@ -1,9 +1,8 @@
 /*
 * TODO
-* 1. add smartList elements internal ordering
-* 2. make smart list element independent from any markup through $($domContainer).find("." + smartListElement)
+* +1. add smartList elements internal ordering (DONE. Solved this problem by getElements recoursive method)
+* +2. make smart list element independent from any markup through $($domContainer).find("." + smartListElement) (DONE)
 * 3. add object cloner for initData
-*
 * */
 
 
@@ -41,6 +40,7 @@ FormBuilder.prototype.init = function(smartListInitData) {
         //fire reindexation. Having no elements in the sList, it will fail on the first loop,
 
     /*========= global initializations to use in "this" namespace*/
+
 };
 
 
@@ -49,7 +49,7 @@ FormBuilder.prototype.templateReader = function(elementTemplateId) {
 
         var $domContainer = this.$domContainer;
 
-        var $template = $($domContainer).find("#" + elementTemplateId)
+        var $template = $($domContainer).find("#" + elementTemplateId);
 
         //read template and detach it from the page
         return $($template).detach();
@@ -91,37 +91,48 @@ FormBuilder.prototype.addElementEventGenerator = function() {
     };
 };
 
+FormBuilder.prototype.deleteElementEvent = function(elementId) {
+    console.log("FormBuilder ======================= deleteElement( " + elementId +" )");
+    //  remove element and save it's index for
+    //  further processing
+    var $elementToDelete = $("#" + elementId);
+    var elementIndex = $elementToDelete.index();
+    $elementToDelete.remove();
+
+    // fire re-indexation by the supplied index
+    this.elementReindexator(elementIndex);
+};
+
 FormBuilder.prototype.deleteElementEventGenerator = function(elementId) {
     var that = this;
 
     return function() {
         console.log("FormBuilder ======================= deleteElementEvent( " + elementId +" )");
-        //  remove element and save it's index for
-        //  further processing
-        var $elementToDelete = $("#" + elementId);
-            var elementIndex = $elementToDelete.index();
-        $elementToDelete.remove();
-
-        // fire re-indexation by the supplied index
-        that.elementReindexator(elementIndex);
+        that.deleteElementEvent(elementId);
     };
 };
 
 FormBuilder.prototype.buildListElement = function($element, $template, elementNumber) {
-    console.log("FormBuilder ======================= buildListElement( $element, $elementTemplate, " + elementNumber +" )");
+    console.log("FormBuilder ======================= buildListElement(" + $element.toString() + ", " + $template.toString() + ", " + elementNumber +" )");
 
     //Create correct listElement id to use in reindexation and as a delete button hook
     var templateDivId = this.sLisElementIdGenerator(this.initData.parentIdPath, this.initData.sListName, elementNumber);
     //apply new id to the element
     $($element).attr("id", templateDivId);
 
-    /*========== "-" button ==========*/
+    /*========== "-" button for this smartListElement ==========*/
+    //get delete "-" button
+    //Remove all events from the "-" button
+    //Bind delete event to the delete "-" button
+    var $deleteButton = this.getDeleteButton($element);
+    $($deleteButton).off();
+    $($deleteButton).click(this.deleteElementEventGenerator(templateDivId));
+
 
     /*========== controls ==========*/
-    //get all inputs of the new element
-    //get id and name for the current element from the template
-    var $elementControls = $($element).children();
-    var $templateControls = $($template).children();
+    //get all сщтекщды of the new smartList element
+    var $elementControls = this.getControls($element);
+    var $templateControls = this.getControls($template);
 
     // look through inputs and apply changes to id's and name's
     // and maybe do some additional job
@@ -131,7 +142,8 @@ FormBuilder.prototype.buildListElement = function($element, $template, elementNu
         if (isControl) {
             console.log("======= applying new names to :: " + $elementControls[i].id + " :: " + $elementControls[i].name);
 
-            //initial id and name from the template
+            //get id and name for the current element from the template
+            //if it has one
             var idValue = $templateControls[i].id;
             var nameValue = $templateControls[i].name;
 
@@ -162,7 +174,7 @@ FormBuilder.prototype.buildListElement = function($element, $template, elementNu
                 smartListInitData["deleteButtonClass"] = this.initData.controls[0]["smart-list"]["deleteButtonClass"];
 
                 smartListInitData.parentIdPath = this.sLisElementIdGenerator(this.initData.parentIdPath, this.initData.sListName, elementNumber);
-                smartListInitData.parentNamePath = this.sLisElementNameGenerator(this.initData.parentNamePath, this.initData.sListName, elementNumber)
+                smartListInitData.parentNamePath = this.sLisElementNameGenerator(this.initData.parentNamePath, this.initData.sListName, elementNumber);
                 smartListInitData.$domContainer = $elementControls[i];
 
 
@@ -179,23 +191,12 @@ FormBuilder.prototype.buildListElement = function($element, $template, elementNu
 
                 formBuilder = new FormBuilder();         //create form builder and
                     formBuilder.init(smartListInitData); //reindex all id's and name's
-                this.children.push(formBuilder);
+                this.children[elementNumber] = [];
+                this.children[elementNumber].push(formBuilder);
             }
 
 
         }
-
-        //determine weather the element is a "-" button or not
-        var isDeleteButton = $($elementControls[i]).hasClass(this.initData.deleteButtonClass);
-        if (isDeleteButton) {
-            //get delete "-" button
-            //Remove all events from the "-" button
-            //Bind delete event to the delete "-" button
-            var $deleteButton = $elementControls[i]
-            $($deleteButton).off();
-            $($deleteButton).click(this.deleteElementEventGenerator(templateDivId));
-        }
-
     }
     //return prepared element of whatever
     return $element;
@@ -221,19 +222,38 @@ FormBuilder.prototype.elementReindexator = function(elementIndex) {
     }
 };
 
-FormBuilder.prototype.controlsCounter = function() {
+FormBuilder.prototype.getControls = function($element) {
     var controlsArray = [];
+    var controlClass = this.initData.controlClass;
 
+    //recoursive function to traverse through the domContainerTree
     var traverser = function($node) {
+        //get all children for the node
+        //if there are no children thete is no need to cycle through them
         var $children = $($node).children();
         var childrenLength = $children.length;
+
+        //loop through all the children
         for (var i=0; i<childrenLength; i++) {
-                
+            if ( $($children[i]).hasClass(controlClass) ) {
+                //if any node has smart list control class push this node into the controlsArray
+                controlsArray.push($children[i])
+            } else {
+                //if this is not a control run traverser on this node
+                traverser($children[i]);
+            }
         }
-    }
+    };
+
+    //traverse through element/template DOM tree
+    traverser($element);
 
     return controlsArray;
 
+};
+
+FormBuilder.prototype.getDeleteButton = function($element) {
+    return $($element).find("." + this.initData.deleteButtonClass);
 };
 
 FormBuilder.prototype.getSListElementsCount = function() {
