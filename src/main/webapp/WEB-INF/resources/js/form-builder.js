@@ -1,3 +1,12 @@
+/*
+* TODO
+* 1. add smartList elements internal ordering
+* 2. make smart list element independent from any markup through $($domContainer).find("." + smartListElement)
+* 3. add object cloner for initData
+*
+* */
+
+
 function FormBuilder (){
 
 }
@@ -8,32 +17,26 @@ FormBuilder.prototype.init = function(smartListInitData) {
 
     /*========= global initializations to use in "this" namespace*/
         this.initData = smartListInitData; //get all properties from initialiser
-        this.$elementTemplate = this.templateReader(this.initData.sListTemplateId); //read template for the list elements
 
-        //apply parent id path to the container necessary (if (parentIdPath))
-        var sListInitId = this.initData.parentIdPath !== null ? (this.initData.parentIdPath + "_") : "";
-            sListInitId += this.initData.sListName;
-
-        var $domContainer = this.initData.$domContainer;
-        if ($domContainer) {
-            $($domContainer).attr("id", sListInitId);
+        //look for domContainer
+        //if not found - make one
+        //this should only work for the root smartList
+        if (!this.initData.$domContainer) {
+            this.$domContainer = $("#" + this.initData.sListName)
         } else {
-            $("#" + this.initData.sListName).attr("id", sListInitId);
+            this.$domContainer = this.initData.$domContainer;
         }
 
-        this.initData.sListIdPath = sListInitId;
+        //apply parent id path to the container necessary
+        var sListInitId = this.sLisIdGenerator(this.initData.parentIdPath, this.initData.sListName);
+        $(this.$domContainer).attr("id", sListInitId);
 
-        //init add button
-        var $addButton = {};
-        if ($domContainer) {
-            $addButton = $($domContainer).find("." + this.initData.addButtonClass);
-        } else {
-            $addButton = $("#" + this.initData.sListIdPath + " ." + this.initData.addButtonClass);
-        }
+        //read list element template
+        this.$elementTemplate = this.templateReader(this.initData.sListTemplateId);
 
-            $($addButton).click(this.addElementEventGenerator());
-
-        this.$addButton = $addButton; //save add button object as a property
+        //find and init add "+" button
+        this.$addButton = $(this.$domContainer).find("." + this.initData.addButtonClass);
+        $(this.$addButton).click(this.addElementEventGenerator());
 
         //fire reindexation. Having no elements in the sList, it will fail on the first loop,
 
@@ -44,14 +47,9 @@ FormBuilder.prototype.init = function(smartListInitData) {
 FormBuilder.prototype.templateReader = function(elementTemplateId) {
     console.log("FormBuilder ======================= templateReader( " + elementTemplateId +" )");
 
-        var $domContainer = this.initData.$domContainer;
+        var $domContainer = this.$domContainer;
 
-        var $template = {};
-        if ($domContainer) {
-            $template = $($domContainer).find("#" + elementTemplateId)
-        } else {
-            $template = $("#" + elementTemplateId);
-        }
+        var $template = $($domContainer).find("#" + elementTemplateId)
 
         //read template and detach it from the page
         return $($template).detach();
@@ -137,19 +135,13 @@ FormBuilder.prototype.buildListElement = function($element, $template, elementNu
             var idValue = $templateControls[i].id;
             var nameValue = $templateControls[i].name;
 
-            //here i generate full names for every field
-            var generatedId = this.sListControlIdGenerator(this.initData.parentIdPath,
-                                                          this.initData.sListName,
-                                                          idValue,
-                                                          elementNumber);
+            //here i generate full ids and names for every smart list control
+            var generatedId = this.sListControlIdGenerator(this.initData.parentIdPath, this.initData.sListName, idValue, elementNumber);
             $($elementControls[i]).attr("id", generatedId);
 
-            var generatedName = this.sListControlNameGenerator(this.initData.parentNamePath,
-                                                              this.initData.sListName,
-                                                              nameValue,
-                                                              elementNumber);
+            var generatedName = this.sListControlNameGenerator(this.initData.parentNamePath, this.initData.sListName, nameValue, elementNumber);
             $($elementControls[i]).attr("name", generatedName);
-        }
+        };
 
         //determine weather the element is a "smartList" or not
         var isSmartList = $($elementControls[i]).hasClass(this.initData.smartListClassClass);
@@ -180,11 +172,12 @@ FormBuilder.prototype.buildListElement = function($element, $template, elementNu
                 this.children = [];
             }
 
-            if (this.children[i]) {
-                formBuilder = this.children[i];
+            if (this.children[elementNumber]) {
+                formBuilder = this.children[elementNumber];
                     formBuilder.init(smartListInitData); //reindex all id's and name's
             } else {
-                formBuilder = new FormBuilder();
+
+                formBuilder = new FormBuilder();         //create form builder and
                     formBuilder.init(smartListInitData); //reindex all id's and name's
                 this.children.push(formBuilder);
             }
@@ -215,7 +208,7 @@ FormBuilder.prototype.elementReindexator = function(elementIndex) {
     var elementsCount = this.getSListElementsCount();
     if (elementsCount > 0) {
         //get an element at the index mark
-        var $listElementDiv = $("#" + this.initData.sListIdPath).children().eq(elementIndex);
+        var $listElementDiv = $(this.$domContainer).children().eq(elementIndex);
 
         //go through all the elements lower than this element and do re-indexation
         for (var i=elementIndex; i<elementsCount; i++) {
@@ -228,11 +221,25 @@ FormBuilder.prototype.elementReindexator = function(elementIndex) {
     }
 };
 
+FormBuilder.prototype.controlsCounter = function() {
+    var controlsArray = [];
+
+    var traverser = function($node) {
+        var $children = $($node).children();
+        var childrenLength = $children.length;
+        for (var i=0; i<childrenLength; i++) {
+                
+        }
+    }
+
+    return controlsArray;
+
+};
 
 FormBuilder.prototype.getSListElementsCount = function() {
 
     //-1 because of the addButton
-    return $("#" + this.initData.sListIdPath).children().length-1;
+    return $(this.$domContainer).children().length-1;
 };
 
 FormBuilder.prototype.sLisIdGenerator = function(parentIdPath, sListId) {
@@ -255,7 +262,7 @@ FormBuilder.prototype.sLisElementNameGenerator = function(parentNamePath, sListN
 
 FormBuilder.prototype.sListControlIdGenerator = function(parentIdPath, sListName, controlId, elementNumber) {
     var result = parentIdPath !== null ? (parentIdPath + "_") : "";
-        result += sListName + elementNumber + "." + controlId;
+        result += sListName + "_" + elementNumber + "." + controlId;
     return result;
 };
 
